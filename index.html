@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wedding Vendor Directory</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/testimonials/testimonial-3/assets/css/testimonial-3.css">
+    <!-- Bootstrap Icons CDN -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+   
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   
+  </head>
+  <body>
+    <!-- ======= TOP BAR ======= -->
+    <div class="top-bar py-2">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="top-bar-left">
+          <span class="me-3">
+            <i class="fas fa-phone"></i> +1 234 567 890 </span>
+          <span>
+            <i class="fas fa-envelope"></i> contact@wedding.com </span>
+        </div>
+        <div class="top-bar-right">
+          <a href="#" class="me-3">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="me-3">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="me-3">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="me-3">
+            <i class="fab fa-pinterest"></i>
+          </a>
+          <!-- <a href="login.html" class="text-white">Login</a> | 
+                <a href="register.html" class="text-white">Register</a> -->
+        </div>
+      </div>
+    </div>
+    <!-- ======= NAVIGATION BAR ======= -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent nav-home">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/images/logo-2.png" alt="Weddlist Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="listing.html">Listing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Weddings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.html">Register</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- ======= HERO SECTION WITH SLIDER & SEARCH FORM ======= -->
+    <header>
+      <div id="weddingCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="assets/images/slider-6.jpg" class="d-block w-100" alt="Wedding Image 1">
+          </div>
+          <div class="carousel-item">
+            <img src="assets/images/slider-7.jpg" class="d-block w-100" alt="Wedding Image 2">
+          </div>
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#weddingCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#weddingCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <!-- Search Box Positioned on the Slider -->
+      <div class="search-box container text-center">
+        <h1 class="text-white fw-bold">Find the Best Wedding Services</h1>
+        <p class="text-white">Trusted vendors for photography, catering, and more.</p>
+        <form class="row g-2 justify-content-center">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Location Name">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select">
+              <option selected>Select Category</option>
+              <option>Photography</option>
+              <option>Catering</option>
+              <option>Venue</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select">
+              <option selected>Select Location</option>
+              <option>New York</option>
+              <option>Los Angeles</option>
+              <option>Chicago</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <a href="#" type="submit" class="btn btn-pink w-100">Find Vendor</a>
+          </div>
+        </form>
+      </div>
+    </header>
+    <!-- Wedding Planning Section -->
+    <section class="wedding-planning py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- Left Section (Description) -->
+          <div class="col-lg-5">
+            <div class="plan-description">
+              <h3 class="plan-heading">Your Wedding Planning Starts Here</h3>
+              <p class="plan-sub-heading"> Sed ut perspiciatis unde omnis iste natus error voluptatem accusantium doloremque laudantium totam rem. </p>
+              <p class="plan-sub-heading"> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam nisi ut aliquid ex ea commodi consequatur. </p>
+              <a class="btn btn-pink" href="https://thegenius.co/wp/weddlist/live/about-1/">Read More</a>
+            </div>
+          </div>
+          <!-- Right Section (Features List) -->
+          <div class="col-lg-7">
+            <div class="plan-start-block">
+              <div class="row">
+                <div class="col-2 d-flex justify-content-center align-items-center">
+                  <div class="widget-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                    <!-- Checklist Icon -->
+                  </div>
+                </div>
+                <div class="col-10">
+                  <div class="section">
+                    <h4 class="section-heading">Check List</h4>
+                    <p class="section-sub-heading"> Get your sorted list with our Check List planning tool to keep everything organized. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="plan-start-block">
+              <div class="row">
+                <div class="col-2 d-flex justify-content-center align-items-center">
+                  <div class="widget-icon">
+                    <i class="fa-solid fa-coins"></i>
+                    <!-- Budget Icon -->
+                  </div>
+                </div>
+                <div class="col-10">
+                  <div class="section">
+                    <h4 class="section-heading">Budget Planner</h4>
+                    <p class="section-sub-heading"> Our Budget Planner helps you track your actual, paid, and due expenses effectively. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="plan-start-block">
+              <div class="row">
+                <div class="col-2 d-flex justify-content-center align-items-center">
+                  <div class="widget-icon">
+                    <i class="fa-solid fa-user-group"></i>
+                    <!-- Guest List Icon -->
+                  </div>
+                </div>
+                <div class="col-10">
+                  <div class="section">
+                    <h4 class="section-heading">Guest List</h4>
+                    <p class="section-sub-heading"> Easily manage your guest list and collect email addresses for invitations. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End of Right Section -->
+        </div>
+      </div>
+    </section>
+    <!-- Wedding Locations Section -->
+    <section class="wedding-locations top_wedding ">
+      <div class="container">
+        <!-- Section Title -->
+        <div class="text-center">
+          <h2 class="fw-bold">Top Wedding Location</h2>
+          <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
+        </div>
+        <!-- Wedding Locations Grid -->
+        <div class="row g-4 mt-4">
+          <!-- Bangalore -->
+          <div class="col-lg-4 col-md-6">
+            <div class="location-card">
+              <img src="assets/images/Bangalore.jpg" class="img-fluid" alt="Bangalore">
+              <div class="overlay"></div>
+              <div class="city-dtl text-center">
+                <h4 class="city-dtl-heading">Bangalore</h4>
+                <div class="listing_counter">15 Listing</div>
+              </div>
+            </div>
+            <div class="location-card">
+              <img src="assets/images/Udaipur.jpg" class="img-fluid" alt="Udaipur">
+              <div class="overlay"></div>
+              <div class="city-dtl text-center">
+                <h4 class="city-dtl-heading">Udaipur</h4>
+                <div class="listing_counter">11 Listing</div>
+              </div>
+            </div>
+          </div>
+          <!-- Goa (Bigger Image) -->
+          <div class="col-lg-4 col-md-6">
+            <div class="location-card large">
+              <img width="360" height="550" src="assets/images/goa.jpg" class="attachment-full size-full" alt="" loading="lazy">
+              <div class="overlay"></div>
+              <div class="city-dtl text-center">
+                <h4 class="city-dtl-heading">Goa</h4>
+                <div class="listing_counter">12 Listing</div>
+              </div>
+            </div>
+          </div>
+          <!-- Mumbai -->
+          <div class="col-lg-4 col-md-6">
+            <div class="location-card">
+              <img src="assets/images/Mumbai.jpg" class="img-fluid" alt="Mumbai">
+              <div class="overlay"></div>
+              <div class="city-dtl text-center">
+                <h4 class="city-dtl-heading">Mumbai</h4>
+                <div class="listing_counter">11 Listing</div>
+              </div>
+            </div>
+            <div class="location-card">
+              <img src="assets/images/Chennai.jpg" class="img-fluid" alt="Chennai">
+              <div class="overlay"></div>
+              <div class="city-dtl text-center">
+                <h4 class="city-dtl-heading">Chennai</h4>
+                <div class="listing_counter">12 Listing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="text-center py-5 Explore">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="kc-elm kc-css-244778 kc_text_block">
+            <div class="call-out-dtl">
+              <h2 class="call-out-heading">Explore wedding vendors with our planning tools ?</h2>
+              <p>
+                <a class="btn btn-pink" href="#">Planning Your Wedding</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+    <section class="why-choose-main-block">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h3 class="section-heading">Why Choose Weddlist</h3>
+          <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
+        </div>
+        <div class="row g-4">
+          <!-- Box 1 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="why-block">
+              <div class="why-icon">
+                <i class="fa-solid fa-heart"></i>
+              </div>
+              <h4 class="why-choose-heading">35+ Year Experience</h4>
+              <p>Sed ut perspiciatis unde omnis iste na voluptatem accusantium doloremque laudantium</p>
+            </div>
+          </div>
+          <!-- Box 2 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="why-block">
+              <div class="why-icon">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <h4 class="why-choose-heading">Trusted by 20k</h4>
+              <p>Sed ut perspiciatis unde omnis iste na voluptatem accusantium doloremque laudantium</p>
+            </div>
+          </div>
+          <!-- Box 3 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="why-block">
+              <div class="why-icon">
+                <i class="fa-solid fa-ring"></i>
+              </div>
+              <h4 class="why-choose-heading">15k Real Weddings</h4>
+              <p>Sed ut perspiciatis unde omnis iste na voluptatem accusantium doloremque laudantium</p>
+            </div>
+          </div>
+          <!-- Box 4 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="why-block">
+              <div class="why-icon">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <h4 class="why-choose-heading">Planning Tools</h4>
+              <p>Sed ut perspiciatis unde omnis iste na voluptatem accusantium doloremque laudantium</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Testimonial Section -->
+    <section class="bg-light py-5 py-xl-8 Testimonial">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+            <p class="section-heading" style="color: #fff;">Words From Happy Couples</p>
+            <p class="" style="color: #fff;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
+            <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+          </div>
+        </div>
+      </div>
+      <div class="container overflow-hidden">
+        <div class="row gy-4 gy-md-0 gx-xxl-5">
+          <div class="col-12 col-md-4">
+            <div class="card border-0 border-bottom border-primary shadow-sm">
+              <div class="card-body p-4 p-xxl-5">
+                <figure>
+                  <img class="img-fluid rounded rounded-circle mb-4 border border-5" loading="lazy" src="assets/images/testi-2.png" alt="Image">
+                  <figcaption>
+                    <div class="bsb-ratings text-warning mb-3" data-bsb-star="5" data-bsb-star-off="0"></div>
+                    <blockquote class="bsb-blockquote-icon mb-4">We were so impressed with the work they did for us. They were able to take our vision and turn it into a reality, and they did it all on time and within budget. We would highly recommend them to anyone looking for a reliable partner.</blockquote>
+                    <h4 class="mb-2">Luna John</h4>
+                    <h5 class="fs-6 text-secondary mb-0">UX Designer</h5>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card border-0 border-bottom border-primary shadow-sm">
+              <div class="card-body p-4 p-xxl-5">
+                <figure>
+                  <img class="img-fluid rounded rounded-circle mb-4 border border-5" loading="lazy" src="assets/images/testi-1.png" alt="Image">
+                  <figcaption>
+                    <div class="bsb-ratings text-warning mb-3" data-bsb-star="4" data-bsb-star-off="1"></div>
+                    <blockquote class="bsb-blockquote-icon mb-4">We were looking for a company that could help us develop a new website that was both visually appealing and user-friendly. We are so happy with the results, and we would highly recommend them to anyone looking for a new website.</blockquote>
+                    <h4 class="mb-2">Mark Smith</h4>
+                    <h5 class="fs-6 text-secondary mb-0">Marketing Specialist</h5>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card border-0 border-bottom border-primary shadow-sm">
+              <div class="card-body p-4 p-xxl-5">
+                <figure>
+                  <img class="img-fluid rounded rounded-circle mb-4 border border-5" loading="lazy" src="assets/images/testi-1.png" alt="Image">
+                  <figcaption>
+                    <div class="bsb-ratings text-warning mb-3" data-bsb-star="5" data-bsb-star-off="0"></div>
+                    <blockquote class="bsb-blockquote-icon mb-4">We were looking for a company that could help us with our branding. We needed a website and marketing materials. They were able to create a brand identity that we loved. They worked with us to develop a logo that represented our company.</blockquote>
+                    <h4 class="mb-2">Luke Reeves</h4>
+                    <h5 class="fs-6 text-secondary mb-0">Sales Manager</h5>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- News Section -->
+    <section class="news-section">
+      <div class="container">
+        <h3 class="mb-3">Latest News & Updates</h3>
+        <p class="mb-5">Sed ut perspiciatis unde omnis iste natus</p>
+        <div class="row g-4">
+          <!-- News Item 1 -->
+          <div class="col-md-4">
+            <div class="news-card">
+              <div class="news-image">
+                <img src="assets/images/blog1.jpg" alt="Wedding News">
+                <div class="news-date">January 22, 2018</div>
+              </div>
+              <div class="news-content">
+                <div class="news-title">World’s Top 10 Wedding Places</div>
+                <p class="news-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...</p>
+                <a href="#" class="read-more">READ MORE</a>
+              </div>
+            </div>
+          </div>
+          <!-- News Item 2 -->
+          <div class="col-md-4">
+            <div class="news-card">
+              <div class="news-image">
+                <img src="assets/images/blog2.jpg" alt="Wedding News">
+                <div class="news-date">January 22, 2018</div>
+              </div>
+              <div class="news-content">
+                <div class="news-title">Tips and Inspiration for Couples</div>
+                <p class="news-text">Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis...</p>
+                <a href="#" class="read-more">READ MORE</a>
+              </div>
+            </div>
+          </div>
+          <!-- News Item 3 -->
+          <div class="col-md-4">
+            <div class="news-card">
+              <div class="news-image">
+                <img src="assets/images/blog3.jpg" alt="Wedding News">
+                <div class="news-date">February 22, 2018</div>
+              </div>
+              <div class="news-content">
+                <div class="news-title">How to Select the Best Wedding Theme</div>
+                <p class="news-text">Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis...</p>
+                <a href="#" class="read-more">READ MORE</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <!-- About -->
+          <div class="col-md-3">
+            <h5>About Weddlist</h5>
+            <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+            <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+          </div>
+          <!-- Pages -->
+          <div class="col-md-3 links">
+            <h5>Pages</h5>
+            <a href="#">Contact Us</a>
+            <a href="#">Blog</a>
+            <a href="#">Help</a>
+            <a href="#">Gallery</a>
+            <a href="#">FAQs</a>
+          </div>
+          <!-- Categories -->
+          <div class="col-md-3 links">
+            <h5>Categories</h5>
+            <a href="#">Beauty</a>
+            <a href="#">Catering</a>
+            <a href="#">Dresses</a>
+            <a href="#">Invitations</a>
+            <a href="#">Music</a>
+          </div>
+          <!-- Newsletter -->
+          <div class="col-md-3">
+            <h5>Newsletter</h5>
+            <div class="d-flex">
+              <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+              <button class="newsletter-btn">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="social-icons mt-3">
+              <a href="#">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyright"> © 2025 All rights reserved. </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
