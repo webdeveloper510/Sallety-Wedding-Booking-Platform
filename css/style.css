@@ -52,7 +52,7 @@ header {
 
 /* Carousel */
 .carousel-item img {
-    height: 100vh;
+    height: 80vh;
     object-fit: cover;
 }
 
@@ -929,7 +929,21 @@ ul.Venue_ul {
 		background-color: rgb(255 62 97) !important;
 		color: #fff !important;
 	}
+	span.badge.bg-warning.text-dark.position-absolute.top-0.start-0.m-2 {
+    background: #fe3f72 !important;
+    color: #fff !important;
+}
 /* Responsive Styling */
+@media (max-width: 1366px) {
+	.why-block {
+    min-height: 312px;
+}
+.news-content {
+    padding: 20px;
+    text-align: left;
+    min-height: 190px;
+}
+}
 @media (max-width: 768px) {
     .widget-icon i {
         font-size: 24px;
@@ -938,3 +952,4 @@ ul.Venue_ul {
         font-size: 24px;
     }
 }
+
