@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Property</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Sidebar Styling */
-    
-    </style>
+   
   </head>
   <body>
     <div class="main-page">
-    <div class="sidebar">
+    <div class="sidebar" id="mySidebar">
         <h2>Logo</h2>
         <ul>
-            <li><a href="#" onclick="showPage('home')" class="nav-link active">Venue List</a></li>
-            <li><a href="#" onclick="showPage('about')" class="nav-link">About Us</a></li>
+            <li><a href="./addVenue.html" class="nav-link active">Add Venue</a></li>
+            <li><a href="./propertylist.html" class="nav-link">Venue List</a></li>
         </ul>
     </div>
 
@@ -190,77 +187,59 @@
 </div>
 </div>
     <script>
-       document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("dateInput")) {
-        let dateInput = document.getElementById("dateInput");
-        let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
-        dateInput.setAttribute("min", today);
+    document.addEventListener("DOMContentLoaded", function () {
+        // Date input validation
+        if (document.getElementById("dateInput")) {
+            let dateInput = document.getElementById("dateInput");
+            let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+            dateInput.setAttribute("min", today);
+        }
+        
+        // Feature box click event
+        const featureBoxes = document.querySelectorAll('.feature-box');
+        
+        featureBoxes.forEach(box => {
+            box.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                const selectedFeatures = [];
+                document.querySelectorAll('.feature-box.selected').forEach(selected => {
+                    selectedFeatures.push(selected.querySelector('p').textContent.trim());
+                });
+            });
+        });
+        
+        // Set active navigation link based on current page
+        const currentPage = window.location.pathname.split("/").pop();
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const linkHref = link.getAttribute('href').split("/").pop();
+            if (currentPage === linkHref || (currentPage === "" && linkHref === "addVenue.html")) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    });
+
+    function showStep(step) {
+        // Hide all sections
+        document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+        // Show selected
+        document.getElementById('step' + step).classList.add('active');
+
+        // Reset all steps
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        // Activate clicked step
+        document.querySelectorAll('.step')[step - 1].classList.add('active');
     }
     
-    // Feature box click event
-    document.addEventListener('DOMContentLoaded', function() {
-    const featureBoxes = document.querySelectorAll('.feature-box');
-    
-    featureBoxes.forEach(box => {
-        box.addEventListener('click', function() {
-            this.classList.toggle('selected');
-            
-            // If you want to store the selected values
-            const selectedFeatures = [];
-            document.querySelectorAll('.feature-box.selected').forEach(selected => {
-                selectedFeatures.push(selected.querySelector('p').textContent.trim());
-            });
-            
-            console.log('Selected features:', selectedFeatures);
-            
-            // You can store these in a hidden input or use them as needed
-            // For example:
-            // document.getElementById('selectedFeaturesInput').value = JSON.stringify(selectedFeatures);
-        });
-    });
-});
-    
-    // Fix for navigation links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function() {
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-});
+    // Sidebar toggle functions
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
 
-function showStep(step) {
-    // Hide all sections
-    document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
-    // Show selected
-    document.getElementById('step' + step).classList.add('active');
-
-    // Reset all steps
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    // Activate clicked step
-    document.querySelectorAll('.step')[step - 1].classList.add('active');
-}
-document.addEventListener('DOMContentLoaded', function() {
-    const featureBoxes = document.querySelectorAll('.feature-box');
-    
-    featureBoxes.forEach(box => {
-        box.addEventListener('click', function() {
-            this.classList.toggle('selected');
-            
-            // If you want to store the selected values
-            const selectedFeatures = [];
-            document.querySelectorAll('.feature-box.selected').forEach(selected => {
-                selectedFeatures.push(selected.querySelector('p').textContent.trim());
-            });
-            
-            console.log('Selected features:', selectedFeatures);
-            
-            // You can store these in a hidden input or use them as needed
-            // For example:
-            // document.getElementById('selectedFeaturesInput').value = JSON.stringify(selectedFeatures);
-        });
-    });
-});
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
     </script>
   </body>
 </html>
