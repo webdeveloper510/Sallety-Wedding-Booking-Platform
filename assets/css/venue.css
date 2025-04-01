@@ -482,7 +482,7 @@ background-color: #fe3f72;
 }
 .location{
 width: 100%;
-margin-top: 10px;
+margin-top: 10px ;
 }
 
 /* Responsive Sidebar */
@@ -594,4 +594,9 @@ tr:hover {
     display: flex;
     justify-content: end;
     margin-right: 10px;
+}
+.feature-content i {
+    font-size: 24px;
+    color: #000;
+    margin-right: 8px;
 }

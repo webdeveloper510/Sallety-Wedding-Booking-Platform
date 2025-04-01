@@ -21,6 +21,8 @@
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
    <!-- Bootstrap JavaScript (Include this before closing </body>) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
@@ -108,14 +110,15 @@
         <div class="form-section active" id="step1">
             <div class="form-grid">
                 <div class="form-group full">
+                    <label>Venue Name</label>
+                    <input type="text" placeholder="Venue Name">
+                </div>
+                <div class="form-group full">
                     <label>Venue Description</label>
-                    <textarea placeholder="Wedding Description"></textarea>
+                    <textarea placeholder="Venue Description"></textarea>
                 </div>
         
-                <div class="form-group full">
-                    <label>Venue Name</label>
-                    <input type="text" placeholder="Wedding Name">
-                </div>
+                
         
                 <div class="form-group" style="width: 90%;">
                     <label>Price</label>
@@ -182,7 +185,7 @@
             <div class="feature-grid">
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="pet-friendly.png" alt="parking">
+                        <i class="fas fa-parking"></i>
                         <p>Parking</p>
                     </div>
                     <div class="checkbox-indicator">
@@ -192,7 +195,7 @@
         
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="seating.png" alt="prayer rooms">
+                        <i class="fas fa-praying-hands"></i>
                         <p>Prayer Rooms</p>
                     </div>
                     <div class="checkbox-indicator">
@@ -202,7 +205,7 @@
         
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="invitation.png" alt="DJ">
+                        <i class="fas fa-music"></i>
                         <p>DJ</p>
                     </div>
                     <div class="checkbox-indicator">
@@ -212,7 +215,7 @@
         
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="parking.png" alt="photographer">
+                        <i class="fas fa-camera"></i>
                         <p>Photographer</p>
                     </div>
                     <div class="checkbox-indicator">
@@ -222,28 +225,31 @@
         
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="mailbox.png" alt="Mailbox">
-                        <p>Mailbox</p>
+                        <i class="fas fa-wifi"></i>
+                        <p>WiFi</p>
                     </div>
                     <div class="checkbox-indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                 </div>
         
+                <!-- Changed from "City View" to "Swimming Pool" -->
                 <div class="feature-box">
                     <div class="feature-content">
-                        <img src="city-view.png" alt="City View">
-                        <p>City View</p>
+                        <i class="fas fa-swimming-pool"></i>
+                        <p>Swimming Pool</p>
                     </div>
                     <div class="checkbox-indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                 </div>
             </div>
+        
             <div class="venue-butn"> 
-                 <button class="submitbtn">Add Venue</button></div>
-          
+                <button class="submitbtn">Add Venue</button>
+            </div>
         </div>
+        
        
 </div>
 </div>
