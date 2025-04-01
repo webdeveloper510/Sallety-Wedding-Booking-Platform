@@ -940,6 +940,40 @@ ul.Venue_ul {
 .card.wedding-card .card-body {
     padding-top: 25px;
 }
+.d_none {
+    display: none !important;
+}
+
+.top-bar.py-2 {
+    display: none;
+}
+ .gallery-img {
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+}
+
+.gallery-img:hover {
+	transform: scale(1.05);
+}
+
+.modal-body img {
+	border-radius: 10px;
+}
+
+div#galleryCarousel {
+	padding: 50px 0px;
+}
+div#weddingCarousel .carousel-item img {
+    height: 80vh;
+}
+.carousel-item img {
+	height: 40vh;
+	object-fit: cover;
+}
+
+.col-md-12.bottom_cont {
+	padding-left: 30px;
+}
 /* Responsive Styling */
 @media (max-width: 1366px) {
 	.why-block {
