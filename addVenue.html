@@ -20,48 +20,66 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-   
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <!-- Bootstrap JavaScript (Include this before closing </body>) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
-        <div class="container">
-          <a class="navbar-brand" href="index.html">
-            <img src="assets/images/logo-2.png" alt="Weddlist Logo" height="40">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="single-venue.html">Venue</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="login.html">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="register.html">Register</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
+            <div class="container">
+              <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo-2.png" alt="Weddlist Logo" height="40">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="single-venue.html">Venue</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./addVenue.html">Add Venue</a>
+                  </li>
+                  <!-- User Dropdown with Icon -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                      <li><a class="dropdown-item" href="login.html">Login</a></li>
+                      <li><a class="dropdown-item" href="register.html">Register</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          
+          <!-- Font Awesome (Include this in your HTML head if not already included) -->
+        
+          
+    </div>
+
+
     <div class="main-page">
-    {% comment %} <div class="sidebar" id="mySidebar">
-        <div style="display: flex; justify-content: center;">
-            <img src="./assets/images/logo1.png" width="20%" />
-           </div>
+  <div class="sidebar" id="mySidebar">
+      <div style="display: flex; justify-content: center;">
+            
+           </div> 
         <ul>
             <li><a href="./addVenue.html" class="nav-link active">Add Venue</a></li>
             <li><a href="./propertylist.html" class="nav-link">Venue List</a></li>
         </ul>
-    </div> {% endcomment %}
+    </div>
 
 <div class="body-content">
     <div class="container-fluid subheadre">
@@ -115,12 +133,12 @@
         <div class="form-section" id="step2"  style="margin-top: 20px;">
             <div>
                 <label>Venue Thumbnail</label>
-                <input type="file" style="width: 65%;">
+                <input type="file" style="width: 73%;">
                 <br>
                 <br>
                 <label>Venue Gallery</label>
                 <br>
-                <div class="dropzone" style="width: 59%; float: left; margin-top: 10px;">
+                <div class="dropzone" style="width: 73%; float: left; margin-top: 10px;">
                     Drop files here or click to upload.
                     <small>*You can upload up to 5 images for your listing</small>
                     <small>*Listing images should be at least 620x480 in dimensions</small>
@@ -222,7 +240,8 @@
                     </div>
                 </div>
             </div>
-            <div>  <button class="submitbtn">Add Venue</button></div>
+            <div class="venue-butn"> 
+                 <button class="submitbtn">Add Venue</button></div>
           
         </div>
        
