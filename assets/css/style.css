@@ -319,7 +319,8 @@ div#galleryCarousel {
     padding: 100px 0px;
 }
 .Explore {
-background: transparent url(../assets/images/call-out-parr-new.jpg) 0% 0% / auto repeat scroll;
+    background: url(../../assets/images/call-out-parr-new.jpg) no-repeat center center;
+    background-size: cover;
 }
 .call-out-dtl {
     position: relative;
@@ -550,7 +551,7 @@ background: transparent url(../assets/images/call-out-parr-new.jpg) 0% 0% / auto
 }
 
 section.inner-banner {
-    background: #bf6e6e00 url(../assets/images/inner-banner.jpg);
+    background: #bf6e6e00 url(../../assets/images/inner-banner.jpg);
     padding: 60px 0px;
     min-height: 250px;
     background-position: top center;
@@ -646,7 +647,7 @@ p.sign-in a {
 	font-weight: 500;
 }
   .card-img-top {
-    height: 220px;
+/*     height: 220px; */
     object-fit: cover;
   }
 .dtl-bottom {
@@ -935,6 +936,9 @@ ul.Venue_ul {
 	span.badge.bg-warning.text-dark.position-absolute.top-0.start-0.m-2 {
     background: #fe3f72 !important;
     color: #fff !important;
+}
+.card.wedding-card .card-body {
+    padding-top: 25px;
 }
 /* Responsive Styling */
 @media (max-width: 1366px) {
