@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Property</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Sidebar Styling */
+    
+    </style>
+  </head>
+  <body>
+    <div class="main-page">
+    <div class="sidebar">
+        <h2>Logo</h2>
+        <ul>
+            <li><a href="#" onclick="showPage('home')" class="nav-link active">Venue List</a></li>
+            <li><a href="#" onclick="showPage('about')" class="nav-link">About Us</a></li>
+        </ul>
+    </div>
+
+<div class="body-content">
+    <div class="container-fluid subheadre">
+      <h2>Add Venue</h2>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius saepe,
+        non aliquam accusantium veritatis quidem voluptatum excepturi deleniti <br >
+        magnam illum, neque, repellat velit? Tempora nostrum eius rerum
+        consectetur! Sequi, dolor.
+      </p>
+    </div>
+
+    <div class="container-fluid main-form">
+
+        <div class="step_tabs">
+        <!-- Step Navigation -->
+        <div class="steps">
+            <div class="step active" onclick="showStep(1)"><span>01</span> Basic Information</div>
+            <div class="step" onclick="showStep(2)"><span>02</span> Gallery</div>
+            <div class="step" onclick="showStep(3)"><span>03</span> Location</div>
+            <div class="step" onclick="showStep(4)"><span>04</span> Amenities</div>
+          
+        </div>
+
+        <!-- Step Forms -->
+        <div class="form-section active" id="step1">
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Venue Description</label>
+                    <textarea placeholder="Wedding Description"></textarea>
+                </div>
+        
+                <div class="form-group full">
+                    <label>Venue Name</label>
+                    <input type="text" placeholder="Wedding Name">
+                </div>
+        
+                <div class="form-group" style="width: 90%;">
+                    <label>Price</label>
+                    <input type="text" placeholder="">
+                </div>
+        
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input type="text" placeholder="">
+                </div>
+            </div>  
+        </div>
+        
+
+        <div class="form-section" id="step2"  style="margin-top: 20px;">
+            <div>
+                <label>Venue Thumbnail</label>
+                <input type="file" style="width: 65%;">
+                <br>
+                <br>
+                <label>Venue Gallery</label>
+                <br>
+                <div class="dropzone" style="width: 59%; float: left; margin-top: 10px;">
+                    Drop files here or click to upload.
+                    <small>*You can upload up to 5 images for your listing</small>
+                    <small>*Listing images should be at least 620x480 in dimensions</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section" id="step3">
+        <div class="location">
+            <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
+        
+            <div class="form-group">
+                <label for="fullAddress">Full Address</label>
+                <input type="text" id="fullAddress" placeholder="Full Address" class="form-control">
+            </div>
+        
+            <div class="form-group">
+                <label for="region">Region</label>
+                <select id="region" class="form-control">
+                    <option>Connecticut</option>
+                    <option>New York</option>
+                    <option>Los Angeles</option>
+                    <option>California</option>
+                </select>
+            </div>
+        
+            <div class="form-row" style="display: flex; gap: 15px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="longitude">Longitude</label>
+                    <input type="text" id="longitude" placeholder="Longitude" style="width: 90%;">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="latitude">Latitude</label>
+                    <input type="text" id="latitude" placeholder="Latitude" >
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="form-section" id="step4">
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="pet-friendly.png" alt="parking">
+                        <p>Parking</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+        
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="seating.png" alt="prayer rooms">
+                        <p>Prayer Rooms</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+        
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="invitation.png" alt="DJ">
+                        <p>DJ</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+        
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="parking.png" alt="photographer">
+                        <p>Photographer</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+        
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="mailbox.png" alt="Mailbox">
+                        <p>Mailbox</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+        
+                <div class="feature-box">
+                    <div class="feature-content">
+                        <img src="city-view.png" alt="City View">
+                        <p>City View</p>
+                    </div>
+                    <div class="checkbox-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+            </div>
+            <div>  <button class="submitbtn">Add Venue</button></div>
+          
+        </div>
+       
+</div>
+</div>
+     
+</div>
+</div>
+</div>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("dateInput")) {
+        let dateInput = document.getElementById("dateInput");
+        let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+        dateInput.setAttribute("min", today);
+    }
+    
+    // Feature box click event
+    document.addEventListener('DOMContentLoaded', function() {
+    const featureBoxes = document.querySelectorAll('.feature-box');
+    
+    featureBoxes.forEach(box => {
+        box.addEventListener('click', function() {
+            this.classList.toggle('selected');
+            
+            // If you want to store the selected values
+            const selectedFeatures = [];
+            document.querySelectorAll('.feature-box.selected').forEach(selected => {
+                selectedFeatures.push(selected.querySelector('p').textContent.trim());
+            });
+            
+            console.log('Selected features:', selectedFeatures);
+            
+            // You can store these in a hidden input or use them as needed
+            // For example:
+            // document.getElementById('selectedFeaturesInput').value = JSON.stringify(selectedFeatures);
+        });
+    });
+});
+    
+    // Fix for navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+
+function showStep(step) {
+    // Hide all sections
+    document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+    // Show selected
+    document.getElementById('step' + step).classList.add('active');
+
+    // Reset all steps
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    // Activate clicked step
+    document.querySelectorAll('.step')[step - 1].classList.add('active');
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const featureBoxes = document.querySelectorAll('.feature-box');
+    
+    featureBoxes.forEach(box => {
+        box.addEventListener('click', function() {
+            this.classList.toggle('selected');
+            
+            // If you want to store the selected values
+            const selectedFeatures = [];
+            document.querySelectorAll('.feature-box.selected').forEach(selected => {
+                selectedFeatures.push(selected.querySelector('p').textContent.trim());
+            });
+            
+            console.log('Selected features:', selectedFeatures);
+            
+            // You can store these in a hidden input or use them as needed
+            // For example:
+            // document.getElementById('selectedFeaturesInput').value = JSON.stringify(selectedFeatures);
+        });
+    });
+});
+    </script>
+  </body>
+</html>
