@@ -32,6 +32,10 @@ body{
     overflow: hidden;
     min-height: 80vh;
     height: 100%;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
 }
 
 .steps {
@@ -408,7 +412,7 @@ div#mySidebar ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    width: 73%;
+    width: 100%;
     margin-top: 30px;
 }
 
