@@ -30,16 +30,15 @@ body{
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-height: 80vh;
     height: 100%;
 }
 
 .steps {
-width: 25%;
-background: transparent;
-float: left;
-padding: 20px;
+    width: 25%;
+    background: transparent;
+    float: left;
+    padding: 30px 25px 30px 10px;
 }
 
 .step {
@@ -282,11 +281,14 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 gap: 15px;
 }
 .form-grid {
-display: grid;
-width: 73%;
-margin-top: 30px;
+    display: grid;
+    width: 73%;
+    margin-top: 30px;
+    border: 0px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
 }
-
 .form-group {
 display: flex;
 flex-direction: column;
@@ -342,14 +344,16 @@ border-color: #c46b63;
 
 .sidebar {
 
-    width: 250px; /* Adjust width as needed */
+    width: 100%; /* Adjust width as needed */
     height: 100%;
+    min-height: 100vh;
     background-color: #5d4e6c !important; /* Sidebar background */
    
    
     overflow-x: hidden;
     transition: 0.3s;
 }
+
 
 .inner_navbar {
     position: absolute;
@@ -371,10 +375,15 @@ border-color: #c46b63;
 }
 
 .sidebar ul li {
-    padding: 10px;
-    text-align: center;
+    padding: 5px 20px;
+    text-align: left;
 }
-
+div#mySidebar ul {
+    margin-top: 20px;
+}
+.sidebar ul li i.fas {
+    padding-right: 5px;
+}
 .sidebar ul li a {
     color: white;
     text-decoration: none;
@@ -533,8 +542,7 @@ margin-top: 30px ;
     border-collapse: collapse;
     background: white;
 }
-
-.property-table th, 
+ 
 .property-table td {
     border: 1px solid #ddd;
     padding: 12px;
@@ -547,7 +555,7 @@ margin-top: 30px ;
 }
 
 .property-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #fe3f721a;
 }
 
 .property-table tr:hover {
@@ -563,8 +571,9 @@ margin-top: 30px ;
 }
 
 .pagination {
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: center;
+    justify-content: end;
 }
 
 .pagination a {
@@ -602,4 +611,42 @@ margin-top: 30px ;
     font-size: 24px;
     color: #000;
     margin-right: 8px;
+}
+.property-table thead {
+    border: none; /* Removes border from the table head */
+    background-color: #f4f4f4; /* Optional: Light gray background for better visibility */
+}
+
+.property-table th {
+    padding: 12px;
+    text-align: left;
+}
+
+.property-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd; /* Adds separation between rows */
+}
+
+/* Apply border-radius only to the top corners */
+.property-table thead tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.property-table thead tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+/* Apply border-radius only to the bottom corners */
+.property-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.property-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+.out_alltable {
+    border: 0px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 12px;
 }

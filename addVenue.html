@@ -113,11 +113,20 @@
                 <div class="step_tabs">
                     <!-- Step Navigation -->
                     <div class="steps">
-                        <div class="step active" onclick="showStep(1)"><span>01</span> Basic Information</div>
-                        <div class="step" onclick="showStep(2)"><span>02</span> Gallery</div>
-                        <div class="step" onclick="showStep(3)"><span>03</span> Location</div>
-                        <div class="step" onclick="showStep(4)"><span>04</span> Amenities</div>
+                        <div class="step active" onclick="showStep(1)">
+                            <span>01</span> Basic Information
+                        </div>
+                        <div class="step" onclick="showStep(2)">
+                            <span>02</span> Gallery
+                        </div>
+                        <div class="step" onclick="showStep(3)">
+                            <span>03</span> Location
+                        </div>
+                        <div class="step" onclick="showStep(4)">
+                            <span>04</span> Amenities
+                        </div>
                     </div>
+            
                     <!-- Step Forms -->
                     <div class="form-section active" id="step1">
                         <div class="form-grid">
@@ -129,37 +138,42 @@
                                 <label>Venue Description</label>
                                 <textarea placeholder="Venue Description"></textarea>
                             </div>
-                            <div class="form-group" style="width: 90%;">
+                            <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" placeholder="">
+                                <input type="text" placeholder="Enter Price">
                             </div>
                             <div class="form-group">
                                 <label>Contact</label>
-                                <input type="text" placeholder="">
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="form-section" id="step2" style="margin-top: 30px;">
-                        <div>
-                            <label>Venue Thumbnail</label>
-                            <input type="file" style="width: 73%;">
-                            <br><br>
-                            <label>Venue Gallery</label>
-                            <br>
-                            <div class="dropzone" style="width: 73%; float: left; margin-top: 10px;">
-                                Drop files here or click to upload.
-                                <small>*You can upload up to 5 images for your listing</small>
-                                <small>*Listing images should be at least 620x480 in dimensions</small>
+                                <input type="text" placeholder="Enter Contact Details">
                             </div>
                         </div>
                     </div>
+            
+                    <div class="form-section" id="step2">
+                        <div class="gallery-upload">
+                            <label>Venue Thumbnail</label>
+                            <input type="file">
+                            
+                            <br><br>
+                            
+                            <label>Venue Gallery</label>
+                            <div class="dropzone">
+                                Drop files here or click to upload.
+                                <small>* You can upload up to 5 images for your listing</small>
+                                <small>* Listing images should be at least 620x480 in dimensions</small>
+                            </div>
+                        </div>
+                    </div>
+            
                     <div class="form-section" id="step3">
                         <div class="location">
                             <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
+            
                             <div class="form-group">
                                 <label for="fullAddress">Full Address</label>
                                 <input type="text" id="fullAddress" placeholder="Full Address" class="form-control">
                             </div>
+            
                             <div class="form-group">
                                 <label for="region">Region</label>
                                 <select id="region" class="form-control">
@@ -169,18 +183,20 @@
                                     <option>California</option>
                                 </select>
                             </div>
-                            <div class="form-row" style="display: flex; gap: 15px;">
-                                <div class="form-group" style="flex: 1;">
+            
+                            <div class="form-row">
+                                <div class="form-group">
                                     <label for="longitude">Longitude</label>
-                                    <input type="text" id="longitude" placeholder="Longitude" style="width: 90%;">
+                                    <input type="text" id="longitude" placeholder="Longitude">
                                 </div>
-                                <div class="form-group" style="flex: 1;">
+                                <div class="form-group">
                                     <label for="latitude">Latitude</label>
                                     <input type="text" id="latitude" placeholder="Latitude">
                                 </div>
                             </div>
                         </div>
                     </div>
+            
                     <div class="form-section" id="step4">
                         <div class="feature-grid">
                             <div class="feature-box">
@@ -189,68 +205,81 @@
                                     <p>Parking</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
-                    
+            
                             <div class="feature-box">
                                 <div class="feature-content">
                                     <i class="fas fa-praying-hands"></i>
                                     <p>Prayer Rooms</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
-                    
+            
                             <div class="feature-box">
                                 <div class="feature-content">
                                     <i class="fas fa-music"></i>
                                     <p>DJ</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
-                    
+            
                             <div class="feature-box">
                                 <div class="feature-content">
                                     <i class="fas fa-camera"></i>
                                     <p>Photographer</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
-                    
+            
                             <div class="feature-box">
                                 <div class="feature-content">
                                     <i class="fas fa-wifi"></i>
                                     <p>WiFi</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
-                    
-                            <!-- Changed from "City View" to "Swimming Pool" -->
+            
                             <div class="feature-box">
                                 <div class="feature-content">
                                     <i class="fas fa-swimming-pool"></i>
                                     <p>Swimming Pool</p>
                                 </div>
                                 <div class="checkbox-indicator">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
-                    
-                        <div class="venue-butn"> 
-                            <button class="submitbtn">Add Venue</button>
+            
+                        <div class="venue-btn">
+                            <button class="submit-btn">Add Venue</button>
                         </div>
                     </div>
                 </div>
             </div>
+            
+
         </div>
     </div>
      
