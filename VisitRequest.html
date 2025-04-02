@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table Booking</title>
+    <title>Visit Request</title>
     <link rel="stylesheet" href="./assets/css/venue.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -78,67 +78,98 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2" style="margin: 0;padding: 0;">
-                <div class="sidebar" id="mySidebar">
-                    <ul>
-                        <li><a href="./addVenue.html" class="nav-link">
-                            <i class="fas fa-map-marker-alt"></i> Add Venue
-                        </a></li>
-                        <li><a href="./VenueList.html" class="nav-link active">
-                            <i class="fas fa-list-ul"></i> Venues
-                        </a></li>
-                        <li><a href="./VisitRequest.html" class="nav-link">
-                            <i class="fas fa-calendar-alt"></i> Request For Visit
-                        </a></li>
-                        <li><a href="./TableBooking.html" class="nav-link">
-                            <i class="fas fa-utensils"></i> Booking Table
-                        </a></li>
-                    </ul>
-                </div>
+              <div class="sidebar" id="mySidebar">
+                <ul>
+                    <li><a href="./addVenue.html" class="nav-link">
+                        <i class="fas fa-map-marker-alt"></i> Add Venue
+                    </a></li>
+                    <li><a href="./VenueList.html" class="nav-link">
+                        <i class="fas fa-list-ul"></i> Venues
+                    </a></li>
+                    <li><a href="./VisitRequest.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i> Request For Visit
+                    </a></li>
+                    <li><a href="./TableBooking.html" class="nav-link">
+                        <i class="fas fa-utensils"></i> Booking Table
+                    </a></li>
+                </ul>
+            </div>
+            
                 
                 
                 
             </div>
             <div class="col-md-10 p-4">
-                <div class="body-content">
+                <div class="body-content p-2">
                     <div class="container-fluid ">
                         <div class="addbutton">
-                            <div>
-                                <h2>Venue List</h2>
-                            </div>
+                          
                         </div>
                         <div>
-                            <table class="property-table">
-                                <thead>
-                                    <tr>
-                                        <th>Location</th>
-                                        <th>Area (sq ft)</th>
-                                        <th>Capacity</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Features</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for property in properties %}
-                                    <tr>
-                                        <td>{{ property.location }}</td>
-                                        <td>{{ property.area }}</td>
-                                        <td>{{ property.capacity }}</td>
-                                        <td>{{ property.date }}</td>
-                                        <td>{{ property.time }}</td>
-                                        <td>{{ property.features }}</td>
-                                        <td>
-                                            <select class="status-dropdown">
-                                                <option value="">Select Option</option>
-                                                <option value="available" {% if property.status == "Available" %}selected{% endif %}>Available</option>
-                                                <option value="not_available" {% if property.status == "Not Available" %}selected{% endif %}>Not Available</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                          <table class="property-table">
+                            <thead>
+                                <tr>
+                                    <th>Your Name</th>
+                                    <th>Your Contact Info (Email)</th>
+                                    <th>Your Contact Info (Phone)</th>
+                                    <th>Preferred Visit Date</th>
+                                    <th>Preferred Time Slot</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic Data Row -->
+                              
+                        
+                                <!-- Dummy Data Rows -->
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>john.doe@example.com</td>
+                                    <td>+1 234 567 890</td>
+                                    <td>05/04/2025</td>
+                                    <td>10:00 AM - 12:00 PM</td>
+                                    <td>
+                                        <select class="status-dropdown">
+                                            <option value="">Select Option</option>
+                                            <option value="confirmed" selected>Confirmed</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>jane.smith@example.com</td>
+                                    <td>+1 987 654 321</td>
+                                    <td>10/04/2025</td>
+                                    <td>2:00 PM - 4:00 PM</td>
+                                    <td>
+                                        <select class="status-dropdown">
+                                            <option value="">Select Option</option>
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="pending" selected>Pending</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Johnson</td>
+                                    <td>michael.j@example.com</td>
+                                    <td>+1 555 888 999</td>
+                                    <td>15/04/2025</td>
+                                    <td>4:00 PM - 6:00 PM</td>
+                                    <td>
+                                        <select class="status-dropdown">
+                                            <option value="">Select Option</option>
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="cancelled" selected>Cancelled</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
                             
                         </div>
                         <!-- Pagination -->
@@ -207,5 +238,22 @@
         </div>
         <div class="copyright"> © 2025 All rights reserved. </div>
       </footer>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const currentPage = window.location.pathname.split("/").pop();
+      
+          document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+              const linkHref = link.getAttribute('href').split("/").pop();
+      
+              // Add 'active' class to the matching link
+              if (currentPage === linkHref) {
+                  link.classList.add('active');
+              } else {
+                  link.classList.remove('active');
+              }
+          });
+      });
+      
+      </script>
   </body>
   </html>

@@ -98,46 +98,55 @@
                 
             </div>
             <div class="col-md-10 p-4">
-                <div class="body-content">
+                <div class="body-content p-2">
                     <div class="container-fluid ">
                         <div class="addbutton">
-                            <div>
-                                <h2>Venue List</h2>
-                            </div>
+                           
                         </div>
                         <div>
-                            <table class="property-table">
+                          <div class="table-responsive">
+                            <table class="table table-bordered table-striped text-center align-middle property-table">
                                 <thead>
                                     <tr>
-                                        <th>Location</th>
-                                        <th>Area (sq ft)</th>
-                                        <th>Capacity</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Features</th>
+                                        <th>Venue Name</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                        <th>Contact</th>
+                                        <th>Address</th>
+                                      
+                                        <th>Amenities</th>
                                         <th>Status</th>
+                                        <th>Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for property in properties %}
                                     <tr>
-                                        <td>{{ property.location }}</td>
-                                        <td>{{ property.area }}</td>
-                                        <td>{{ property.capacity }}</td>
-                                        <td>{{ property.date }}</td>
-                                        <td>{{ property.time }}</td>
-                                        <td>{{ property.features }}</td>
+                                        <td>Grand Hall</td>
+                                        <td>Spacious venue with modern interiors</td>
+                                        <td>$5000</td>
+                                        <td>+1 234 567 890</td>
+                                        
+                                        <td>123 Main St, NY</td>
+                                        
+                                        <td>WiFi, Parking, Catering</td>
                                         <td>
-                                            <select class="status-dropdown">
-                                                <option value="">Select Option</option>
-                                                <option value="available" {% if property.status == "Available" %}selected{% endif %}>Available</option>
-                                                <option value="not_available" {% if property.status == "Not Available" %}selected{% endif %}>Not Available</option>
+                                            <select class="form-select">
+                                                <option value="">Select</option>
+                                                <option value="available" selected>Available</option>
+                                                <option value="not_available">Not Available</option>
                                             </select>
                                         </td>
+                                        <td>
+                                          <!-- Action Buttons -->
+                                          <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                      </td>
                                     </tr>
-                                    {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+                        
+                        
                             
                         </div>
                         <!-- Pagination -->
@@ -157,18 +166,22 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Set active navigation link based on current page
-        const currentPage = window.location.pathname.split("/").pop();
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const linkHref = link.getAttribute('href').split("/").pop();
-            if (currentPage === linkHref || (currentPage === "" && linkHref === "propertylist.html")) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentPage = window.location.pathname.split("/").pop();
+
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        const linkHref = link.getAttribute('href').split("/").pop();
+
+        // Add 'active' class to the matching link
+        if (currentPage === linkHref) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
     });
+});
+
+ 
     
     // Sidebar toggle functions
     function openSidebar() {

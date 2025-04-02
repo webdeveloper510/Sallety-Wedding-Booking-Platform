@@ -92,7 +92,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 sidebar" id="mySidebar">
-                <div style="display: flex; justify-content: center;"></div> 
+                
                 <ul>
                     <li><a href="./addVenue.html" class="nav-link active">
                         <i class="fas fa-map-marker-alt"></i> Add Venue
@@ -139,7 +139,7 @@
                             </div>
                         </div>  
                     </div>
-                    <div class="form-section" id="step2" style="margin-top: 20px;">
+                    <div class="form-section" id="step2" style="margin-top: 30px;">
                         <div>
                             <label>Venue Thumbnail</label>
                             <input type="file" style="width: 73%;">
@@ -258,59 +258,63 @@
 
 </div>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Date input validation
-        if (document.getElementById("dateInput")) {
-            let dateInput = document.getElementById("dateInput");
-            let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
-            dateInput.setAttribute("min", today);
-        }
-        
-        // Feature box click event
-        const featureBoxes = document.querySelectorAll('.feature-box');
-        
-        featureBoxes.forEach(box => {
-            box.addEventListener('click', function() {
-                this.classList.toggle('selected');
-                const selectedFeatures = [];
-                document.querySelectorAll('.feature-box.selected').forEach(selected => {
-                    selectedFeatures.push(selected.querySelector('p').textContent.trim());
+        document.addEventListener("DOMContentLoaded", function () {
+            // Date input validation
+            if (document.getElementById("dateInput")) {
+                let dateInput = document.getElementById("dateInput");
+                let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+                dateInput.setAttribute("min", today);
+            }
+            
+            // Feature box click event
+            const featureBoxes = document.querySelectorAll('.feature-box');
+            
+            featureBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    const selectedFeatures = [];
+                    document.querySelectorAll('.feature-box.selected').forEach(selected => {
+                        selectedFeatures.push(selected.querySelector('p').textContent.trim());
+                    });
                 });
+            });
+            
+            // Set active navigation link based on current page
+            const currentPage = window.location.pathname.split("/").pop();
+        
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                const linkHref = link.getAttribute('href').split("/").pop();
+        
+                // Add 'active' class to the matching link
+                if (currentPage === linkHref) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
             });
         });
         
-        // Set active navigation link based on current page
-        const currentPage = window.location.pathname.split("/").pop();
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const linkHref = link.getAttribute('href').split("/").pop();
-            if (currentPage === linkHref || (currentPage === "" && linkHref === "addVenue.html")) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    });
-
-    function showStep(step) {
-        // Hide all sections
-        document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
-        // Show selected
-        document.getElementById('step' + step).classList.add('active');
-
-        // Reset all steps
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        // Activate clicked step
-        document.querySelectorAll('.step')[step - 1].classList.add('active');
-    }
-    
-    // Sidebar toggle functions
-    function openSidebar() {
-        document.getElementById("mySidebar").style.width = "250px";
-    }
-
-    function closeSidebar() {
-        document.getElementById("mySidebar").style.width = "0";
-    }
+        // Move showStep function outside to make it globally available
+        function showStep(step) {
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+            // Show selected
+            document.getElementById('step' + step).classList.add('active');
+        
+            // Reset all steps
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            // Activate clicked step
+            document.querySelectorAll('.step')[step - 1].classList.add('active');
+        }
+        
+        // Sidebar toggle functions
+        function openSidebar() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+        
+        function closeSidebar() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
     </script>
      <footer class="footer">
         <div class="container">
