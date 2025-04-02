@@ -389,6 +389,7 @@ border-color: #c46b63;
 
 .sidebar ul li a:hover, .sidebar ul li a.active {
     background: #fe3f72 ;
+    color: white;
 }
 
 /* Main Content */
