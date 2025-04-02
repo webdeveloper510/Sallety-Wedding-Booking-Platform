@@ -22,6 +22,8 @@
    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
    <!-- Bootstrap JavaScript (Include this before closing </body>) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -72,16 +74,8 @@
     </div>
 
 
-    <div class="main-page">
-  <div class="sidebar" id="mySidebar">
-      <div style="display: flex; justify-content: center;">
-            
-           </div> 
-        <ul>
-            <li><a href="./addVenue.html" class="nav-link active">Add Venue</a></li>
-            <li><a href="./propertylist.html" class="nav-link">Venue List</a></li>
-        </ul>
-    </div> 
+    <div class="">
+
 
 <div class="body-content">
     <div class="container-fluid subheadre">
@@ -94,165 +88,165 @@
       </p>
     </div>
 
-    <div class="container-fluid main-form">
 
-        <div class="step_tabs">
-        <!-- Step Navigation -->
-        <div class="steps">
-            <div class="step active" onclick="showStep(1)"><span>01</span> Basic Information</div>
-            <div class="step" onclick="showStep(2)"><span>02</span> Gallery</div>
-            <div class="step" onclick="showStep(3)"><span>03</span> Location</div>
-            <div class="step" onclick="showStep(4)"><span>04</span> Amenities</div>
-          
-        </div>
-
-        <!-- Step Forms -->
-        <div class="form-section active" id="step1">
-            <div class="form-grid">
-                <div class="form-group full">
-                    <label>Venue Name</label>
-                    <input type="text" placeholder="Venue Name">
-                </div>
-                <div class="form-group full">
-                    <label>Venue Description</label>
-                    <textarea placeholder="Venue Description"></textarea>
-                </div>
-        
-                
-        
-                <div class="form-group" style="width: 90%;">
-                    <label>Price</label>
-                    <input type="text" placeholder="">
-                </div>
-        
-                <div class="form-group">
-                    <label>Contact</label>
-                    <input type="text" placeholder="">
-                </div>
-            </div>  
-        </div>
-        
-
-        <div class="form-section" id="step2"  style="margin-top: 20px;">
-            <div>
-                <label>Venue Thumbnail</label>
-                <input type="file" style="width: 73%;">
-                <br>
-                <br>
-                <label>Venue Gallery</label>
-                <br>
-                <div class="dropzone" style="width: 73%; float: left; margin-top: 10px;">
-                    Drop files here or click to upload.
-                    <small>*You can upload up to 5 images for your listing</small>
-                    <small>*Listing images should be at least 620x480 in dimensions</small>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar" id="mySidebar">
+                <div style="display: flex; justify-content: center;"></div> 
+                <ul>
+                    <li><a href="./addVenue.html" class="nav-link active">
+                        <i class="bi bi-plus-circle"></i> Add Venue
+                    </a></li>
+                    <li><a href="./VenueList.html" class="nav-link">
+                        <i class="fas fa-list"></i> Venue List
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-10 main-form">
+                <div class="step_tabs">
+                    <!-- Step Navigation -->
+                    <div class="steps">
+                        <div class="step active" onclick="showStep(1)"><span>01</span> Basic Information</div>
+                        <div class="step" onclick="showStep(2)"><span>02</span> Gallery</div>
+                        <div class="step" onclick="showStep(3)"><span>03</span> Location</div>
+                        <div class="step" onclick="showStep(4)"><span>04</span> Amenities</div>
+                    </div>
+                    <!-- Step Forms -->
+                    <div class="form-section active" id="step1">
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label>Venue Name</label>
+                                <input type="text" placeholder="Venue Name">
+                            </div>
+                            <div class="form-group full">
+                                <label>Venue Description</label>
+                                <textarea placeholder="Venue Description"></textarea>
+                            </div>
+                            <div class="form-group" style="width: 90%;">
+                                <label>Price</label>
+                                <input type="text" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Contact</label>
+                                <input type="text" placeholder="">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="form-section" id="step2" style="margin-top: 20px;">
+                        <div>
+                            <label>Venue Thumbnail</label>
+                            <input type="file" style="width: 73%;">
+                            <br><br>
+                            <label>Venue Gallery</label>
+                            <br>
+                            <div class="dropzone" style="width: 73%; float: left; margin-top: 10px;">
+                                Drop files here or click to upload.
+                                <small>*You can upload up to 5 images for your listing</small>
+                                <small>*Listing images should be at least 620x480 in dimensions</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-section" id="step3">
+                        <div class="location">
+                            <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
+                            <div class="form-group">
+                                <label for="fullAddress">Full Address</label>
+                                <input type="text" id="fullAddress" placeholder="Full Address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region</label>
+                                <select id="region" class="form-control">
+                                    <option>Connecticut</option>
+                                    <option>New York</option>
+                                    <option>Los Angeles</option>
+                                    <option>California</option>
+                                </select>
+                            </div>
+                            <div class="form-row" style="display: flex; gap: 15px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="text" id="longitude" placeholder="Longitude" style="width: 90%;">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="latitude">Latitude</label>
+                                    <input type="text" id="latitude" placeholder="Latitude">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-section" id="step4">
+                        <div class="feature-grid">
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-parking"></i>
+                                    <p>Parking</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                    
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-praying-hands"></i>
+                                    <p>Prayer Rooms</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                    
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-music"></i>
+                                    <p>DJ</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                    
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-camera"></i>
+                                    <p>Photographer</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                    
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-wifi"></i>
+                                    <p>WiFi</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                    
+                            <!-- Changed from "City View" to "Swimming Pool" -->
+                            <div class="feature-box">
+                                <div class="feature-content">
+                                    <i class="fas fa-swimming-pool"></i>
+                                    <p>Swimming Pool</p>
+                                </div>
+                                <div class="checkbox-indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="venue-butn"> 
+                            <button class="submitbtn">Add Venue</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="form-section" id="step3">
-        <div class="location">
-            <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
-        
-            <div class="form-group">
-                <label for="fullAddress">Full Address</label>
-                <input type="text" id="fullAddress" placeholder="Full Address" class="form-control">
-            </div>
-        
-            <div class="form-group">
-                <label for="region">Region</label>
-                <select id="region" class="form-control">
-                    <option>Connecticut</option>
-                    <option>New York</option>
-                    <option>Los Angeles</option>
-                    <option>California</option>
-                </select>
-            </div>
-        
-            <div class="form-row" style="display: flex; gap: 15px;">
-                <div class="form-group" style="flex: 1;">
-                    <label for="longitude">Longitude</label>
-                    <input type="text" id="longitude" placeholder="Longitude" style="width: 90%;">
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label for="latitude">Latitude</label>
-                    <input type="text" id="latitude" placeholder="Latitude" >
-                </div>
-            </div>
-        </div>
-        </div>
-        
-        <div class="form-section" id="step4">
-            <div class="feature-grid">
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-parking"></i>
-                        <p>Parking</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-        
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-praying-hands"></i>
-                        <p>Prayer Rooms</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-        
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-music"></i>
-                        <p>DJ</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-        
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-camera"></i>
-                        <p>Photographer</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-        
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-wifi"></i>
-                        <p>WiFi</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-        
-                <!-- Changed from "City View" to "Swimming Pool" -->
-                <div class="feature-box">
-                    <div class="feature-content">
-                        <i class="fas fa-swimming-pool"></i>
-                        <p>Swimming Pool</p>
-                    </div>
-                    <div class="checkbox-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="venue-butn"> 
-                <button class="submitbtn">Add Venue</button>
-            </div>
-        </div>
-        
-       
-</div>
-</div>
+    </div>
      
 </div>
 </div>
@@ -312,5 +306,58 @@
         document.getElementById("mySidebar").style.width = "0";
     }
     </script>
+     <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <!-- About -->
+            <div class="col-md-3">
+              <h5>About Weddlist</h5>
+              <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+              <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+              <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+            </div>
+            <!-- Pages -->
+            <div class="col-md-3 links">
+              <h5>Pages</h5>
+              <a href="#">Contact Us</a>
+              <a href="#">Blog</a>
+              <a href="#">Help</a>
+              <a href="#">Gallery</a>
+              <a href="#">FAQs</a>
+            </div>
+            <!-- Categories -->
+            <div class="col-md-3 links">
+              <h5>Categories</h5>
+              <a href="#">Beauty</a>
+              <a href="#">Catering</a>
+              <a href="#">Dresses</a>
+              <a href="#">Invitations</a>
+              <a href="#">Music</a>
+            </div>
+            <!-- Newsletter -->
+            <div class="col-md-3">
+              <h5>Newsletter</h5>
+              <div class="d-flex">
+                <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                <button class="newsletter-btn">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+              <div class="social-icons mt-3">
+                <a href="#">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
+      </footer>
   </body>
 </html>

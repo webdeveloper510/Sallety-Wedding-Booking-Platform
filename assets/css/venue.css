@@ -2,12 +2,11 @@ body{
     margin: 0px;
 }
 .main-page {
-    width: 100%;
-    float: left;
+    margin-top: 120px;
 }
 .body-content {
-    margin-left: 250px; /* Same width as sidebar */
-    transition: margin-left 0.3s;
+    /* margin-left: 250px; Same width as sidebar */
+    /* transition: margin-left 0.3s; */
 }
 @media (max-width: 768px) {
     .sidebar {
@@ -342,7 +341,7 @@ border-color: #c46b63;
 }
 
 .sidebar {
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 0;
     width: 250px; /* Adjust width as needed */
@@ -353,8 +352,11 @@ border-color: #c46b63;
     overflow-x: hidden;
     transition: 0.3s;
 }
+
 .inner_navbar {
-    position: fixed;
+    position: absolute;
+    left: 0;
+    right: 0;
     width: 100%;
     z-index: 1100; /* Higher than sidebar */
     background-color: #222; /* Navbar background */
@@ -527,30 +529,32 @@ margin-top: 10px ;
     background-color: #ff4d79;
 }
 
-table {
+.property-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
 }
 
-th, td {
+.property-table th, 
+.property-table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
 
-th {
-    background-color: #007bff;
+.property-table th {
+    background-color: #fe3f72;
     color: white;
 }
 
-tr:nth-child(even) {
+.property-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tr:hover {
+.property-table tr:hover {
     background-color: #ddd;
 }
+
 
 .status-dropdown {
     width: 100%;
@@ -565,22 +569,22 @@ tr:hover {
 }
 
 .pagination a {
-    color: #007bff;
+    color: #fe3f72;
     padding: 8px 16px;
     text-decoration: none;
-    border: 1px solid #007bff;
+    border: 1px solid #fe3f72;
     border-radius: 4px;
     margin: 0 5px;
     display: inline-block;
 }
 
 .pagination a.active {
-    background-color: #007bff;
+    background-color: #fe3f72;
     color: white;
 }
 
 .pagination a:hover {
-    background-color: #0056b3;
+    background-color: #fe3f72;
     color: white;
 }
 
