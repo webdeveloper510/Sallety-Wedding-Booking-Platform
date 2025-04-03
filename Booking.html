@@ -31,7 +31,31 @@
    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
 <style>
   
+  .booking-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+  }
 
+  .form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .Confirm-btn {
+    background: #fe3f72;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    transition: 0.3s;
+    width:200px
+  }
+  .Confirm-btn:hover {
+    background: #fe3f72;
+  }
   
 </style>
   </head>
@@ -72,6 +96,21 @@
           </div>
         </div>
       </nav>
+      <section class="inner-banner">
+        <div class="container">
+          <div class="banner-dtl text-center">
+            <div class="banner-heading">
+              <h2>Book Now</h2>
+            </div>
+            <div class="breadcrumb-block">
+              <ol class="breadcrumb mb-0 justify-content-center">
+               
+               
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
       <div class="container mt-5">
         <div class="row">
             <!-- Calendar Section -->
@@ -83,31 +122,49 @@
 
             <!-- Form Section -->
             <div class="col-md-7">
-             
-                <form id="bookingForm">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="name" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="bookingType" class="form-label">Select Booking Type</label>
-                        <select class="form-select" id="bookingType">
-                            <option value="standard">Standard</option>
-                            <option value="premium">Premium</option>
-                        </select>
-                    </div>
-
-                    <input type="hidden" id="chosenDate">
-                    <button type="submit" class="btn btn-primary">Confirm Booking</button>
-                </form>
+              <form id="bookingForm">
+                <div class="mb-3">
+                  <label class="form-label">Select Booking Type:</label>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input booking-type" id="lunch" value="Lunch" data-price="500">
+                    <label class="form-check-label" for="lunch">Lunch ($500)</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input booking-type" id="coffee" value="Coffee" data-price="200">
+                    <label class="form-check-label" for="coffee">Coffee ($200)</label>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="guests" class="form-label">Number of Guests</label>
+                    <select class="form-select" id="guests">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                  </div>
+                </div>
+        
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <p class="m-0"><strong>Total Price: $<span id="totalPrice">0</span></strong></p>
+                  <button type="submit" class="btn btn-primary Confirm-btn" >Confirm Booking</button>
+                </div>
+              </form>
             </div>
-        </div>
+          
+      </div>
     </div>
 
   
@@ -134,23 +191,66 @@
 
             calendar.render();
 
+            function calculateTotalPrice() {
+              let total = 0;
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  total += parseInt(checkbox.getAttribute("data-price"));
+              });
+              totalPriceElement.innerText = total;
+          }
+
+          // Listen for checkbox changes to update price
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              checkbox.addEventListener("change", calculateTotalPrice);
+          });
+
             // Handle Form Submission
             document.getElementById("bookingForm").addEventListener("submit", function (event) {
-                event.preventDefault();
+              event.preventDefault();
 
-                if (!chosenDateInput.value) {
-                    alert("Please select a date before confirming.");
-                    return;
-                }
+              if (!chosenDateInput.value) {
+                  alert("Please select a date before confirming.");
+                  return;
+              }
 
-                let name = document.getElementById("name").value;
-                let email = document.getElementById("email").value;
-                let bookingType = document.getElementById("bookingType").value;
-                let chosenDate = chosenDateInput.value;
+              let name = document.getElementById("name").value;
+              let phone = document.getElementById("phone").value;
+              let email = document.getElementById("email").value;
+              let guests = document.getElementById("guests").value;
+              let chosenDate = chosenDateInput.value;
+              
+              let selectedTypes = [];
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  selectedTypes.push(checkbox.value);
+              });
 
-                alert(`Booking Confirmed!\n\nName: ${name}\nEmail: ${email}\nDate: ${chosenDate}\nType: ${bookingType}`);
-            });
-        });
+              if (selectedTypes.length === 0) {
+                  alert("Please select at least one booking type.");
+                  return;
+              }
+
+              let totalPrice = totalPriceElement.innerText;
+
+              alert(`Booking Confirmed!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nDate: ${chosenDate}\nGuests: ${guests}\nType: ${selectedTypes.join(", ")}\nTotal Price: $${totalPrice}`);
+          });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          let totalPriceElement = document.getElementById("totalPrice");
+    
+          function calculateTotalPrice() {
+              let total = 0;
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  total += parseInt(checkbox.getAttribute("data-price"));
+              });
+              totalPriceElement.innerText = total;
+          }
+    
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              checkbox.addEventListener("change", calculateTotalPrice);
+          });
+      });
     </script>
   </body>
     </html>
