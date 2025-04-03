@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wedding Vendor Directory</title>
@@ -10,323 +11,333 @@
     <link rel="stylesheet" href="assets/css/all.min.css">
     <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/homenew.style.css">
+    <link rel="stylesheet" href="assets/css/homenew.style.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/testimonial-3.css">
     <!-- Bootstrap Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
 <body>
-   <div class="header_part">
-    <div class="top-bar">
-        <!-- Logo -->
-        <div class="logo">
-            <img src="assets/images/logo1.png" alt="Logo">
-        </div>
+    <div class="header_part">
+        <div class="top-bar">
+            <!-- Logo -->
+            <div class="logo">
+                <a class="navbar-brand" href="new-index.html">
+                    <img src="assets/images/logo1.png" alt="Weddlist Logo">
+                </a>
+            </div>
 
-        <!-- Buttons -->
-        <div>
-            <button class="btn btn-outline-primary Venue_btn Login">Login</button>
-            <button class="btn btn-primary Venue_btn">Add Venue</button>
+            <!-- Buttons & User Dropdown -->
+            <div class="btn-group new_group">
+                <a type="button" href="VenueList.html" class="btn btn-primary Venue_btn" target="_blank">Add Venue</a>
+                <!-- User Dropdown -->
+                <div class="dropdown">
+                    <a class="nav-link user-icon" id="userDropdown" role="button">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li><a class="dropdown-item" href="login.html">Login</a></li>
+                        <li><a class="dropdown-item" href="register.html">Register</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="active">
+                <label for="destination">Where</label>
+                <input type="text" id="destination" placeholder="Search destinations">
+            </div>
+            <div>
+                <label for="date">Select date</label>
+                <input type="date" id="date">
+            </div>
+            <div>
+                <label for="guests">Capacity</label>
+                <input type="number" id="guests" placeholder="Add no of guests" min="1">
+            </div>
+            <button class="search-button">
+                <i class="bi bi-search"></i>
+            </button>
         </div>
     </div>
-    <!-- Search Bar -->
-	<div class="search-bar">
-    <div class="active">
-        <label for="destination">Where</label>
-        <input type="text" id="destination" placeholder="Search destinations">
-    </div>
-    <div>
-        <label for="date">Select date</label>
-        <input type="date" id="date">
-    </div>
-    <div>
-        <label for="guests">Capacity</label>
-        <input type="number" id="guests" placeholder="Add no of guests" min="1">
-    </div>
-    <button class="search-button">
-        <i class="bi bi-search"></i>
-    </button>
-</div>
-</div>
-<hr>
-<section class="wedding-locations top_wedding Rated_venues" style="background: #fff;">
-      <div class="container">
-        <!-- Section Title -->
-        <div class="text-center">
-          <h2 class="fw-bold">Top Featured Venues</h2>
-          <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
-        </div>
-        <!-- Wedding Locations Grid -->
-        <div class="row g-4 mt-4">
-		<!-- Card 1 -->
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <a href="single-venue-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <!--  <img src="https://i.pravatar.cc/40" class="rounded-circle me-2" alt="User">
-<!--                                         <div>
-                                            <h6 class="mb-0">Rinda Flow</h6>
-                                            <small class="text-muted">June 3, 2021</small>
-                                        </div> -->
-                                    </div>
-                                    <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
-                                    <p class="price text-danger fw-bold">$16,433.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <a href="single-venue-detail.html"><button class="btn btn-outline-primary w-100 mt-3">View Details</button></a>
-                                </div>
-                            </div>
+    <hr>
+    <section class="wedding-locations top_wedding Rated_venues" style="background: #fff;">
+        <div class="container">
+            <!-- Section Title -->
+            <div class="text-center">
+                <h2 class="fw-bold">Top Featured Venues</h2>
+                <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
+            </div>
+            <!-- Wedding Locations Grid -->
+            <div class="row g-4 mt-4">
+                <!-- Card 1 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <a href="single-venue-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
                         </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
+                            <p class="price text-danger fw-bold">$16,433.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <a href="single-venue-detail.html">
+                                <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Card 2 -->
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/5.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <!--  <img src="https://i.pravatar.cc/41" class="rounded-circle me-2" alt="User">
-<!--                                         <div>
-                                            <h6 class="mb-0">Oliver Rasky</h6>
-                                            <small class="text-muted">June 3, 2021</small>
-                                        </div> -->
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
-                            </div>
+                <!-- Card 2 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/5.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
                         </div>
-						
-						                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <a href="single-listing-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/6.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <!--  <img src="https://i.pravatar.cc/40" class="rounded-circle me-2" alt="User">
-<!--                                         <div>
-                                            <h6 class="mb-0">Rinda Flow</h6>
-                                            <small class="text-muted">June 3, 2021</small>
-                                        </div> -->
-                                    </div>
-                                    <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
-                                    <p class="price text-danger fw-bold">$16,433.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <a href="single-listing-detail.html"><button class="btn btn-outline-primary w-100 mt-3">View Details</button></a>
-                                </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
                             </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Card 2 -->
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/1.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <!--  <img src="https://i.pravatar.cc/41" class="rounded-circle me-2" alt="User">
-<!--                                         <div>
-                                            <h6 class="mb-0">Oliver Rasky</h6>
-                                            <small class="text-muted">June 3, 2021</small>
-                                        </div> -->
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
-                            </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <a href="single-listing-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/6.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
                         </div>
-						
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
                             </div>
+                            <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
+                            <p class="price text-danger fw-bold">$16,433.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <a href="single-listing-detail.html">
+                                <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                            </a>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <!--  <img src="https://i.pravatar.cc/41" class="rounded-circle me-2" alt="User">
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <!--  <img src="https://i.pravatar.cc/41" class="rounded-circle me-2" alt="User">
                                        <div>
                                             <h6 class="mb-0">Oliver Rasky</h6>
                                             <small class="text-muted">June 3, 2021</small>
                                         </div> -->
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
                             </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card wedding-card">
-                                <div class="card-img-top position-relative">
-                                    <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
-                                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-2">
-                                       
-                                    </div>
-                                    <h5 class="fw-bold">The Muse Sarovar Portico</h5>
-                                    <p class="price text-danger fw-bold">$17,233.33 </p>
-                                    <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
-                                    <div class="d-flex justify-content-between text-muted d_none">
-                                        <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
-                                        <span><i class="bi bi-people"></i> 200</span>
-                                        <span><i class="bi bi-calendar-heart"></i> 1</span>
-                                    </div>
-                                    <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
-                                </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
                             </div>
-                        </div>						
-		</div>
-	  </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <!-- About -->
-          <div class="col-md-3">
-            <h5>About Weddlist</h5>
-            <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-            <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
-          </div>
-          <!-- Pages -->
-          <div class="col-md-3 links">
-            <h5>Pages</h5>
-            <a href="#">Contact Us</a>
-            <a href="#">Help</a>
-            <a href="#">Gallery</a>
-            <a href="#">FAQs</a>
-          </div>
-          <!-- Categories -->
-          <div class="col-md-3 links">
-            <h5>Categories</h5>
-            <a href="#">Beauty</a>
-            <a href="#">Catering</a>
-            <a href="#">Dresses</a>
-            <a href="#">Music</a>
-          </div>
-          <!-- Newsletter -->
-          <div class="col-md-3">
-            <h5>Newsletter</h5>
-            <div class="d-flex">
-              <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
-              <button class="newsletter-btn">
-                <i class="fas fa-paper-plane"></i>
-              </button>
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3">
+                    <h5>About Weddlist</h5>
+                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                </div>
+                <!-- Pages -->
+                <div class="col-md-3 links">
+                    <h5>Pages</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Help</a>
+                    <a href="#">Gallery</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-3 links">
+                    <h5>Categories</h5>
+                    <a href="#">Beauty</a>
+                    <a href="#">Catering</a>
+                    <a href="#">Dresses</a>
+                    <a href="#">Music</a>
+                </div>
+                <!-- Newsletter -->
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <div class="d-flex">
+                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="social-icons mt-3">
-              <a href="#">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="copyright"> © 2025 All rights reserved. </div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
     </footer>
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
-
 </body>
+<script>
+    // Toggle dropdown menu on user icon click
+        document.getElementById("userDropdown").addEventListener("click", function () {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener("click", function (event) {
+            let dropdown = document.getElementById("dropdownMenu");
+            let userIcon = document.getElementById("userDropdown");
+            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove("show");
+            }
+        });
+</script>
+
 </html>
