@@ -21,6 +21,7 @@ body{
     border: 1px solid #fe3f72 !important;
     transition: 0.3s !important;
 	text-decoration: none;
+    margin-top: 10px;
 }
 .btn-pink:hover {
     background: #fff !important;
