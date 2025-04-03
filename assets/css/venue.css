@@ -658,3 +658,100 @@ margin-top: 30px ;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 12px;
 }
+
+/* FullCalendar Enhancements */
+#calendar {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fc-toolbar-title {
+    font-size: 20px !important;
+    font-weight: bold;
+    color: #333;
+}
+
+.fc-daygrid-day {
+    background-color: #fff;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #ff4081;
+    cursor: pointer;
+}
+
+.fc-daygrid-day-number {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.fc-day-today {
+    background: #ff4081 !important;
+    border-radius: 6px;
+}
+
+.fc-button {
+    background-color: #ff4081 !important;
+    border: none !important;
+    color: white !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+}
+
+.fc-button:hover {
+    background-color: #e91e63 !important;
+}
+
+.fc-prev-button,
+.fc-next-button {
+    background: transparent !important;
+    color: #aea6a9 !important;
+    font-size: 18px !important;
+}
+
+.fc-prev-button:hover,
+.fc-next-button:hover {
+    color: #f3eef0 !important;
+}
+.calender-modal{
+    display: flex;
+    justify-content: space-between;
+}
+.close-butun{
+border: none;
+background: #ff4081;
+border-radius: 50%;
+color: white;
+}
+.fc-highlight{
+    background: #f283a8 !important;
+}
+/* Modal Styling */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox Styling */
+.form-check-label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.form-check-input {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Button Styling */
+.btn-primary, .btn-success {
+    width: 100%;
+    font-size: 16px;
+    border-radius: 6px;
+}
