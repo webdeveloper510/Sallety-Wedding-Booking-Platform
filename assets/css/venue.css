@@ -138,15 +138,15 @@ small {
 background-repeat: no-repeat;
 background-size: cover;
 background-position: center;
-padding: 80px 20px; /* Added space */
-color: white; /* Make sure text is visible */
-text-align: center; /* Center the text */
+padding: 80px 20px; 
+color: white;
+text-align: center; 
 }
 
 .subheadre h2 {
 font-size: 36px;
 margin-bottom: 20px;
-text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Optional: text shadow for readability */
+text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
 }
 
 .subheadre p {
@@ -352,10 +352,10 @@ border-color: #c46b63;
 
 .sidebar {
 
-    width: 100%; /* Adjust width as needed */
+    width: 100%; 
     height: 100%;
     min-height: 100vh;
-    background-color: #5d4e6c !important; /* Sidebar background */
+    background-color: #5d4e6c !important; 
    
    
     overflow-x: hidden;
@@ -368,8 +368,8 @@ border-color: #c46b63;
     left: 0;
     right: 0;
     width: 100%;
-    z-index: 1100; /* Higher than sidebar */
-    background-color: #222; /* Navbar background */
+    z-index: 1100; 
+    background-color: #222; 
     top: 0;
 }
 .sidebar h2 {
@@ -409,7 +409,7 @@ div#mySidebar ul {
 
 /* Main Content */
 .main-content {
-    margin-left: 270px; /* Adjust for sidebar width */
+    margin-left: 270px; 
     padding: 20px;
 }
 .feature-grid {
