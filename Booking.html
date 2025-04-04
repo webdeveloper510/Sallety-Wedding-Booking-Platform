@@ -49,9 +49,7 @@
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.05);
 	
   }
-  .booking-form-input{
-  height:36px !important;
-  }
+ 
   .Confirm-btn {
     background: #fe3f72;
     border: none;
@@ -98,51 +96,50 @@
 
 </style>
 <body>
-    <div class="header_part">
-        <div class="top-bar">
-            <!-- Logo -->
-            <div class="logo">
-                <a class="navbar-brand" href="new-index.html">
-                    <img src="assets/images/logo1.png" alt="Weddlist Logo">
-                </a>
-            </div>
-
-            <!-- Buttons & User Dropdown -->
-            <div class="btn-group new_group">
-                <a type="button" href="./addVenue.html" class="btn btn-primary Venue_btn" >Add Venue</a>
-                <!-- User Dropdown -->
-                <div class="dropdown">
-                    <a class="nav-link user-icon" id="userDropdown" role="button">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu" id="dropdownMenu">
-                        <li><a class="dropdown-item" href="login.html">Login</a></li>
-                        <li><a class="dropdown-item" href="register.html">Register</a></li>
-                    </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
+    <div class="container">
+        <a class="navbar-brand" href="new-index.html">
+            <img src="assets/images/logo1.png" alt="Weddlist Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="new-index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="single-venue.html">Venue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./addVenue.html">Add Venue</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="login.html">Login</a></li>
+            <li><a class="dropdown-item" href="register.html">Register</a></li>
+          </ul>
+        </li>
+      </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid subheadre">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <h2>Booking </h2>
                 </div>
             </div>
-
         </div>
-        <!-- Search Bar -->
-<!--         <div class="search-bar">
-            <div class="active">
-                <label for="destination">Where</label>
-                <input type="text" id="destination" placeholder="Search destinations">
-            </div>
-            <div>
-                <label for="date">Select date</label>
-                <input type="date" id="date">
-            </div>
-            <div>
-                <label for="guests">Capacity</label>
-                <input type="number" id="guests" placeholder="Add no of guests" min="1">
-            </div>
-            <button class="search-button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div> -->
     </div>
-    <hr>
       <div class="container mt-5 mb-4">
         <div class="row">
             <!-- Calendar Section -->
@@ -159,19 +156,19 @@
                   <label class="form-label">Select Booking Type:</label>
                   <div class="d-flex flex-column gap-2">
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input booking-type" id="lunch" value="Lunch" data-price="500">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="lunch" value="Lunch" data-price="500">
                       <label class="form-check-label" for="lunch">Lunch ($500)</label>
                     </div>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input booking-type" id="coffee" value="Coffee" data-price="200">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="coffee" value="Coffee" data-price="200">
                       <label class="form-check-label" for="coffee">Coffee ($200)</label>
                     </div>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input booking-type" id="dinner" value="Dinner" data-price="700">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="dinner" value="Dinner" data-price="700">
                       <label class="form-check-label" for="dinner">Dinner ($700)</label>
                     </div>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input booking-type" id="coffee-dinner" value="Coffee + Dinner" data-price="900">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="coffee-dinner" value="Coffee + Dinner" data-price="900">
                       <label class="form-check-label" for="coffee-dinner">Coffee + Dinner ($900)</label>
                     </div>
                   </div>
@@ -181,23 +178,23 @@
                 <div class="row w-100">
                   <div class="col-md-6 mb-3">
                     <label for="guests" class="form-label">Number of Guests</label>
-                    <select class="form-select Booking-select" style="height:50px" id="guests">
+                    <select class="form-select Booking-select" style="height:39px" id="guests">
                       <option value="1">1</option>
                       <option value="2">2</option>
                     </select>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control booking-form-input" id="name" required>
+                    <input type="text" class="form-control booking-form-input" placeholder="Enter Your Name" id="name" required>
                   </div>
 				  <div class="row w-100">
                   <div class="col-md-6 mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="tel" class="form-control  booking-form-input" id="phone" required>
+                    <input type="tel" class="form-control  booking-form-input"  placeholder="Enter Your Phone" id="phone" required>
                   </div>
                   <div class="col-md-6 mb-3 last_col">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control  booking-form-input" style="width: 322px;" id="email" required>
+                    <input type="email" class="form-control  booking-form-input" placeholder="Enter Your Email" style="width: 322px;" id="email" required>
                   </div>
 				  </div>
                 </div>
