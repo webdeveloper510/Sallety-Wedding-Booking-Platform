@@ -24,36 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-<style>
-    /* Fix the header on scroll */
-    .header_part {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: white;
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Default search bar position */
-    .search-bar {
-        position: relative;
-        transition: all 0.3s ease;
-    }
-    
-    /* When scrolled, move search bar under fixed header */
-    .header_fixed .search-bar {
-        position: fixed;
-        top: -24px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 750px; /* Same max width */
-        z-index: 999;
-        background: white;
-    }
-    </style>
+
 <body>
     <div class="header_part">
         <div class="top-bar">
@@ -72,7 +43,7 @@
                 </div>
                 <div>
                     <label for="topDate">Select date</label>
-                    <input type="date" id="topDate" style="color:black">
+                    <input type="date" style="color:black" id="topDate">
                 </div>
                 <div>
                     <label for="topGuests">Capacity</label>
@@ -122,76 +93,76 @@
 
 
     
-  <div class="container-fluid category_sec">
-    <div class="category-container">
-        <!-- Left Arrow -->
-        <button class="arrow-btn left-arrow" id="scrollLeft">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-
-        <div class="category-wrapper">
-            <div class="category-nav" id="categoryNav">
-                <a href="#" class="category-item active">
-                    <i class="fas fa-tractor"></i>
-                    Farms
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-ticket-alt"></i>
-                    Icons
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-swimming-pool"></i>
-                    Amazing pools
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-umbrella-beach"></i>
-                    OMG!
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-building"></i>
-                    Mansions
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-campground"></i>
-                    Camping
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-mountain"></i>
-                    Amazing views
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-home"></i>
-                    Cabins
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-chess-rook"></i>
-                    Castles
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-bed"></i>
-                    Rooms
-                </a>
-            </div>
-        </div>
-
-        <!-- Right Arrow -->
-        <button class="arrow-btn right-arrow" id="scrollRight">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-
-        <!-- Filters & Toggle -->
-        <div class="right-section">
-            <button class="filters-btn">
-                <i class="fas fa-sliders-h"></i> Filters
+    <div class="container-fluid mt-3">
+        <div class="category-container">
+            <!-- Left Arrow -->
+            <button class="arrow-btn left-arrow" id="scrollLeft">
+                <i class="fas fa-chevron-left"></i>
             </button>
-
-            <div class="toggle-switch">
-                <label>Display total before taxes</label>
-                <input type="checkbox">
+    
+            <div class="category-wrapper">
+                <div class="category-nav" id="categoryNav">
+                    <a href="#" class="category-item active">
+                        <i class="fas fa-tractor"></i>
+                        Farms
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        Icons
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-swimming-pool"></i>
+                        Amazing pools
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-umbrella-beach"></i>
+                        OMG!
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-building"></i>
+                        Mansions
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-campground"></i>
+                        Camping
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-mountain"></i>
+                        Amazing views
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-home"></i>
+                        Cabins
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-chess-rook"></i>
+                        Castles
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-bed"></i>
+                        Rooms
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Right Arrow -->
+            <button class="arrow-btn right-arrow" id="scrollRight">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+    
+            <!-- Filters & Toggle -->
+            <div class="right-section">
+                <button class="filters-btn">
+                    <i class="fas fa-sliders-h"></i> Filters
+                </button>
+    
+                <div class="toggle-switch">
+                    <label>Display total before taxes</label>
+                    <input type="checkbox">
+                </div>
             </div>
         </div>
     </div>
-</div>
     <section class="wedding-locations top_wedding Rated_venues" style="background: #fff;">
         <div class="container">
             <!-- Section Title -->
@@ -497,211 +468,158 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Header elements
-        const topSearchBar = document.querySelector('.top-search');
-        const mainSearchBar = document.querySelector('.main-search');
-        const header = document.querySelector('.header_part');
-        
-        // Category elements
-        const categoryContainer = document.querySelector('.category-container');
-        const categoryNav = document.getElementById('categoryNav');
-        const scrollLeftBtn = document.getElementById('scrollLeft');
-        const scrollRightBtn = document.getElementById('scrollRight');
-        const categoryItems = document.querySelectorAll('.category-item');
-        
-        // Initial setup
-        setupInitialState();
-        setupScrollButtons();
-        setupCategoryItemsClick();
-        
-        // Add scroll event listener
-        window.addEventListener('scroll', handlePageScroll);
-        
-        // Sync search inputs
-        syncSearchInputs();
-        
-        // Handle window resize
-        window.addEventListener('resize', checkArrowVisibility);
-    });
-    
-    function setupInitialState() {
+        // Elements
         const topSearchBar = document.querySelector('.top-search');
         const mainSearchBar = document.querySelector('.main-search');
         const header = document.querySelector('.header_part');
         const categoryContainer = document.querySelector('.category-container');
         
-        // Initial header setup
+        // Initial setup - show only main search bar
         if (topSearchBar && mainSearchBar) {
             topSearchBar.style.display = 'none';
             mainSearchBar.style.display = 'flex';
+            
+            // Make header sticky when scrolling
+            makeHeaderSticky();
         }
         
-        // Create placeholders for fixed positioning
-        createPlaceholder(header, 'header-placeholder');
-        createPlaceholder(categoryContainer, 'category-placeholder');
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
         
-        // Check arrow visibility initially
-        checkArrowVisibility();
-    }
+        // Initialize arrows
+        updateArrows();
+        
+        // Sync search inputs
+        syncSearchInputs();
+    });
     
-    function createPlaceholder(element, className) {
-        if (!element) return;
-        
-        const height = element.offsetHeight;
-        const placeholder = document.createElement('div');
-        placeholder.style.height = height + 'px';
-        placeholder.style.display = 'none';
-        placeholder.classList.add(className);
-        
-        element.parentNode.insertBefore(placeholder, element.nextSibling);
-    }
-    
-    function handlePageScroll() {
-        const scrollPosition = window.scrollY;
+    function makeHeaderSticky() {
         const header = document.querySelector('.header_part');
-        const headerPlaceholder = document.querySelector('.header-placeholder');
+        const headerHeight = header.offsetHeight;
+        
+        // Create a placeholder to prevent page jump when header becomes fixed
+        const placeholder = document.createElement('div');
+        placeholder.style.height = headerHeight + 'px';
+        placeholder.style.display = 'none';
+        placeholder.classList.add('header-placeholder');
+        
+        // Insert placeholder right after header
+        header.parentNode.insertBefore(placeholder, header.nextSibling);
+        
+        // Create a placeholder for category container
         const categoryContainer = document.querySelector('.category-container');
-        const categoryPlaceholder = document.querySelector('.category-placeholder');
+        if (categoryContainer) {
+            const categoryPlaceholder = document.createElement('div');
+            categoryPlaceholder.style.height = categoryContainer.offsetHeight + 'px';
+            categoryPlaceholder.style.display = 'none';
+            categoryPlaceholder.classList.add('category-placeholder');
+            
+            // Insert placeholder after category container
+            categoryContainer.parentNode.insertBefore(categoryPlaceholder, categoryContainer.nextSibling);
+        }
+    }
+    
+    function handleScroll() {
+        const scrollPosition = window.scrollY;
         const topSearchBar = document.querySelector('.top-search');
         const mainSearchBar = document.querySelector('.main-search');
+        const header = document.querySelector('.header_part');
+        const placeholder = document.querySelector('.header-placeholder');
+        const categoryContainer = document.querySelector('.category-container');
+        const categoryPlaceholder = document.querySelector('.category-placeholder');
         
-        // Define scroll thresholds
-        const headerThreshold = 100;
+        // Define scroll threshold
+        const scrollThreshold = 100;
         
-        // Handle header stickiness
-        if (scrollPosition > headerThreshold) {
+        if (scrollPosition > scrollThreshold) {
             // Make header sticky
-            makeElementSticky(header, headerPlaceholder, 0);
+            header.style.position = 'fixed';
+            header.style.top = '0';
+            header.style.left = '0';
+            header.style.zIndex = '1000';
+            header.style.width = '100%';
+            header.style.backgroundColor = '#fff';
+            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // Show placeholder to prevent content jump
+            if (placeholder) {
+                placeholder.style.display = 'block';
+            }
+            
+            // Make category container sticky too
+            if (categoryContainer) {
+                categoryContainer.style.position = 'fixed';
+                categoryContainer.style.top = header.offsetHeight + 'px';
+                categoryContainer.style.left = '0';
+                categoryContainer.style.zIndex = '999';
+                categoryContainer.style.width = '100%';
+                categoryContainer.style.backgroundColor = '#fff';
+                categoryContainer.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                
+                // Show category placeholder
+                if (categoryPlaceholder) {
+                    categoryPlaceholder.style.display = 'block';
+                }
+            }
             
             // Show top search bar, hide main search bar
             if (topSearchBar && mainSearchBar) {
                 topSearchBar.style.display = 'flex';
                 mainSearchBar.style.display = 'none';
             }
-            
-            // Make category container sticky below header
-            if (categoryContainer && header) {
-                const headerHeight = header.offsetHeight;
-                makeElementSticky(categoryContainer, categoryPlaceholder, headerHeight);
-                categoryContainer.classList.add('sticky');
-            }
         } else {
             // Remove sticky header
-            removeElementSticky(header, headerPlaceholder);
+            header.style.position = 'relative';
+            header.style.boxShadow = 'none';
+            header.style.width = '';
+            
+            // Hide placeholder
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
+            
+            // Remove sticky category container
+            if (categoryContainer) {
+                categoryContainer.style.position = 'relative';
+                categoryContainer.style.top = '';
+                categoryContainer.style.boxShadow = 'none';
+                categoryContainer.style.width = '';
+                
+                // Hide category placeholder
+                if (categoryPlaceholder) {
+                    categoryPlaceholder.style.display = 'none';
+                }
+            }
             
             // Show main search bar, hide top search bar
             if (topSearchBar && mainSearchBar) {
                 topSearchBar.style.display = 'none';
                 mainSearchBar.style.display = 'flex';
             }
-            
-            // Remove sticky category container
-            if (categoryContainer) {
-                removeElementSticky(categoryContainer, categoryPlaceholder);
-                categoryContainer.classList.remove('sticky');
-            }
         }
+        
+        // Update arrows when scrolling (in case category width changes)
+        updateArrows();
     }
     
-    function makeElementSticky(element, placeholder, topOffset) {
-        if (!element || !placeholder) return;
+    function updateArrows() {
+        const categoryNav = document.getElementById("categoryNav");
+        const scrollLeft = document.getElementById("scrollLeft");
+        const scrollRight = document.getElementById("scrollRight");
         
-        element.style.position = 'fixed';
-        element.style.top = topOffset + 'px';
-        element.style.left = '0';
-        element.style.width = '100%';
-        element.style.zIndex = '1000';
-        element.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        if (!categoryNav || !scrollLeft || !scrollRight) return;
         
-        // Show placeholder to prevent content jump
-        placeholder.style.display = 'block';
-    }
-    
-    function removeElementSticky(element, placeholder) {
-        if (!element || !placeholder) return;
-        
-        element.style.position = 'relative';
-        element.style.top = 'auto';
-        element.style.boxShadow = 'none';
-        
-        // Hide placeholder
-        placeholder.style.display = 'none';
-    }
-    
-    function setupScrollButtons() {
-        const categoryNav = document.getElementById('categoryNav');
-        const scrollLeftBtn = document.getElementById('scrollLeft');
-        const scrollRightBtn = document.getElementById('scrollRight');
-        
-        if (!categoryNav || !scrollLeftBtn || !scrollRightBtn) return;
-        
-        scrollLeftBtn.addEventListener('click', function() {
-            categoryNav.scrollBy({ left: -200, behavior: 'smooth' });
-        });
-        
-        scrollRightBtn.addEventListener('click', function() {
-            categoryNav.scrollBy({ left: 200, behavior: 'smooth' });
-        });
-        
-        // Check scroll position to determine arrow visibility
-        categoryNav.addEventListener('scroll', checkArrowVisibility);
-    }
-    
-    function checkArrowVisibility() {
-        const categoryNav = document.getElementById('categoryNav');
-        const scrollLeftBtn = document.getElementById('scrollLeft');
-        const scrollRightBtn = document.getElementById('scrollRight');
-        
-        if (!categoryNav || !scrollLeftBtn || !scrollRightBtn) return;
-        
-        // Check if scrolling is possible
-        const isScrollable = categoryNav.scrollWidth > categoryNav.clientWidth;
-        
-        // Left arrow visibility
-        if (categoryNav.scrollLeft <= 10) {
-            scrollLeftBtn.style.opacity = '0.5';
-            scrollLeftBtn.style.pointerEvents = 'none';
+        if (categoryNav.scrollLeft > 0) {
+            scrollLeft.style.display = "flex"; // Show left arrow
         } else {
-            scrollLeftBtn.style.opacity = '1';
-            scrollLeftBtn.style.pointerEvents = 'auto';
+            scrollLeft.style.display = "none"; // Hide left arrow
         }
-        
-        // Right arrow visibility
-        if (categoryNav.scrollLeft + categoryNav.clientWidth >= categoryNav.scrollWidth - 10) {
-            scrollRightBtn.style.opacity = '0.5';
-            scrollRightBtn.style.pointerEvents = 'none';
-        } else {
-            scrollRightBtn.style.opacity = '1';
-            scrollRightBtn.style.pointerEvents = 'auto';
-        }
-        
-        // Hide both arrows if not scrollable
-        if (!isScrollable) {
-            scrollLeftBtn.style.display = 'none';
-            scrollRightBtn.style.display = 'none';
-        } else {
-            scrollLeftBtn.style.display = 'flex';
-            scrollRightBtn.style.display = 'flex';
-        }
-    }
     
-    function setupCategoryItemsClick() {
-        const categoryItems = document.querySelectorAll('.category-item');
-        
-        categoryItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all items
-                categoryItems.forEach(el => el.classList.remove('active'));
-                
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // Additional functionality can be added here
-                // such as filtering content based on category
-            });
-        });
+        if (categoryNav.scrollLeft + categoryNav.clientWidth < categoryNav.scrollWidth) {
+            scrollRight.style.display = "flex"; // Show right arrow
+        } else {
+            scrollRight.style.display = "none"; // Hide right arrow
+        }
     }
     
     function syncSearchInputs() {
@@ -713,7 +631,7 @@
         const topGuests = document.getElementById('topGuests');
         const mainGuests = document.getElementById('mainGuests');
         
-        if (!topDestination || !mainDestination || !topDate || !mainDate || !topGuests || !mainGuests) return;
+        if (!topDestination || !mainDestination) return;
         
         // Sync from main to top
         mainDestination.addEventListener('input', function() {
@@ -742,5 +660,4 @@
         });
     }
 </script>
-
 </html>
