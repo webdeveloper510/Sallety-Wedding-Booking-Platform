@@ -421,28 +421,29 @@ div#mySidebar ul {
 }
 
 .feature-box {
-position: relative;
-border: 1px solid #e0e0e0;
-border-radius: 8px;
-padding: 30px 20px;
-text-align: center;
-cursor: pointer;
-transition: all 0.3s ease;
-background-color: white;
-box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-overflow: hidden;
+    position: relative;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px;
+    padding: 30px 20px !important;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+    overflow: hidden;
+    padding: 10px;
 }
 
 .feature-box:hover {
 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.feature-content {
+/* .feature-content {
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-}
+} */
 
 .feature-box img {
 width: 50px;
@@ -457,30 +458,40 @@ color: #333;
 }
 
 .checkbox-indicator {
-position: absolute;
-top: 116px;
-right: 4px;
-width: 22px;
-height: 22px;
-background-color: #fe3f72;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-opacity: 0;
-transition: opacity 0.3s ease;
+    position: absolute;
+    top: 85px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    background-color: #fe3f72;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
 }
 
+
+
+  
 .check-icon {
-width: 18px;
+width: 14px;
 height: 18px;
 color: white;
-/* margin-top: 4px; */
+margin-bottom: 5px;
 }
 
 .feature-box.selected .checkbox-indicator {
 opacity: 1;
+display: block;
+stroke: #28a745; 
 }
+.feature-box.selected {
+    border: 2px solid #28a745;
+    background-color: #edb9cb;
+    transition: all 0.3s ease;
+  }
 
 .submitbtn {
 background-color: #fe3f72;
@@ -819,4 +830,9 @@ color: white;
 }
 .last_col input#email {
     width: 100%;
+}
+.form-input{
+padding: 10px !important;
+border: 1px solid #ddd !important;
+width: 97% !important;
 }

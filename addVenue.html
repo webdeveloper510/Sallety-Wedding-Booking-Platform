@@ -125,7 +125,7 @@
                             <div class="form-grid">
                                 <div class="form-group full">
                                     <label>Venue Name</label>
-                                    <input type="text" placeholder="Venue Name">
+                                    <input type="text" class="form-input" placeholder="Venue Name">
                                 </div>
                                 <div class="form-group full">
                                     <label>Venue Description</label>
@@ -133,11 +133,11 @@
                                 </div>
                                 <div class="form-group" style="width: 90%;">
                                     <label>Price</label>
-                                    <input type="text" placeholder="">
+                                    <input type="text" class="form-input" placeholder="Enter Price">
                                 </div>
                                 <div class="form-group">
                                     <label>Contact</label>
-                                    <input type="text" placeholder="">
+                                    <input type="text" class="form-input"  placeholder="Enter Contact">
                                 </div>
                             </div>
                         </div>
@@ -146,7 +146,7 @@
                             <div class="same_div">
                                 <label style="font-weight: 500;">Venue Thumbnail</label>
 
-                                <input type="file" style="margin-bottom: 15px;">
+                                <input type="file" class="form-input" style="margin-bottom: 15px;">
 
                                 <label style="font-weight: 500;">Venue Gallery</label>
                                 <div class="dropzone" style=" float: left; margin-top: 10px;">
@@ -162,7 +162,7 @@
                                 <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
                                 <div class="form-group">
                                     <label for="fullAddress">Full Address</label>
-                                    <input type="text" id="fullAddress" placeholder="Full Address" class="form-control">
+                                    <input type="text" id="fullAddress" placeholder="Full Address"  class="form-input">
                                 </div>
                                 <div class="form-group">
                                     <label for="region">Region</label>
@@ -176,11 +176,11 @@
                                 <div class="form-row" style="display: flex; gap: 15px;">
                                     <div class="form-group" style="flex: 1;">
                                         <label for="longitude">Longitude</label>
-                                        <input type="text" id="longitude" placeholder="Longitude" style="width: 90%;">
+                                        <input type="text" id="longitude" class="form-input"  placeholder="Longitude" style="width: 90%;">
                                     </div>
                                     <div class="form-group" style="flex: 1;">
                                         <label for="latitude">Latitude</label>
-                                        <input type="text" id="latitude" placeholder="Latitude">
+                                        <input type="text" id="latitude" class="form-input"  placeholder="Latitude">
                                     </div>
                                 </div>
                             </div>
@@ -274,6 +274,7 @@
 
 
         </div>
+
     </div>
 
     </div>
@@ -290,16 +291,20 @@
             
             // Feature box click event
             const featureBoxes = document.querySelectorAll('.feature-box');
-            
-            featureBoxes.forEach(box => {
-                box.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                    const selectedFeatures = [];
-                    document.querySelectorAll('.feature-box.selected').forEach(selected => {
-                        selectedFeatures.push(selected.querySelector('p').textContent.trim());
-                    });
-                });
-            });
+
+featureBoxes.forEach(box => {
+    box.addEventListener('click', function () {
+        this.classList.toggle('selected');
+
+        // Get all selected features
+        const selectedFeatures = Array.from(document.querySelectorAll('.feature-box.selected'))
+            .map(selected => selected.querySelector('p').textContent.trim());
+
+        // Log the selected features
+        console.log("Selected Features:", selectedFeatures);
+    });
+});
+
             
             // Set active navigation link based on current page
             const currentPage = window.location.pathname.split("/").pop();
