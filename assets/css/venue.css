@@ -289,7 +289,6 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 gap: 15px;
 }
 .form-grid {
-    display: grid;
     width: 100%;
     margin-top: 30px;
     border: 0px solid rgb(221, 221, 221);
@@ -1267,4 +1266,10 @@ width: 97% !important;
 .header-placeholder,
 .category-placeholder {
     transition: height 0.3s ease;
+}
+.file-input{
+    padding-bottom: 7px;
+    padding-top: 7px;
+    border: 1px solid #ddd;
+    width: 94%;
 }
