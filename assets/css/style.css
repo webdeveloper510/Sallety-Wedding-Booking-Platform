@@ -1141,3 +1141,41 @@ div#weddingCarousel .carousel-item img {
 	left: 0;
 	right: 0;
 }
+.out_amenities .form-check .form-check-input {
+    float: none;
+    margin-left: -1.5em;
+}
+.outer_chamber {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.outer_map {
+    padding-top: 30px;
+}
+.outer_chamber .img-wrapper img {
+    width: 100%;
+}
+.outer_map h3.mt-4 {
+    padding-left: 15px;
+}
+.img-wrapper-fixed {
+  height: 300px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.img-wrapper-fixed-sm {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.img-wrapper-fixed img,
+.img-wrapper-fixed-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.top_wedding h5.fw-bold {
+    min-height: 48px;
+}
