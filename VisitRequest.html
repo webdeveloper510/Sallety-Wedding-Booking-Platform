@@ -31,51 +31,50 @@
 </head>
 
 <body>
-    <div class="header_part">
-        <div class="top-bar">
-            <!-- Logo -->
-            <div class="logo">
-                <a class="navbar-brand" href="new-index.html">
-                    <img src="assets/images/logo1.png" alt="Weddlist Logo">
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
+        <div class="container">
+            <a class="navbar-brand" href="new-index.html">
+                <img src="assets/images/logo1.png" alt="Weddlist Logo" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="new-index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="single-venue.html">Venue</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./addVenue.html">Add Venue</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="login.html">Login</a></li>
+                <li><a class="dropdown-item" href="register.html">Register</a></li>
+              </ul>
+            </li>
+          </ul>
             </div>
-
-            <!-- Buttons & User Dropdown -->
-            <div class="btn-group new_group">
-                <a type="button" href="./addVenue.html" class="btn btn-primary Venue_btn" >Add Venue</a>
-                <!-- User Dropdown -->
-                <div class="dropdown">
-                    <a class="nav-link user-icon" id="userDropdown" role="button">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu" id="dropdownMenu">
-                        <li><a class="dropdown-item" href="login.html">Login</a></li>
-                        <li><a class="dropdown-item" href="register.html">Register</a></li>
-                    </ul>
+        </div>
+    </nav>
+    <div class="container-fluid subheadre">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <h2>Wedding Venues</h2>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <div class="active">
-                <label for="destination">Where</label>
-                <input type="text" id="destination" placeholder="Search destinations">
-            </div>
-            <div>
-                <label for="date">Select date</label>
-                <input type="date" id="date">
-            </div>
-            <div>
-                <label for="guests">Capacity</label>
-                <input type="number" id="guests" placeholder="Add no of guests" min="1">
-            </div>
-            <button class="search-button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-    </div>
-    <hr>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2" style="margin: 0;padding: 0;">
