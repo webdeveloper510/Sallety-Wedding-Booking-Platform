@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="./assets/css/venue.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/homenew.style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <!-- Bootstrap JavaScript (Include this before closing </body>) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+	   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   <!-- FullCalendar CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+
+</head>
+ <style>
+  
+  .booking-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+  }
+
+  .booking-form-input, .Booking-select {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.05);
+	
+  }
+ 
+  .Confirm-btn {
+    background: #fe3f72;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    transition: 0.3s;
+    width:200px
+  }
+  .Confirm-btn:hover {
+    background: #fe3f72;
+  }
+  .bookingForm {
+    border-radius: 10px;
+    background: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+  .fc .fc-daygrid-day-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.fc-daygrid-day-events {
+    display: none;
+}
+.fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.bookingForm input#phone {
+    width: 96%;
+}
+.last_col {
+    padding-left: 30px;
+}
+.last_col input#email {
+    width: 100%;
+}
+
+</style>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
+    <div class="container">
+        <a class="navbar-brand" href="new-index.html">
+            <img src="assets/images/logo1.png" alt="Weddlist Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="new-index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="single-venue.html">Venue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./addVenue.html">Add Venue</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="login.html">Login</a></li>
+            <li><a class="dropdown-item" href="register.html">Register</a></li>
+          </ul>
+        </li>
+      </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid subheadre">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <h2>Booking </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="container mt-5 mb-4">
+        <div class="row">
+            <!-- Calendar Section -->
+            <div class="col-md-4">
+               
+                <div id="calendar"></div>
+                <p id="selectedDateText" class="mt-2 text-primary"></p>
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-8">
+              <form id="bookingForm" class="bookingForm">
+                <div class="mb-3">
+                  <label class="form-label">Select Booking Type:</label>
+                  <div class="d-flex flex-column gap-2">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="lunch" value="Lunch" data-price="500">
+                      <label class="form-check-label" for="lunch">Lunch ($500)</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="coffee" value="Coffee" data-price="200">
+                      <label class="form-check-label" for="coffee">Coffee ($200)</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="dinner" value="Dinner" data-price="700">
+                      <label class="form-check-label" for="dinner">Dinner ($700)</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input booking-type p-0" id="coffee-dinner" value="Coffee + Dinner" data-price="900">
+                      <label class="form-check-label" for="coffee-dinner">Coffee + Dinner ($900)</label>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <div class="row w-100">
+                  <div class="col-md-6 mb-3">
+                    <label for="guests" class="form-label">Number of Guests</label>
+                    <select class="form-select Booking-select" style="height:39px" id="guests">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control booking-form-input" placeholder="Enter Your Name" id="name" required>
+                  </div>
+				  <div class="row w-100">
+                  <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control  booking-form-input"  placeholder="Enter Your Phone" id="phone" required>
+                  </div>
+                  <div class="col-md-6 mb-3 last_col">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control  booking-form-input" placeholder="Enter Your Email" style="width: 322px;" id="email" required>
+                  </div>
+				  </div>
+                </div>
+        
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <p class="m-0"><strong>Total Price: $<span id="totalPrice">0</span></strong></p>
+                  <button type="submit" class="btn btn-primary Confirm-btn" >Confirm Booking</button>
+                </div>
+              </form>
+            </div>
+          
+      </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3">
+                    <h5>About Weddlist</h5>
+                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                </div>
+                <!-- Pages -->
+                <div class="col-md-3 links">
+                    <h5>Pages</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Help</a>
+                    <a href="#">Gallery</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-3 links">
+                    <h5>Categories</h5>
+                    <a href="#">Beauty</a>
+                    <a href="#">Catering</a>
+                    <a href="#">Dresses</a>
+                    <a href="#">Invitations</a>
+                    <a href="#">Music</a>
+                </div>
+                <!-- Newsletter -->
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <div class="d-flex">
+                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
+    </footer>
+  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let calendarEl = document.getElementById("calendar");
+            let selectedDateText = document.getElementById("selectedDateText");
+            let chosenDateInput = document.getElementById("chosenDate");
+
+            // Initialize FullCalendar
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                selectable: true,
+                dateClick: function (info) {
+                    selectedDateText.innerText = "Selected Date: " + info.dateStr;
+                    chosenDateInput.value = info.dateStr; // Store selected date for form submission
+                },
+            });
+
+            calendar.render();
+
+            function calculateTotalPrice() {
+              let total = 0;
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  total += parseInt(checkbox.getAttribute("data-price"));
+              });
+              totalPriceElement.innerText = total;
+          }
+
+          // Listen for checkbox changes to update price
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              checkbox.addEventListener("change", calculateTotalPrice);
+          });
+
+            // Handle Form Submission
+            document.getElementById("bookingForm").addEventListener("submit", function (event) {
+              event.preventDefault();
+
+              if (!chosenDateInput.value) {
+                  alert("Please select a date before confirming.");
+                  return;
+              }
+
+              let name = document.getElementById("name").value;
+              let phone = document.getElementById("phone").value;
+              let email = document.getElementById("email").value;
+              let guests = document.getElementById("guests").value;
+              let chosenDate = chosenDateInput.value;
+              
+              let selectedTypes = [];
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  selectedTypes.push(checkbox.value);
+              });
+
+              if (selectedTypes.length === 0) {
+                  alert("Please select at least one booking type.");
+                  return;
+              }
+
+              let totalPrice = totalPriceElement.innerText;
+
+              alert(`Booking Confirmed!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nDate: ${chosenDate}\nGuests: ${guests}\nType: ${selectedTypes.join(", ")}\nTotal Price: $${totalPrice}`);
+          });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          let totalPriceElement = document.getElementById("totalPrice");
+    
+          function calculateTotalPrice() {
+              let total = 0;
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  total += parseInt(checkbox.getAttribute("data-price"));
+              });
+              totalPriceElement.innerText = total;
+          }
+    
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              checkbox.addEventListener("change", calculateTotalPrice);
+          });
+      });
+    </script>
+  </body>
+    </html>

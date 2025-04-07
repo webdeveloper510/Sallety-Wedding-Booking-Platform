@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wedding Vendor Directory</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/homenew.style.css">
+    <link rel="stylesheet" href="./assets/css/venue.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/testimonial-3.css">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header_part">
+        <div class="top-bar">
+            <!-- Logo -->
+            <div class="logo">
+                <a class="navbar-brand" href="new-index.html">
+                    <img src="assets/images/logo1.png" alt="Weddlist Logo">
+                </a>
+            </div>
+    
+            <!-- Search Bar in top-bar (initially hidden) -->
+            <div class="search-bar top-search">
+                <div class="active">
+                    <label for="topDestination">Where</label>
+                    <input type="text" id="topDestination" style="color:black" placeholder="Search destinations">
+                </div>
+                <div>
+                    <label for="topDate">Select date</label>
+                    <input type="date" style="color:black" id="topDate">
+                </div>
+                <div>
+                    <label for="topGuests">Capacity</label>
+                    <input type="number" id="topGuests" style="color:black" placeholder="Add no of guests" min="1">
+                </div>
+                <button class="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+    
+            <!-- Buttons & User Dropdown -->
+            <div class="btn-group new_group">
+                <a type="button" href="./addVenue.html" class="btn btn-primary Venue_btn">Add Venue</a>
+                <!-- User Dropdown -->
+                <div class="dropdown">
+                    <a class="nav-link user-icon" id="userDropdown" role="button">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li><a class="dropdown-item" href="login.html">Login</a></li>
+                        <li><a class="dropdown-item" href="register.html">Register</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Search Bar (shown by default) -->
+        <div class="search-bar main-search">
+            <div class="active">
+                <label for="mainDestination">Where</label>
+                <input type="text" id="mainDestination" placeholder="Search destinations">
+            </div>
+            <div>
+                <label for="mainDate">Select date</label>
+                <input type="date" id="mainDate">
+            </div>
+            <div>
+                <label for="mainGuests">Capacity</label>
+                <input type="number" id="mainGuests" placeholder="Add no of guests" min="1">
+            </div>
+            <button class="search-button">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+    <hr>
+
+
+    
+    <div class="container-fluid mt-3">
+        <div class="category-container">
+            <!-- Left Arrow -->
+            <button class="arrow-btn left-arrow" id="scrollLeft">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+    
+            <div class="category-wrapper">
+                <div class="category-nav" id="categoryNav">
+                    <a href="#" class="category-item active">
+                        <i class="fas fa-tractor"></i>
+                        Farms
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        Icons
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-swimming-pool"></i>
+                        Amazing pools
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-umbrella-beach"></i>
+                        OMG!
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-building"></i>
+                        Mansions
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-campground"></i>
+                        Camping
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-mountain"></i>
+                        Amazing views
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-home"></i>
+                        Cabins
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-chess-rook"></i>
+                        Castles
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-bed"></i>
+                        Rooms
+                    </a>
+                     <a href="#" class="category-item">
+                        <i class="fas fa-campground"></i>
+                        Camping
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-mountain"></i>
+                        Amazing views
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-home"></i>
+                        Cabins
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-chess-rook"></i>
+                        Castles
+                    </a>
+                    <a href="#" class="category-item">
+                        <i class="fas fa-bed"></i>
+                        Rooms
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Right Arrow -->
+            <button class="arrow-btn right-arrow" id="scrollRight">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+    
+            <!-- Filters & Toggle -->
+            <div class="right-section">
+                <button class="filters-btn">
+                    <i class="fas fa-sliders-h"></i> Filters
+                </button>
+    
+                <div class="toggle-switch">
+                    <label>Display total before taxes</label>
+                    <input type="checkbox">
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="wedding-locations top_wedding Rated_venues" style="background: #fff;">
+        <div class="container">
+            <!-- Section Title -->
+            <div class="text-center">
+                <h2 class="fw-bold">Top Featured Venues</h2>
+                <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
+            </div>
+            <!-- Wedding Locations Grid -->
+            <div class="row g-4 mt-4">
+                <!-- Card 1 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <a href="single-venue-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
+                            <p class="price text-danger fw-bold">$16,433.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <a href="single-venue-detail.html">
+                                <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/5.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <a href="single-listing-detail.html"><img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/6.jpg" class="img-fluid rounded-top" alt="Wedding"></a>
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">Theodore Lowe, Azusa New York</h5>
+                            <p class="price text-danger fw-bold">$16,433.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $16,433.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <a href="single-listing-detail.html">
+                                <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <!--  <img src="https://i.pravatar.cc/41" class="rounded-circle me-2" alt="User">
+                                       <div>
+                                            <h6 class="mb-0">Oliver Rasky</h6>
+                                            <small class="text-muted">June 3, 2021</small>
+                                        </div> -->
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/categories/1.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card wedding-card">
+                        <div class="card-img-top position-relative">
+                            <img src="https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/listings/3.jpg" class="img-fluid rounded-top" alt="Wedding">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">On Wedding</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+
+                            </div>
+                            <h5 class="fw-bold">The Muse Sarovar Portico</h5>
+                            <p class="price text-danger fw-bold">$17,233.33 </p>
+                            <p class="text-muted small">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <div class="d-flex justify-content-between text-muted d_none">
+                                <span><i class="bi bi-cash-coin"></i> $17,233.33</span>
+                                <span><i class="bi bi-people"></i> 200</span>
+                                <span><i class="bi bi-calendar-heart"></i> 1</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3">
+                    <h5>About Weddlist</h5>
+                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                </div>
+                <!-- Pages -->
+                <div class="col-md-3 links">
+                    <h5>Pages</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Help</a>
+                    <a href="#">Gallery</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-3 links">
+                    <h5>Categories</h5>
+                    <a href="#">Beauty</a>
+                    <a href="#">Catering</a>
+                    <a href="#">Dresses</a>
+                    <a href="#">Music</a>
+                </div>
+                <!-- Newsletter -->
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <div class="d-flex">
+                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
+    </footer>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+    // Toggle dropdown menu on user icon click
+        document.getElementById("userDropdown").addEventListener("click", function () {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener("click", function (event) {
+            let dropdown = document.getElementById("dropdownMenu");
+            let userIcon = document.getElementById("userDropdown");
+            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove("show");
+            }
+        });
+</script>
+
+<script>
+    const categoryNav = document.getElementById("categoryNav");
+    const scrollLeft = document.getElementById("scrollLeft");
+    const scrollRight = document.getElementById("scrollRight");
+
+    function updateArrows() {
+        if (categoryNav.scrollLeft > 0) {
+            scrollLeft.style.display = "flex"; // Show left arrow
+        } else {
+            scrollLeft.style.display = "none"; // Hide left arrow
+        }
+
+        if (categoryNav.scrollLeft + categoryNav.clientWidth < categoryNav.scrollWidth) {
+            scrollRight.style.display = "flex"; // Show right arrow
+        } else {
+            scrollRight.style.display = "none"; // Hide right arrow
+        }
+    }
+
+    scrollLeft.addEventListener("click", function () {
+        categoryNav.scrollBy({ left: -200, behavior: "smooth" });
+    });
+
+    scrollRight.addEventListener("click", function () {
+        categoryNav.scrollBy({ left: 200, behavior: "smooth" });
+    });
+
+    categoryNav.addEventListener("scroll", updateArrows);
+
+    // Initial check to hide/show arrows
+    updateArrows();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elements
+        const topSearchBar = document.querySelector('.top-search');
+        const mainSearchBar = document.querySelector('.main-search');
+        const header = document.querySelector('.header_part');
+        const categoryContainer = document.querySelector('.category-container');
+        
+        // Initial setup - show only main search bar
+        if (topSearchBar && mainSearchBar) {
+            topSearchBar.style.display = 'none';
+            mainSearchBar.style.display = 'flex';
+            
+            // Make header sticky when scrolling
+            makeHeaderSticky();
+        }
+        
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initialize arrows
+        updateArrows();
+        
+        // Sync search inputs
+        syncSearchInputs();
+    });
+    
+    function makeHeaderSticky() {
+        const header = document.querySelector('.header_part');
+        const headerHeight = header.offsetHeight;
+        
+        // Create a placeholder to prevent page jump when header becomes fixed
+        const placeholder = document.createElement('div');
+        placeholder.style.height = headerHeight + 'px';
+        placeholder.style.display = 'none';
+        placeholder.classList.add('header-placeholder');
+        
+        // Insert placeholder right after header
+        header.parentNode.insertBefore(placeholder, header.nextSibling);
+        
+        // Create a placeholder for category container
+        const categoryContainer = document.querySelector('.category-container');
+        if (categoryContainer) {
+            const categoryPlaceholder = document.createElement('div');
+            categoryPlaceholder.style.height = categoryContainer.offsetHeight + 'px';
+            categoryPlaceholder.style.display = 'none';
+            categoryPlaceholder.classList.add('category-placeholder');
+            
+            // Insert placeholder after category container
+            categoryContainer.parentNode.insertBefore(categoryPlaceholder, categoryContainer.nextSibling);
+        }
+    }
+    
+    function handleScroll() {
+        const scrollPosition = window.scrollY;
+        const topSearchBar = document.querySelector('.top-search');
+        const mainSearchBar = document.querySelector('.main-search');
+        const header = document.querySelector('.header_part');
+        const placeholder = document.querySelector('.header-placeholder');
+        const categoryContainer = document.querySelector('.category-container');
+        const categoryPlaceholder = document.querySelector('.category-placeholder');
+        
+        // Define scroll threshold
+        const scrollThreshold = 100;
+        
+        if (scrollPosition > scrollThreshold) {
+            // Make header sticky
+            header.style.position = 'fixed';
+            header.style.top = '0';
+            header.style.left = '0';
+            header.style.zIndex = '1000';
+            header.style.width = '100%';
+            header.style.backgroundColor = '#fff';
+            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // Show placeholder to prevent content jump
+            if (placeholder) {
+                placeholder.style.display = 'block';
+            }
+            
+            // Make category container sticky too
+            if (categoryContainer) {
+                categoryContainer.style.position = 'fixed';
+                categoryContainer.style.top = header.offsetHeight + 'px';
+                categoryContainer.style.left = '0';
+                categoryContainer.style.zIndex = '999';
+                categoryContainer.style.width = '100%';
+                categoryContainer.style.backgroundColor = '#fff';
+                categoryContainer.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                
+                // Show category placeholder
+                if (categoryPlaceholder) {
+                    categoryPlaceholder.style.display = 'block';
+                }
+            }
+            
+            // Show top search bar, hide main search bar
+            if (topSearchBar && mainSearchBar) {
+                topSearchBar.style.display = 'flex';
+                mainSearchBar.style.display = 'none';
+            }
+        } else {
+            // Remove sticky header
+            header.style.position = 'relative';
+            header.style.boxShadow = 'none';
+            header.style.width = '';
+            
+            // Hide placeholder
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
+            
+            // Remove sticky category container
+            if (categoryContainer) {
+                categoryContainer.style.position = 'relative';
+                categoryContainer.style.top = '';
+                categoryContainer.style.boxShadow = 'none';
+                categoryContainer.style.width = '';
+                
+                // Hide category placeholder
+                if (categoryPlaceholder) {
+                    categoryPlaceholder.style.display = 'none';
+                }
+            }
+            
+            // Show main search bar, hide top search bar
+            if (topSearchBar && mainSearchBar) {
+                topSearchBar.style.display = 'none';
+                mainSearchBar.style.display = 'flex';
+            }
+        }
+        
+        // Update arrows when scrolling (in case category width changes)
+        updateArrows();
+    }
+    
+    function updateArrows() {
+        const categoryNav = document.getElementById("categoryNav");
+        const scrollLeft = document.getElementById("scrollLeft");
+        const scrollRight = document.getElementById("scrollRight");
+        
+        if (!categoryNav || !scrollLeft || !scrollRight) return;
+        
+        if (categoryNav.scrollLeft > 0) {
+            scrollLeft.style.display = "flex"; // Show left arrow
+        } else {
+            scrollLeft.style.display = "none"; // Hide left arrow
+        }
+    
+        if (categoryNav.scrollLeft + categoryNav.clientWidth < categoryNav.scrollWidth) {
+            scrollRight.style.display = "flex"; // Show right arrow
+        } else {
+            scrollRight.style.display = "none"; // Hide right arrow
+        }
+    }
+    
+    function syncSearchInputs() {
+        // Get input elements
+        const topDestination = document.getElementById('topDestination');
+        const mainDestination = document.getElementById('mainDestination');
+        const topDate = document.getElementById('topDate');
+        const mainDate = document.getElementById('mainDate');
+        const topGuests = document.getElementById('topGuests');
+        const mainGuests = document.getElementById('mainGuests');
+        
+        if (!topDestination || !mainDestination) return;
+        
+        // Sync from main to top
+        mainDestination.addEventListener('input', function() {
+            topDestination.value = this.value;
+        });
+        
+        mainDate.addEventListener('change', function() {
+            topDate.value = this.value;
+        });
+        
+        mainGuests.addEventListener('input', function() {
+            topGuests.value = this.value;
+        });
+        
+        // Sync from top to main
+        topDestination.addEventListener('input', function() {
+            mainDestination.value = this.value;
+        });
+        
+        topDate.addEventListener('change', function() {
+            mainDate.value = this.value;
+        });
+        
+        topGuests.addEventListener('input', function() {
+            mainGuests.value = this.value;
+        });
+    }
+</script>
+</html>
