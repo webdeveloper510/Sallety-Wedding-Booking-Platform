@@ -1,0 +1,1181 @@
+/* ======= TOP BAR ======= */
+
+* {
+	font-family: "Roboto", sans-serif;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+div,
+button {
+	font-family: "Roboto", sans-serif;
+}
+
+body {
+	margin: 0 !;
+	padding: 0;
+}
+
+
+.btn-pink {
+	background-color: #fe3f72 !important;
+	color: #fff !important;
+	padding: 13px 20px !important;
+	font-size: 15px !important;
+	border-radius: 5px !important;
+	border: 1px solid #fe3f72 !important;
+	transition: 0.3s !important;
+	text-decoration: none;
+    margin-top: 10px;
+}
+
+.btn-pink:hover {
+	background: #fff !important;
+	color: #e91e63 !important;
+}
+
+.top-bar {
+	background: #222;
+	color: white;
+	font-size: 14px;
+}
+
+.top-bar a {
+	color: white;
+	text-decoration: none;
+}
+
+
+/* ======= HERO SECTION ======= */
+header {
+	position: relative;
+}
+
+.nav-home {
+	position: absolute !important;
+	top: 40px;
+	right: 0;
+	left: 0;
+	z-index: 1030;
+}
+
+/* Carousel */
+.carousel-item img {
+	height: 80vh;
+	object-fit: cover;
+}
+
+/* Overlay Search Box */
+.search-box {
+	position: absolute;
+	top: 35%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 85%;
+	background: rgba(0, 0, 0, 0.6);
+	padding: 20px;
+	border-radius: 10px;
+}
+
+/* Navbar Styling */
+.navbar {
+	transition: background 0.3s;
+}
+
+.navbar-brand img {
+	height: 50px;
+}
+
+.navbar-nav .nav-link {
+	font-weight: 500;
+	color: white;
+}
+
+.navbar-nav .nav-link:hover {
+	color: #f8d210;
+}
+
+/* Input Fields */
+.form-control,
+.form-select {
+	border-radius: 5px;
+	height: 50px;
+}
+
+/* Button */
+.btn-danger {
+	height: 50px;
+	font-size: 18px;
+}
+
+.fixed-top {
+	top: 35px;
+}
+
+.search-box {
+	position: absolute;
+	top: 50%;
+}
+
+/* ======= Wedding Planning Section ======= */
+.wedding-planning {
+	background-color: #f8f9fa;
+}
+
+/* Plan Description */
+.plan-description {
+	padding: 20px;
+}
+
+.plan-heading {
+	font-size: 28px;
+	font-weight: bold;
+	color: #333;
+}
+
+.plan-sub-heading {
+	font-size: 16px;
+	color: #666;
+}
+
+
+/* Plan Features Blocks */
+.plan-start-block {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 15px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.widget-icon i {
+	font-size: 28px;
+	color: #fe3f72;
+}
+
+.section-heading {
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+.section-sub-heading {
+	font-size: 14px;
+	color: #666;
+}
+
+section.wedding-planning {
+	padding-top: 100px !important;
+	padding-bottom: 100px !important;
+	background: #fff;
+}
+
+/* ======= Wedding Locations Section ======= */
+.wedding-locations {
+	background-color: #f8f9fa;
+}
+
+/* Location Card Styling */
+.location-card {
+	position: relative;
+	overflow: hidden;
+	border-radius: 10px;
+}
+
+.location-card img {
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+	transition: transform 0.3s ease-in-out;
+}
+
+/* Large Card for Goa */
+.location-card.large img {
+	object-fit: cover;
+}
+
+/* Overlay Effect */
+.overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .38);
+	-webkit-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+.city-dtl {
+	text-align: center;
+	position: absolute;
+	top: 45%;
+	padding: 0 40px;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+.city-dtl-heading {
+	color: #fff;
+	font-size: 22px;
+	margin-bottom: 10px;
+}
+
+.city-dtl-heading {
+	text-shadow: 2px 2px 8px #000;
+}
+
+.listing_counter {
+	color: #fff;
+	background-color: rgba(20, 20, 20, .45);
+	padding: 7px 15px;
+	text-align: center;
+	display: inline-block;
+	width: auto;
+	position: relative;
+	border-radius: 4px;
+}
+
+/* Hover Effect */
+.location-card:hover img {
+	transform: scale(1.05);
+}
+
+.location-card {
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 30px;
+	border-radius: 3px;
+}
+
+.gallery-slider {
+	position: relative;
+	max-width: 600px;
+	margin: auto;
+}
+
+.gallery-img img {
+	width: 100%;
+	height: auto;
+	border-radius: 5px;
+}
+
+.overlay-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 5px;
+}
+
+.gallery-dtl {
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	color: #fff;
+}
+
+.gallery-dtl i {
+	font-size: 24px;
+	color: #ff4d6d;
+	margin-bottom: 10px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+	width: 5%;
+}
+
+.vendor-profile-block {
+	text-align: center;
+	background: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	transition: 0.3s;
+}
+
+.vendor-profile-block:hover {
+	transform: translateY(-5px);
+}
+
+.vendor-profile-img img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.vendor-profile-dtl {
+	padding-top: 10px;
+}
+
+.social-icons {
+	padding: 0;
+	margin: 10px 0 0;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.social-icons a {
+	text-decoration: none;
+	color: #555;
+	font-size: 16px;
+	transition: 0.3s;
+}
+
+.social-icons a:hover {
+	color: #007bff;
+}
+
+.gallery-block {
+	position: relative;
+}
+
+div#galleryCarousel {
+	padding: 100px 0px;
+}
+
+.Explore {
+	background: url(../../assets/images/call-out-parr-new.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.call-out-dtl {
+	position: relative;
+	padding-top: 110px;
+	padding-bottom: 110px;
+}
+
+.call-out-heading {
+	color: #fff;
+	margin-bottom: 40px;
+	font-size: 44px;
+}
+
+.why-choose-main-block {
+	background: #f8f9fa;
+	padding: 100px 0;
+	text-align: center;
+}
+
+.why-block {
+	background: #fff;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	transition: 0.3s;
+}
+
+.why-block:hover {
+	transform: translateY(-5px);
+}
+
+.why-icon {
+	font-size: 40px;
+	color: #ff4081;
+	margin-bottom: 15px;
+}
+
+.testimonial-section {
+	background: url('https://thegenius.co/wp/weddlist/live/wp-content/uploads/2018/02/testimonial-bg-1.jpg') center/cover no-repeat;
+	position: relative;
+	padding: 80px 0;
+	color: #fff;
+	text-align: center;
+}
+
+.testimonial-section::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(32, 16, 46, 0.7);
+	/* Dark overlay */
+}
+
+.testimonial-content {
+	position: relative;
+	z-index: 2;
+}
+
+.testimonial-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: left;
+	gap: 20px;
+	padding: 20px;
+}
+
+.testimonial-box img {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	border: 3px solid #fff;
+}
+
+.testimonial-text {
+	max-width: 500px;
+}
+
+.testimonial-name {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.testimonial-date {
+	color: #ff4081;
+	font-size: 14px;
+	margin-bottom: 5px;
+}
+
+.owl-nav {
+	position: absolute;
+	bottom: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.owl-nav button {
+	background: #fff !important;
+	color: #ff4081 !important;
+	border-radius: 50%;
+	font-size: 18px !important;
+	padding: 5px 15px !important;
+	margin: 5px;
+}
+
+.Testimonial {
+	background: url(https://thegenius.co/wp/weddlist/live/wp-content/uploads/2018/02/testimonial-bg-1.jpg) center / cover no-repeat;
+	position: relative;
+	padding: 80px 0;
+	color: #fff;
+	text-align: center;
+}
+
+.news-section {
+	padding: 80px 0;
+	text-align: center;
+}
+
+.news-card {
+	background: #fff;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: 0.3s ease-in-out;
+}
+
+.news-card:hover {
+	transform: translateY(-5px);
+}
+
+.news-image {
+	position: relative;
+	width: 100%;
+	height: 220px;
+	overflow: hidden;
+}
+
+.news-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.news-date {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: #ff4081;
+	color: #fff;
+	padding: 5px 10px;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
+.news-content {
+	padding: 20px;
+	text-align: left;
+}
+
+.news-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.news-text {
+	font-size: 14px;
+	color: #6c757d;
+}
+
+.read-more {
+	color: #ff4081;
+	font-weight: bold;
+	font-size: 14px;
+	text-decoration: none;
+	transition: 0.3s;
+}
+
+.read-more:hover {
+	text-decoration: underline;
+}
+
+.fixed-top {
+	top: 35px !important;
+}
+
+/* footer */
+.footer {
+	background-color: #2e2933;
+	color: #ccc;
+	padding: 50px 0px 0px 0px;
+}
+
+.footer h5 {
+	color: white;
+	font-weight: bold;
+}
+
+.footer .links a {
+	color: #ccc;
+	text-decoration: none;
+	display: block;
+	margin-bottom: 5px;
+	transition: 0.3s;
+}
+
+.social-icons a {
+	display: inline-block;
+	background-color: #444;
+	color: white;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	margin-right: 5px;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+.social-icons a:hover {
+	background-color: #ff4a75;
+}
+
+.newsletter-input {
+	background-color: white;
+	border: none;
+	padding: 10px;
+	width: 70%;
+	border-radius: 5px 0 0 5px;
+}
+
+.newsletter-btn {
+	background-color: #ff4a75;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 0 5px 5px 0;
+}
+
+.copyright {
+	text-align: center;
+	margin-top: 30px;
+	font-size: 14px;
+	color: #bbb;
+	color: #b7b0c0;
+	font-size: 14px;
+	line-height: 1.71;
+	margin-bottom: 0;
+	background: #29242f;
+	padding: 20px;
+}
+
+.top_wedding {
+	padding: 100px 0px;
+}
+
+/* Inner pages css start */
+
+.inner_navbar {
+	background-color: black;
+}
+
+section.inner-banner {
+	background: #bf6e6e00 url(../../assets/images/inner-banner.jpg);
+	padding: 60px 0px;
+	min-height: 250px;
+	background-position: top center;
+	align-items: center;
+	display: flex;
+}
+
+.banner-dtl {
+	color: #fff;
+}
+
+li.breadcrumb-item a,
+li.breadcrumb-item {
+	color: #fff;
+	text-decoration: none;
+}
+
+.breadcrumb-item.active {
+	color: #fff !important;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+	color: #fff !important;
+}
+
+.couple-login {
+	width: 50%;
+	margin: 0 auto;
+}
+
+section.register-main-block {
+	padding: 120px 0;
+	background-color: #faf9f5;
+}
+
+.register-block {
+	padding: 53px 60px;
+	background-color: #fff;
+	box-shadow: 0 0 15px 0 rgb(0 0 0 / 8%);
+}
+
+
+.submit-btn {
+	background-color: #fe3f72 !important;
+	color: #fff !important;
+	padding: 10px 20px !important;
+	font-size: 14px !important;
+	border-radius: 5px !important;
+	border: 1px solid #fe3f72 !important;
+	transition: 0.3s !important;
+	text-decoration: none;
+}
+
+.submit-btn:hover {
+	background: #fff !important;
+	color: #e91e63 !important;
+}
+
+p.sign-in {
+	color: #777;
+	font-size: 15px;
+	line-height: 1.73;
+	letter-spacing: .2px;
+}
+
+p.sign-in a {
+	color: #fe3f72;
+	text-decoration: none;
+}
+
+/* Listing page css */
+.refine-search {
+	background-color: #f7f7f7;
+	border: 1px solid #ddd;
+	margin-bottom: 30px;
+}
+
+.refine-search .btn-search {
+	background: #fe3f72;
+	padding: 10px 10px;
+	border: 1px solid #fe3f72;
+}
+
+.refine-search .btn-search a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.refine-search .btn-search:hover {
+	background: transparent;
+	border-color: #fe3f72;
+}
+
+.refine-search .btn-search:hover a {
+	color: #fe3f72;
+}
+
+.bg-pink {
+	background-color: #fe3f72;
+	color: #fff;
+	padding: 5px 10px;
+	font-size: 12px;
+	border-radius: 5px;
+}
+
+.pink-clr {
+	color: #fe3f72;
+	font-weight: 500;
+}
+
+.card-img-top {
+	/*     height: 220px; */
+	object-fit: cover;
+}
+
+.dtl-bottom {
+	border-top: 1px solid #e3e3e3;
+}
+
+.venue-card .card-body {
+	background: #f7f7f7;
+}
+
+.pagination .page-item .page-link {
+	border: 1px solid #ddd;
+	color: #333;
+	padding: 8px 15px;
+	margin: 0 10px;
+	border-radius: 5px;
+	transition: all 0.3s;
+}
+
+.pagination .page-item.active .page-link {
+	background-color: #ff4a6b;
+	border-color: #ff4a6b;
+	color: white;
+}
+
+.pagination .page-item .page-link:hover {
+	background-color: #ff4a6b;
+	border-color: #ff4a6b;
+	color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+	color: #aaa;
+	pointer-events: none;
+}
+
+/* Listing detail page css */
+
+.listing-header {
+	background-color: #f4f8f9;
+	border: solid 1px #dbe7ef;
+}
+
+.listing-header .left-side h3 {
+	font-size: 22px;
+}
+
+.claim-text {
+	color: #777777bf;
+	font-size: 15px;
+	font-weight: 500;
+	margin-left: 20px;
+}
+
+.claim-text i {
+	color: #40b3ef;
+}
+
+.listing-header .left-side .badge {
+	border: 1px solid #bbb;
+	color: #333;
+	padding: 10px 20px;
+	line-height: 100%;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.listing-description-block {
+	padding: 20px 0;
+}
+
+.vendor-tabs ul {
+	display: flex;
+	list-style: none;
+	padding: 0;
+}
+
+.vendor-tabs ul li {
+	margin-right: 10px;
+}
+
+.vendor-tabs ul li a {
+	padding: 10px 15px;
+	background: #f5f5f5;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.vendor-tabs ul li.active a {
+	background: #ff487a;
+	color: #fff;
+}
+
+.vendor-info {
+	width: 80%;
+}
+
+.vendor-info img {
+	width: 100px;
+	border-radius: 5px;
+}
+
+.vendor-description {
+	margin-top: 15px;
+}
+
+
+.contact-vendor input,
+.contact-vendor textarea {
+	margin-bottom: 10px;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.contact-via label {
+	margin-right: 10px;
+}
+
+.btn-submit {
+	background: #ff487a;
+	color: #fff;
+	padding: 10px;
+	border: none;
+	width: 100%;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.claim-listing {
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+.claim-listing a {
+	color: #ff487a;
+	text-decoration: none;
+}
+
+
+.contact-vendor,
+.claim-listing {
+	width: 320px;
+}
+
+.claim-listing p,
+.claim-listing a {
+	font-size: 17px;
+}
+
+.vendor-info p i {
+	color: #fe3f72;
+	margin-right: 10px;
+}
+
+.vendor-info p a {
+	color: #333;
+	text-decoration: none;
+}
+
+.vendor-info p a:hover {
+	color: #fe3f72;
+}
+
+div#faqs .accordion-button:not(.collapsed) {
+	color: #333;
+	background-color: #fce4ec;
+	box-shadow: none;
+}
+
+div#faqs .accordion-button:focus {
+	box-shadow: none;
+}
+
+ul#vendorTabs li .nav-link {
+	color: #333;
+	border: 1px solid #ccc;
+	margin-right: 10px;
+}
+
+ul#vendorTabs li button.nav-link.active {
+	background-color: #fce4ec;
+	border-bottom: none;
+	color: #fe3f72;
+}
+
+.contact-vendor a.submit {
+	font-size: 17px !important;
+}
+
+/* Contact page Css  */
+.contact-section {
+	padding: 60px 0;
+	text-align: center;
+}
+
+.contact-box {
+	background-color: #f8f9fa;
+	padding: 30px;
+	border-radius: 10px;
+	transition: all 0.3s ease-in-out;
+}
+
+.contact-box:hover {
+	background-color: #ffffff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contact-icon {
+	font-size: 40px;
+	color: #fe3f72;
+	background: #fce4ec;
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.contact-heading {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.contact-info {
+	color: #666;
+	font-size: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+	border-radius: 5px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	width: 100%;
+}
+
+.contact-form textarea {
+	resize: none;
+	height: 150px;
+}
+
+.btn-submit {
+	background-color: #ff4f68;
+	color: #fff;
+	padding: 12px 20px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	transition: all 0.3s ease-in-out;
+}
+
+.btn-submit:hover {
+	background-color: #fe3f72;
+}
+
+button.btn.btn-submit {
+	background-color: #ff4061;
+	border-radius: 4px;
+	text-transform: uppercase;
+	z-index: 1;
+	position: relative;
+	font-size: 13px;
+	text-align: center;
+	color: #fff;
+	line-height: 1.88;
+	letter-spacing: .6px;
+	border: none;
+	overflow: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-transition: all .8s ease;
+	-ms-transition: all .8s ease;
+	-o-transition: all .8s ease;
+	-moz-transition: all .8s ease;
+	transition: all .8s ease;
+	border-radius: 4px;
+	padding: 11px 20px;
+	border-radius: 3px;
+}
+
+
+/* dated 27-03 */
+ul.Venue_ul li {
+	list-style: none;
+	font-size: 15px;
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+ul.Venue_ul {
+	padding-left: 2px;
+}
+
+.content_section {
+	padding-bottom: 100px;
+	padding-top: 50px;
+}
+
+button.btn.btn-outline-primary {
+	border: 1px solid #fe3f72;
+	color: #fe3f72;
+}
+
+button.btn.btn-outline-primary:hover {
+	border: 1px solid #fe3f72 !important;
+	background: #fe3f72 !important;
+	color: #fff;
+}
+
+.bg-warning {
+	--bs-bg-opacity: 1;
+	background-color: rgb(255 62 97) !important;
+	color: #fff !important;
+}
+
+span.badge.bg-warning.text-dark.position-absolute.top-0.start-0.m-2 {
+	background: #fe3f72 !important;
+	color: #fff !important;
+}
+
+.card.wedding-card .card-body {
+	padding-top: 25px;
+}
+
+.d_none {
+	display: none !important;
+}
+
+.top-bar.py-2 {
+	display: none;
+}
+
+.gallery-img {
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+}
+
+.gallery-img:hover {
+	transform: scale(1.05);
+}
+
+.modal-body img {
+	border-radius: 10px;
+}
+
+div#galleryCarousel {
+	padding: 50px 0px;
+}
+
+div#weddingCarousel .carousel-item img {
+	height: 80vh;
+}
+
+.carousel-item img {
+	height: 40vh;
+	object-fit: cover;
+}
+
+.col-md-12.bottom_cont {
+	padding-left: 30px;
+}
+
+/* Responsive Styling */
+@media (max-width: 1366px) {
+	.why-block {
+		min-height: 312px;
+	}
+
+	.news-content {
+		padding: 20px;
+		text-align: left;
+		min-height: 190px;
+	}
+}
+
+@media (max-width: 768px) {
+	.widget-icon i {
+		font-size: 24px;
+	}
+
+	.plan-heading {
+		font-size: 24px;
+	}
+}
+
+
+/* add venue form */
+.header_home {
+	position: relative;
+}
+
+.header_inner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+.out_amenities .form-check .form-check-input {
+    float: none;
+    margin-left: -1.5em;
+}
+.outer_chamber {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.outer_map {
+    padding-top: 30px;
+}
+.outer_chamber .img-wrapper img {
+    width: 100%;
+}
+.outer_map h3.mt-4 {
+    padding-left: 15px;
+}
+.img-wrapper-fixed {
+  height: 300px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.img-wrapper-fixed-sm {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.img-wrapper-fixed img,
+.img-wrapper-fixed-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.top_wedding h5.fw-bold {
+    min-height: 48px;
+}
