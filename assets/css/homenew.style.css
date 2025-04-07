@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px 116px;
+	padding: 10px 55px;
 	background-color: #fff;
 	/*   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
@@ -30,13 +30,14 @@ hr {
 
 .top-bar .btn {
 	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .Venue_btn {
 	background: #ff385c !important;
 	border-color: #ff385c !important;
 	border-radius: 10px !important;
-	padding: 10px 25px !important;
+	padding: 8px 14px !important;
 }
 
 .Venue_btn:hover {
@@ -151,8 +152,8 @@ input:focus {
 
 a#userDropdown {
 	background: #5d4e6c;
-	height: 50px;
-	width: 50px;
+	height: 40px;
+	width: 40px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -160,7 +161,7 @@ a#userDropdown {
 }
 
 a#userDropdown i.fas.fa-user {
-	font-size: 24px;
+	font-size: 17px;
 }
 
 .new_group {
