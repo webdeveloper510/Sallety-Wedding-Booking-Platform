@@ -2,7 +2,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+<<<<<<< HEAD:Wedding_Platform/user/static/assets/css/homenew.style.css
 	padding: 10px 35px;
+=======
+	padding: 10px 55px;
+>>>>>>> bc339b2c103f7df0c3ed6455f5ac56bd2d78e601:assets/css/homenew.style.css
 	background-color: #fff;
 	/*   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
@@ -30,13 +34,18 @@ hr {
 
 .top-bar .btn {
 	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .Venue_btn {
 	background: #ff385c !important;
 	border-color: #ff385c !important;
 	border-radius: 10px !important;
+<<<<<<< HEAD:Wedding_Platform/user/static/assets/css/homenew.style.css
 	padding: 8px 15px !important;
+=======
+	padding: 8px 14px !important;
+>>>>>>> bc339b2c103f7df0c3ed6455f5ac56bd2d78e601:assets/css/homenew.style.css
 }
 
 .Venue_btn:hover {
@@ -160,7 +169,11 @@ a#userDropdown {
 }
 
 a#userDropdown i.fas.fa-user {
+<<<<<<< HEAD:Wedding_Platform/user/static/assets/css/homenew.style.css
 	font-size: 20px;
+=======
+	font-size: 17px;
+>>>>>>> bc339b2c103f7df0c3ed6455f5ac56bd2d78e601:assets/css/homenew.style.css
 }
 
 .new_group {
