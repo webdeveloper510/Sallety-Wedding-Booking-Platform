@@ -1,0 +1,47 @@
+{% load static %}
+<div class="header_part">
+    <div class="top-bar">
+        <!-- Logo -->
+        <div class="logo">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'assets/images/logo1.png' %}" alt="Weddlist Logo">
+            </a>
+        </div>
+
+        <!-- Search Bar in top-bar -->
+        <div class="search-bar top-search">
+            <div class="active">
+                <label for="topDestination">Where</label>
+                <input type="text" id="topDestination" style="color:black" placeholder="Search destinations">
+            </div>
+            <div>
+                <label for="topDate">Select date</label>
+                <input type="date" style="color:black" id="topDate">
+            </div>
+            <div>
+                <label for="topGuests">Capacity</label>
+                <input type="number" id="topGuests" style="color:black" placeholder="Add no of guests" min="1">
+            </div>
+            <button class="search-button">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+        <!-- Buttons & User Dropdown -->
+        <div class="btn-group new_group">
+            <a type="button" href="{% url 'addVenue' %}" class="btn btn-primary Venue_btn">Add Venue</a>
+            <a href="{% url 'contact' %}" class="fw-bold" style="color:black;font-size:15px">Contact</a>
+            <div class="dropdown">
+                <a class="nav-link user-icon" id="userDropdown" role="button">
+                    <i class="fas fa-user"></i>
+                </a>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                    <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
+                    <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>

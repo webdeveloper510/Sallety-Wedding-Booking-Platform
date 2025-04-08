@@ -1,0 +1,33 @@
+<div class="col-md-2" style="margin: 0;padding: 0;">
+    <div class="sidebar" id="mySidebar">
+        <ul>
+            <li>
+                {% comment %} <h1>{{request.resolver_match.url_name}}</h1> {% endcomment %}
+                <a href="{% url 'addVenue' %}" class="nav-link {% if request.resolver_match.url_name == 'addVenue' %}active{% endif %}">
+                    <i class="fas fa-map-marker-alt"></i> Add Venue
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'venue-list' %}" class="nav-link {% if request.resolver_match.url_name == 'venue-list' %}active{% endif %}">
+
+                    <i class="fas fa-list-ul"></i> Venues
+                </a>
+                
+            </li>
+            <li>
+                <a href="{% url 'visit-request' %}" class="nav-link {% if request.resolver_match.url_name == 'visit-request' %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i> Request For Visit
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'table-booking' %}" class="nav-link {% if request.resolver_match.url_name == 'table-booking' %}active{% endif %}">
+                    <i class="fas fa-utensils"></i> Booking 
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+
+
+
+</div>

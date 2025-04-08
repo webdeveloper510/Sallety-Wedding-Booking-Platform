@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -5,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wedding Vendor Directory</title>
     <!-- Bootstrap 5.3.3 CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static  'assets/css/bootstrap.min.css' %}">
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}">
     <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/testimonial-3.css">
     <!-- Bootstrap Icons CDN -->

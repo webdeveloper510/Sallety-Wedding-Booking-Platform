@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wedding Vendor Directory</title>
     <!-- Bootstrap 5.3.3 CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static  'assets/css/bootstrap.min.css' %}">
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}">
     <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/homenew.style.css">
-    <link rel="stylesheet" href="./assets/css/venue.css">
+    {% comment %} <link rel="stylesheet" href="static/assets/css/style.css"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/homenew.style.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/venue.css' %}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/testimonial-3.css">
@@ -30,8 +32,8 @@
         <div class="top-bar">
             <!-- Logo -->
             <div class="logo">
-                <a class="navbar-brand" href="new-index.html">
-                    <img src="assets/images/logo1.png" alt="Weddlist Logo">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'assets/images/logo1.png' %}" alt="Weddlist Logo">
                 </a>
             </div>
     
@@ -56,15 +58,16 @@
     
             <!-- Buttons & User Dropdown -->
             <div class="btn-group new_group">
-                <a type="button" href="./addVenue.html" class="btn btn-primary Venue_btn">Add Venue</a>
+                <a type="button" href="{% url 'addVenue' %}" class="btn btn-primary Venue_btn">Add Venue</a>
+                <a href="{% url 'contact' %}" class="fw-bold" style="color:black;font-size:15px">Contact</a>
                 <!-- User Dropdown -->
                 <div class="dropdown">
                     <a class="nav-link user-icon" id="userDropdown" role="button">
                         <i class="fas fa-user"></i>
                     </a>
                     <ul class="dropdown-menu" id="dropdownMenu">
-                        <li><a class="dropdown-item" href="login.html">Login</a></li>
-                        <li><a class="dropdown-item" href="register.html">Register</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
                     </ul>
                 </div>
             </div>
@@ -186,10 +189,10 @@
     <section class="wedding-locations top_wedding Rated_venues" style="background: #fff;">
         <div class="container">
             <!-- Section Title -->
-            <div class="text-center">
+            {% comment %} <div class="text-center">
                 <h2 class="fw-bold">Top Featured Venues</h2>
                 <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
-            </div>
+            </div> {% endcomment %}
             <!-- Wedding Locations Grid -->
             <div class="row g-4 mt-4">
                 <!-- Card 1 -->
@@ -210,7 +213,7 @@
                                 <span><i class="bi bi-people"></i> 200</span>
                                 <span><i class="bi bi-calendar-heart"></i> 1</span>
                             </div>
-                            <a href="single-venue-detail.html">
+                            <a href="{% url 'venue-detail' %}">
                                 <button class="btn btn-outline-primary w-100 mt-3">View Details</button>
                             </a>
                         </div>
