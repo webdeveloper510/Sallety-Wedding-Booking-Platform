@@ -79,12 +79,27 @@ WSGI_APPLICATION = 'Wedding_Platform.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wedding_plan',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost', # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+        'OPTIONS': {
+                'read_default_file': '/opt/lampp/etc/my.cnf',
+            }
+        }
     }
-}
 
 
 # Password validation
@@ -104,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

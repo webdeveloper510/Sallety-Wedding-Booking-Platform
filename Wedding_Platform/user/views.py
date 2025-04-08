@@ -5,7 +5,11 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import VenueForm, VenueImageFormSet
-from .models import Venue
+from .models import Venue, User
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from .models import User
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
@@ -80,37 +84,48 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+
+def user_register(request):
+    if request.method == "POST":
+        name = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if User.objects.filter(name=name).exists():
+            messages.error(request, "Username already taken.")
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, "Email already registered.")
+        else:
+            user = User.objects.create_user(name=name, email=email, password=password)
+            messages.success(request, "Account created successfully!")
+            return redirect('user-login')
+
+    return render(request, 'register.html')
+
 def user_login(request):
     if request.method == "POST":
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
 
-        print("Username/Email:", username_or_email)
-        print("Password:", password)
-
+        # Authenticate using email (USERNAME_FIELD)
         user = authenticate(request, username=username_or_email, password=password)
-        print("User from authenticate (username):", user)
 
+        # Try with name if the first attempt fails
         if user is None:
             try:
-                user_obj = User.objects.get(email=username_or_email)
-                print("Found user by email:", user_obj.username)
-                user = authenticate(request, username=user_obj.username, password=password)
+                user_obj = User.objects.get(name=username_or_email)
+                user = authenticate(request, username=user_obj.email, password=password)
             except User.DoesNotExist:
-                print("No user found with email:", username_or_email)
                 user = None
-
-        print("Final user:", user)
 
         if user is not None:
             login(request, user)
             return redirect('/')
         else:
             messages.error(request, "Invalid credentials")
-    
+
     return render(request, 'login.html')
 
-def user_register(request):
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
