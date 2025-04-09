@@ -18,6 +18,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        input[type="checkbox"] {
+           
+           
+            width: auto !important;
+            height: auto !important;
+            padding:8px !important;
+        }
+        input[type="file"],
+        select {
+            padding: 10px !important;
+            border: 1px solid #ddd !important;
+            width: 97% !important;
+        }
+        
+    </style>
+    
 </head>
 
 <body>
@@ -92,6 +109,7 @@
                                     
                                     <div class="form-group full">
                                         <label>Select Categories</label>
+                                    
                                         <div class="form-check">
                                             {{ form.is_beach }}
                                             <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
@@ -100,15 +118,18 @@
                                             {{ form.is_city }}
                                             <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
                                         </div>
+                                        <!-- and so on -->
                                         <div class="form-check">
                                             {{ form.is_hotel }}
                                             <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
                                         </div>
                                         <div class="form-check">
                                             {{ form.is_countryside }}
-                                            <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">Countryside</label>
+                                            <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">countryside</label>
                                         </div>
+                                    
                                     </div>
+                                    
                                     
                                     <div style="display: flex; gap: 40px; width: 100%;">
                                         <div class="form-group" style="flex: 1;">
@@ -151,8 +172,14 @@
                             <!-- Step 3: Location -->
                             <div class="form-section" id="step3">
                                 <div class="location same_div">
-                                    <p>Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
-                                    <div class="form-group">
+                                   
+                                    {% comment %} <div class="">
+                                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423817.9663201953!2d18.032266843830698!3d-33.913395580156234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sin!4v1743676276759!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            
+                                       </div>
+                                       <p class="text-muted">Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>	
+                                       	 {% endcomment %}
+                                    <div class="form-group mt2">
                                         <label for="fullAddress">Full Address</label>
                                         {{ form.full_address }}
                                         {% if form.full_address.errors %}
@@ -281,8 +308,61 @@
     </div>
 
     <footer class="footer">
-        <!-- Footer content goes here -->
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3">
+                    <h5>About Weddlist</h5>
+                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                </div>
+                <!-- Pages -->
+                <div class="col-md-3 links">
+                    <h5>Pages</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Help</a>
+                    <a href="#">Gallery</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-3 links">
+                    <h5>Categories</h5>
+                    <a href="#">Beauty</a>
+                    <a href="#">Catering</a>
+                    <a href="#">Dresses</a>
+                    <a href="#">Invitations</a>
+                    <a href="#">Music</a>
+                </div>
+                <!-- Newsletter -->
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <div class="d-flex">
+                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
     </footer>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Step navigation

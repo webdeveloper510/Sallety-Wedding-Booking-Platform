@@ -38,7 +38,7 @@
             <div class="row">
                 {% include 'sidebar.html' %}
 
-                <div class="col-md-10 p-4" style=height:100vh;>
+                <div class="col-md-10 p-4" >
                     <div class="body-content p-2">
                         <div class="container-fluid ">
                             <div class="out_alltable">
@@ -58,31 +58,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for venue in venues %}
                                         <tr>
-                                            <td>Grand Hall</td>
-                                            <td>Spacious venue with modern interiors</td>
-                                            <td>$5000</td>
-                                            <td>+1 234 567 890</td>
-
-                                            <td>123 Main St, NY</td>
-
-                                            <td>WiFi, Parking, Catering</td>
+                                            <td>{{ venue.name }}</td>
+                                            <td>{{ venue.description }}</td>
+                                            <td>${{ venue.price }}</td>
+                                            <td>{{ venue.contact }}</td>
+                                            <td>{{ venue.full_address }}</td>
+                                            <td>
+                                                {% if venue.has_wifi %}WiFi{% endif %}
+                                                {% if venue.has_parking %}, Parking{% endif %}
+                                                {% if venue.has_dj %}, DJ{% endif %}
+                                                {% if venue.has_prayer_rooms %}, Prayer Rooms{% endif %}
+                                                {% if venue.has_photographer %}, Photographer{% endif %}
+                                                {% if venue.has_swimming_pool %}, Swimming Pool{% endif %}
+                                            </td>
                                             <td>
                                                 <select class="form-select">
-                                                    <option value="">Select</option>
-                                                    <option value="available" selected>Available</option>
-                                                    <option value="not_available">Not Available</option>
+                                                    <option value="available" {% if venue.status == "Available" %}selected{% endif %}>Available</option>
+                                                    <option value="not_available" {% if venue.status == "Not Available" %}selected{% endif %}>Not Available</option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <!-- Action Buttons -->
-                                                <a href="./addVenue.html" class="btn btn-sm btn-primary">
+                                                <a href="#" class="btn btn-sm btn-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </td>
-
                                         </tr>
+                                        {% empty %}
+                                        <tr><td colspan="8" class="text-center">No venues found.</td></tr>
+                                        {% endfor %}
                                     </tbody>
+                                    
                                 </table>
 
 
@@ -102,10 +110,6 @@
             </div>
         </div>
     </div>
-
-
-  
-
     <footer class="footer">
         <div class="container">
             <div class="row">

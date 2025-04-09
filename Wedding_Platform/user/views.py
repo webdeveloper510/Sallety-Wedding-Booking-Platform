@@ -9,29 +9,28 @@ from .models import Venue, User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .models import User
+from .models import Venue, VenueImage, User
+from .models import BookingType, Booking
+from .forms import BookingForm
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the polls index.")
 
 def index(request):
     return render(request, 'new-index.html')
 
-# def login(request):  
-#     return render(request, 'login.html')
 
 @login_required
 def add_venue(request):
     if request.method == 'POST':
         form = VenueForm(request.POST, request.FILES)
-        formset = VenueImageFormSet(request.POST, request.FILES)
         
         if form.is_valid():
-            # Save venue but don't commit to DB yet
             venue = form.save(commit=False)
-            venue.created_by = request.user
-            venue.save()
             
+            # ✅ Assign user correctly
+            venue.user = request.user
+            venue.status = 'Active'
+            venue.save()
+
             # Process amenities checkboxes
             venue.has_parking = 'parking' in request.POST.getlist('amenities', [])
             venue.has_prayer_rooms = 'prayer_rooms' in request.POST.getlist('amenities', [])
@@ -47,18 +46,27 @@ def add_venue(request):
                 for image in gallery_images:
                     VenueImage.objects.create(venue=venue, image=image)
                     
-            messages.success(request, 'Venue added successfully!')
-            return redirect('venue_list')  # Redirect to a venue list page
+            messages.success(request, 'Venue added successfully! It will be reviewed by an administrator.')
+            return redirect('venue-list')
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = VenueForm()
-        formset = VenueImageFormSet()
     
     return render(request, 'addVenue.html', {
         'form': form,
-        'formset': formset,
     })
+
+
+@login_required
+def VenueList(request):
+    # Show all venues for admins, but only user's own venues for regular users
+    if request.user.is_staff:
+        venues = Venue.objects.all().order_by('-created_at')
+    else:
+        venues = Venue.objects.filter(user_id=request.user).order_by('-created_at')
+    
+    return render(request, 'VenuList.html', {'venues': venues})
 
 
 def venue(request):
@@ -68,7 +76,10 @@ def contact(request):
     return render(request, 'contact.html')
 
 def venue_list(request):
-    return render(request, 'VenueList.html')
+    venues = Venue.objects.all().order_by('-id')  # Show latest first, optional
+    return render(request, 'VenueList.html', {
+        'venues': venues
+    })
 
 def visit_request(request):
     return render(request, 'VisitRequest.html')
@@ -142,3 +153,53 @@ def user_login(request):
             return redirect('user-login')  # Redirect to login page after registration
 
     return render(request, 'register.html')
+
+
+
+def booking(request):
+    # Get all booking types to display on the form
+    booking_types = BookingType.objects.all()
+    
+    # If there are no booking types in the database, create default ones
+    if not booking_types.exists():
+        BookingType.objects.create(name="Lunch", price=500)
+        BookingType.objects.create(name="Coffee", price=200)
+        BookingType.objects.create(name="Dinner", price=700)
+        BookingType.objects.create(name="Coffee + Dinner", price=900)
+        booking_types = BookingType.objects.all()
+    
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        
+        if form.is_valid():
+            # Create booking without saving to DB yet
+            booking = form.save(commit=False)
+            
+            # Get selected booking types
+            selected_types = request.POST.getlist('booking_types')
+            
+            if not selected_types:
+                messages.error(request, "Please select at least one booking type.")
+                return render(request, 'Booking.html', {'form': form, 'booking_types': booking_types})
+            
+            # Calculate total price
+            total_price = 0
+            for type_id in selected_types:
+                booking_type = BookingType.objects.get(id=type_id)
+                total_price += booking_type.price
+            
+            booking.total_price = total_price
+            booking.save()
+            
+            # Add the selected booking types
+            for type_id in selected_types:
+                booking.types.add(BookingType.objects.get(id=type_id))
+            
+            messages.success(request, "Booking confirmed successfully!")
+            return redirect('booking')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = BookingForm()
+    
+    return render(request, 'Booking.html', {'form': form, 'booking_types': booking_types})

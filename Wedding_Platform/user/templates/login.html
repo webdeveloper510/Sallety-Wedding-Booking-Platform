@@ -1,29 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Wedding Vendor Directory</title>
     <!-- Bootstrap 5.3.3 CSS -->
-    <link rel="stylesheet" href="{% static  'assets/css/bootstrap.min.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static  'assets/css/bootstrap.min.css' %}"
+    />
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}">
-    <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static  'assets/css/homenew.style.css' %}">
-    <link rel="stylesheet" href="{% static  'assets/css/venue.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}" />
+    <script
+      src="https://kit.fontawesome.com/your-fa-kit.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static  'assets/css/homenew.style.css' %}"
+    />
+    <link rel="stylesheet" href="{% static  'assets/css/venue.css' %}" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/testimonial-3.css">
+    <link rel="stylesheet" href="assets/css/testimonial-3.css" />
     <!-- Bootstrap Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
 
-   
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
   </head>
   <body>
     <!-- ======= TOP BAR ======= -->
@@ -31,9 +47,9 @@
       <div class="container d-flex justify-content-between align-items-center">
         <div class="top-bar-left">
           <span class="me-3">
-            <i class="fas fa-phone"></i> +1 234 567 890 </span>
-          <span>
-            <i class="fas fa-envelope"></i> contact@wedding.com </span>
+            <i class="fas fa-phone"></i> +1 234 567 890
+          </span>
+          <span> <i class="fas fa-envelope"></i> contact@wedding.com </span>
         </div>
         <div class="top-bar-right">
           <a href="#" class="me-3">
@@ -57,10 +73,18 @@
     <nav class="navbar navbar-expand-lg navbar-dark inner_navbar">
       <div class="container">
         <a class="navbar-brand" href="index.html">
-          <img src="{% static 'assets/images/logo1.png' %}" alt="Weddlist Logo" height="40">
-
+          <img
+            src="{% static 'assets/images/logo1.png' %}"
+            alt="Weddlist Logo"
+            height="40"
+          />
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -78,19 +102,35 @@
               <a class="nav-link" href="./addVenue.html">Add Venue</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <i class="fas fa-user"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
-                <li><a class="dropdown-item" href="register.html">Register</a></li>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="userDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="{% url 'user-login' %}"
+                    >Login</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="register.html">Register</a>
+                </li>
               </ul>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    
+
     <section class="inner-banner">
       <div class="container">
         <div class="banner-dtl text-center">
@@ -116,27 +156,43 @@
             <form method="POST" action="{% url 'user-login' %}">
               {% csrf_token %}
               <div class="mb-3">
-                <input type="text" name="username_or_email" class="form-control" placeholder="Username Or Email" required>
+                <input
+                  type="text"
+                  name="username_or_email"
+                  class="form-control"
+                  placeholder="Username Or Email"
+                  required
+                />
               </div>
               <div class="mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Password"
+                  required
+                />
               </div>
               <div class="mt-3 mb-4 text-start">
                 <button type="submit" class="btn submit-btn">SIGN IN</button>
               </div>
-              {% comment %} <div class="mt-3 mb-4 text-start">
-                <input type='hidden' name='csrfmiddlewaretoken' value='some-long-token'>
-              </div> {% endcomment %}
-              {% if messages %}
-    {% for message in messages %}
-      <p style="color: red;">{{ message }}</p>
-    {% endfor %}
-  {% endif %}
+              {% comment %}
+              <div class="mt-3 mb-4 text-start">
+                <input
+                  type="hidden"
+                  name="csrfmiddlewaretoken"
+                  value="some-long-token"
+                />
+              </div>
+              {% endcomment %} {% if messages %} {% for message in messages %}
+              <p style="color: red">{{ message }}</p>
+              {% endfor %} {% endif %}
             </form>
-            
+
             <div class="row w-100 m-0">
               <div class="col-sm-7 p-0 text-start">
-                <p class="sign-in"> Don't have an account? <a href="register.html">Sign Up</a>
+                <p class="sign-in">
+                  Don't have an account? <a href="register.html">Sign Up</a>
                 </p>
                 <!--  <p class="sign-in">
                     Are you Vendor?  <a class="vendorsignupclick">Register Now</a></p> -->
@@ -159,7 +215,10 @@
           <div class="col-md-3">
             <h5>About Weddlist</h5>
             <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+            <p>
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
+              poris suscipit labo riosam.
+            </p>
             <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
           </div>
           <!-- Pages -->
@@ -184,7 +243,11 @@
           <div class="col-md-3">
             <h5>Newsletter</h5>
             <div class="d-flex">
-              <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="EMAIL ADDRESS"
+              />
               <button class="newsletter-btn">
                 <i class="fas fa-paper-plane"></i>
               </button>
@@ -203,11 +266,10 @@
           </div>
         </div>
       </div>
-      <div class="copyright"> © 2025 All rights reserved. </div>
+      <div class="copyright">© 2025 All rights reserved.</div>
     </footer>
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
-
   </body>
 </html>
