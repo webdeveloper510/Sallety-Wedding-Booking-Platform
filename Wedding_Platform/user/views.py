@@ -12,26 +12,37 @@ from django.contrib import messages
 from .models import Venue, VenueImage, User
 from .models import BookingType, Booking
 from .forms import BookingForm
+from django.shortcuts import render, get_object_or_404
 
 
 def index(request):
-    return render(request, 'new-index.html')
+    # Get active venues from the database
+    venues = Venue.objects.filter(status='active')
+    context = {
+        'venues': venues
+    }
+    return render(request, 'new-index.html', context)
 
 
 @login_required
 def add_venue(request):
     if request.method == 'POST':
         form = VenueForm(request.POST, request.FILES)
-        
-        if form.is_valid():
+        formset = VenueImageFormSet(request.POST, request.FILES)
+
+        if form.is_valid() and formset.is_valid():
             venue = form.save(commit=False)
-            
-            # ✅ Assign user correctly
             venue.user = request.user
             venue.status = 'Active'
             venue.save()
 
-            # Process amenities checkboxes
+            # Link and save images
+            images = formset.save(commit=False)
+            for image in images:
+                image.venue = venue
+                image.save()
+
+            # Save amenities (if still required)
             venue.has_parking = 'parking' in request.POST.getlist('amenities', [])
             venue.has_prayer_rooms = 'prayer_rooms' in request.POST.getlist('amenities', [])
             venue.has_dj = 'dj' in request.POST.getlist('amenities', [])
@@ -39,24 +50,19 @@ def add_venue(request):
             venue.has_wifi = 'wifi' in request.POST.getlist('amenities', [])
             venue.has_swimming_pool = 'swimming_pool' in request.POST.getlist('amenities', [])
             venue.save()
-            
-            # Save gallery images
-            if 'gallery_images' in request.FILES:
-                gallery_images = request.FILES.getlist('gallery_images')
-                for image in gallery_images:
-                    VenueImage.objects.create(venue=venue, image=image)
-                    
+
             messages.success(request, 'Venue added successfully! It will be reviewed by an administrator.')
             return redirect('venue-list')
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = VenueForm()
-    
+        formset = VenueImageFormSet()
+
     return render(request, 'addVenue.html', {
         'form': form,
+        'formset': formset
     })
-
 
 @login_required
 def VenueList(request):
@@ -87,8 +93,15 @@ def visit_request(request):
 def table_booking(request):
     return render(request, 'TableBooking.html')
 
-def venue_detail(request):
-    return render(request, 'single-venue-detail.html')
+def venue_detail(request, venue_id):
+    venue = get_object_or_404(Venue, id=venue_id)
+    # Get related images for this venue
+    venue_images = venue.images.all()
+    context = {
+        'venue': venue,
+        'venue_images': venue_images
+    }
+    return render(request, 'single-venue-detail.html', context)
 def booking(request):
     return render(request, 'Booking.html')
 def contact(request):

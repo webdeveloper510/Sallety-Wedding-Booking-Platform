@@ -28,7 +28,7 @@
 
     <!-- Bootstrap JavaScript (Include this before closing </body>) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-	   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- FullCalendar CSS -->
    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
@@ -248,6 +248,7 @@
             let calendarEl = document.getElementById("calendar");
             let selectedDateText = document.getElementById("selectedDateText");
             let chosenDateInput = document.getElementById("chosenDate");
+            let totalPriceElement = document.getElementById("totalPrice");
 
             // Initialize FullCalendar
             let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -261,66 +262,42 @@
 
             calendar.render();
 
+            // Calculate total price function
             function calculateTotalPrice() {
-              let total = 0;
-              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-                  total += parseInt(checkbox.getAttribute("data-price"));
-              });
-              totalPriceElement.innerText = total;
-          }
+                let total = 0;
+                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                    total += parseInt(checkbox.getAttribute("data-price"));
+                });
+                totalPriceElement.innerText = total;
+            }
 
-          // Listen for checkbox changes to update price
-          document.querySelectorAll(".booking-type").forEach((checkbox) => {
-              checkbox.addEventListener("change", calculateTotalPrice);
-          });
+            // Listen for checkbox changes to update price
+            document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                checkbox.addEventListener("change", calculateTotalPrice);
+            });
 
             // Handle Form Submission
             document.getElementById("bookingForm").addEventListener("submit", function (event) {
-              event.preventDefault();
+                // Only prevent default if we're showing an alert
+                if (!chosenDateInput.value) {
+                    event.preventDefault();
+                    alert("Please select a date before confirming.");
+                    return;
+                }
 
-              if (!chosenDateInput.value) {
-                  alert("Please select a date before confirming.");
-                  return;
-              }
+                let selectedTypes = [];
+                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                    selectedTypes.push(checkbox.value);
+                });
 
-              let name = document.getElementById("name").value;
-              let phone = document.getElementById("phone").value;
-              let email = document.getElementById("email").value;
-              let guests = document.getElementById("guests").value;
-              let chosenDate = chosenDateInput.value;
-              
-              let selectedTypes = [];
-              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-                  selectedTypes.push(checkbox.value);
-              });
+                if (selectedTypes.length === 0) {
+                    event.preventDefault();
+                    alert("Please select at least one booking type.");
+                    return;
+                }
 
-              if (selectedTypes.length === 0) {
-                  alert("Please select at least one booking type.");
-                  return;
-              }
-
-              let totalPrice = totalPriceElement.innerText;
-
-              alert(`Booking Confirmed!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nDate: ${chosenDate}\nGuests: ${guests}\nType: ${selectedTypes.join(", ")}\nTotal Price: $${totalPrice}`);
-          });
-      });
+            });
+        });
     </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          let totalPriceElement = document.getElementById("totalPrice");
-    
-          function calculateTotalPrice() {
-              let total = 0;
-              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-                  total += parseInt(checkbox.getAttribute("data-price"));
-              });
-              totalPriceElement.innerText = total;
-          }
-    
-          document.querySelectorAll(".booking-type").forEach((checkbox) => {
-              checkbox.addEventListener("change", calculateTotalPrice);
-          });
-      });
-    </script>
-  </body>
-    </html>
+</body>
+</html>

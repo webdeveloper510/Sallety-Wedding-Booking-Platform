@@ -1065,7 +1065,10 @@ span.badge.bg-warning.text-dark.position-absolute.top-0.start-0.m-2 {
 }
 
 .card.wedding-card .card-body {
-	padding-top: 25px;
+	padding-top: 2px;
+}
+.wedding-card{
+border: none !important;
 }
 
 .d_none {

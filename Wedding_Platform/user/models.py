@@ -81,6 +81,7 @@ class Venue(models.Model):
     chambermarie_image = models.ImageField(upload_to='venues/chambermarie/', blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     contact = models.CharField(max_length=20,null=True, blank=True)
+    capacity = models.IntegerField(null=True, blank=True) 
 
     # Categories
     is_beach = models.BooleanField(default=False)
@@ -112,6 +113,7 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class VenueImage(models.Model):

@@ -7,7 +7,7 @@ class VenueForm(forms.ModelForm):
         model = Venue
         fields = [
             'name', 'description', 'chambermarie', 'chambermarie_image',
-            'price', 'contact', 
+            'price', 'contact', 'capacity', 
             'is_beach', 'is_city', 'is_hotel', 'is_countryside',
             'thumbnail', 
             'full_address', 'region', 'longitude', 'latitude',
@@ -20,6 +20,7 @@ class VenueForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Venue Description'}),
             'price': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Price'}),
             'contact': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Enter Contact'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Capacity'}),
             'full_address': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Full Address'}),
             'longitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Longitude'}),
             'latitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Latitude'}),
