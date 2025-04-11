@@ -58,7 +58,7 @@ class Venue(models.Model):
     )
 
     REGION_CHOICES = (
-        
+       
         ('Connecticut1', 'Connecticut1'),
         ('New York', 'New York'),
         ('Los Angeles', 'Los Angeles'),
@@ -115,7 +115,6 @@ class Venue(models.Model):
         return self.name
 
 
-
 class VenueImage(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE, related_name='images',null=True, blank=True)
     image = models.ImageField(upload_to='venue_gallery/',null=True, blank=True)
@@ -146,4 +145,23 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking by {self.name} on {self.booking_date}"
-      
+
+
+
+class VisitRequest(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    visit_date = models.DateField()
+    time_slot = models.CharField(
+        max_length=50,
+        choices=[
+            ('Morning (9 AM - 12 PM)', 'Morning (9 AM - 12 PM)'),
+            ('Afternoon (12 PM - 3 PM)', 'Afternoon (12 PM - 3 PM)'),
+            ('Evening (3 PM - 6 PM)', 'Evening (3 PM - 6 PM)'),
+        ]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.visit_date}"

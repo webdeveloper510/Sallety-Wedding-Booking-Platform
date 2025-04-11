@@ -2,770 +2,498 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Venue</title>
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/homenew.style.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/venue.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/homenew.style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/venue.css' %}">
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
-      input[type="checkbox"] {
-        width: auto !important;
-        height: auto !important;
-        padding: 8px !important;
-      }
-      input[type="file"],
-      input[type="number"],
-      select {
-        padding: 10px !important;
-        border: 1px solid #ddd !important;
-        width: 97% !important;
-      }
-      .dropzone {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        text-align: center;
-        margin-top: 10px;
-        border-radius: 5px;
-        background: #f9f9f9;
-        cursor: pointer;
-        width: 100%;
-    }
-    .dropzone:hover {
-        border-color: #666;
-    }
-    #imagePreview {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 15px;
-    }
-    .preview-container {
-        position: relative;
-        margin: 10px;
-    }
-    .preview-container img {
-        width: 100px;
-        height: 100px;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-    .remove-btn {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: red;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        font-size: 12px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    </style>
-  </head>
+        input[type="checkbox"] {
+           
+           
+            width: auto !important;
+            height: auto !important;
+            padding:8px !important;
+        }
+        input[type="file"],
+        select {
+            padding: 10px !important;
+            border: 1px solid #ddd !important;
+            width: 97% !important;
+        }
+       
+     
+            .thumbnail {
+                position: relative;
+                width: 120px;
+                height: 100px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .thumbnail img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        
+            .remove-btn {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                background: red;
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 14px;
+                cursor: pointer;
+                z-index: 2;
+            }
+        </style>
+   
+</head>
 
-  <body>
+<body>
     {% include 'header.html' %}
     <div class="container-fluid">
-      <div class="row">
-        {% include 'sidebar.html' %}
+        <div class="row">
+            {% include 'sidebar.html' %}
 
-        <div class="col-md-10 main-form">
-          {% if messages %}
-          <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-          </div>
-          {% endif %}
-
-          <div class="row">
-            <div class="col-md-3">
-              <div class="step_tabs">
-                <!-- Step Navigation -->
-                <div class="steps">
-                  <div class="step active" onclick="showStep(1)">
-                    <span>01</span> Basic Information
-                  </div>
-                  <div class="step" onclick="showStep(2)">
-                    <span>02</span> Gallery
-                  </div>
-                  <div class="step" onclick="showStep(3)">
-                    <span>03</span> Location
-                  </div>
-                  <div class="step" onclick="showStep(4)">
-                    <span>04</span> Amenities
-                  </div>
+            <div class="col-md-10 main-form">
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
                 </div>
-              </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="step_tabs">
+                            <!-- Step Navigation -->
+                            <div class="steps">
+                                <div class="step active" onclick="showStep(1)"><span>01</span> Basic Information</div>
+                                <div class="step" onclick="showStep(2)"><span>02</span> Gallery</div>
+                                <div class="step" onclick="showStep(3)"><span>03</span> Location</div>
+                                <div class="step" onclick="showStep(4)"><span>04</span> Amenities</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 main-form">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                           
+                            <!-- Step 1: Basic Information -->
+                            <div class="form-section active" id="step1">
+                                <div class="form-grid">
+                                    <div class="form-group full">
+                                        <label>Venue Name</label>
+                                        {{ form.name }}
+                                        {% if form.name.errors %}
+                                        <div class="error">{{ form.name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                   
+                                    <div class="form-group full">
+                                        <label>Venue Description</label>
+                                        {{ form.description }}
+                                        {% if form.description.errors %}
+                                        <div class="error">{{ form.description.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                   
+                                    <div style="display: flex; gap: 15px; width: 100%;">
+                                        <div class="form-group" style="flex: 1;">
+                                            <label>Chambermarie</label>
+                                            {{ form.chambermarie }}
+                                            {% if form.chambermarie.errors %}
+                                            <div class="error">{{ form.chambermarie.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group" style="flex: 1;">
+                                            <label>Upload Chambermarie Image</label>
+                                            {{ form.chambermarie_image }}
+                                            {% if form.chambermarie_image.errors %}
+                                            <div class="error">{{ form.chambermarie_image.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group full">
+                                        <label>Select Categories</label>
+                                   
+                                        <div class="form-check">
+                                            {{ form.is_beach }}
+                                            <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
+                                        </div>
+                                        <div class="form-check">
+                                            {{ form.is_city }}
+                                            <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
+                                        </div>
+                                        <!-- and so on -->
+                                        <div class="form-check">
+                                            {{ form.is_hotel }}
+                                            <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
+                                        </div>
+                                        <div class="form-check">
+                                            {{ form.is_countryside }}
+                                            <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">countryside</label>
+                                        </div>
+                                   
+                                    </div>
+                                   
+                                   
+                                    <div style="display: flex; gap: 40px; width: 100%;">
+                                        <div class="form-group" style="flex: 1;">
+                                            <label>Price</label>
+                                            {{ form.price }}
+                                            {% if form.price.errors %}
+                                            <div class="error">{{ form.price.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group" style="flex: 1;">
+                                            <label>Contact</label>
+                                            {{ form.contact }}
+                                            {% if form.contact.errors %}
+                                            <div class="error">{{ form.contact.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group full">
+                                        <label>Capacity</label>
+                                        {{ form.capacity }}
+                                        {% if form.capacity.errors %}
+                                        <div class="error">{{ form.capacity.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Gallery -->
+                            <div class="form-section" id="step2" style="margin-top: 30px;">
+                                <div class="same_div">
+                                    <label style="font-weight: 500;">Venue Thumbnail</label>
+                                    {{ form.thumbnail }}
+                                    {% if form.thumbnail.errors %}
+                                    <div class="error">{{ form.thumbnail.errors }}</div>
+                                    {% endif %}
+
+                                    <div class="dropzone" style="float: left; margin-top: 10px;">
+                                        <input type="file" name="gallery_images" multiple accept="image/*" id="galleryInput">
+                                        
+                                        <div id="previewContainer" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+                                    
+                                        <p id="errorText" style="color: red; font-weight: 500;"></p>
+                                    
+                                        <small>* You can upload up to 4 images for your listing</small><br>
+                                        <small>* Listing images should be at least 620x480 in dimensions</small>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Location -->
+                            <div class="form-section" id="step3">
+                                <div class="location same_div">
+                                   
+                                    {% comment %} <div class="">
+                                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423817.9663201953!2d18.032266843830698!3d-33.913395580156234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sin!4v1743676276759!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                           
+                                       </div>
+                                       <p class="text-muted">Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
+                                        {% endcomment %}
+                                    <div class="form-group mt2">
+                                        <label for="fullAddress">Full Address</label>
+                                        {{ form.full_address }}
+                                        {% if form.full_address.errors %}
+                                        <div class="error">{{ form.full_address.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="region">Region</label>
+                                        {{ form.region }}
+                                        {% if form.region.errors %}
+                                        <div class="error">{{ form.region.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-row" style="display: flex; gap: 15px;">
+                                        <div class="form-group" style="flex: 1;">
+                                            <label for="longitude">Longitude</label>
+                                            {{ form.longitude }}
+                                            {% if form.longitude.errors %}
+                                            <div class="error">{{ form.longitude.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group" style="flex: 1;">
+                                            <label for="latitude">Latitude</label>
+                                            {{ form.latitude }}
+                                            {% if form.latitude.errors %}
+                                            <div class="error">{{ form.latitude.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Amenities -->
+                            <div class="form-section" id="step4">
+                                <div class="location same_div">
+                                    <div class="feature-grid">
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'parking')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-parking"></i>
+                                                <p>Parking</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="parking" style="display:none;" {% if form.has_parking.value %}checked{% endif %}>
+                                        </div>
+                                       
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'prayer_rooms')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-praying-hands"></i>
+                                                <p>Prayer Rooms</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="prayer_rooms" style="display:none;" {% if form.has_prayer_rooms.value %}checked{% endif %}>
+                                        </div>
+                                       
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'dj')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-music"></i>
+                                                <p>DJ</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="dj" style="display:none;" {% if form.has_dj.value %}checked{% endif %}>
+                                        </div>
+                                       
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'photographer')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-camera"></i>
+                                                <p>Photographer</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="photographer" style="display:none;" {% if form.has_photographer.value %}checked{% endif %}>
+                                        </div>
+                                       
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'wifi')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-wifi"></i>
+                                                <p>WiFi</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="wifi" style="display:none;" {% if form.has_wifi.value %}checked{% endif %}>
+                                        </div>
+                                       
+                                        <div class="feature-box" onclick="toggleAmenity(this, 'swimming_pool')">
+                                            <div class="feature-content">
+                                                <i class="fas fa-swimming-pool"></i>
+                                                <p>Swimming Pool</p>
+                                            </div>
+                                            <div class="checkbox-indicator">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <input type="checkbox" name="amenities" value="swimming_pool" style="display:none;" {% if form.has_swimming_pool.value %}checked{% endif %}>
+                                        </div>
+                                    </div>
+
+                                    <div class="venue-butn">
+                                        <button type="submit" class="submitbtn">Add Venue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="col-md-9 main-form">
-              <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                <!-- Step 1: Basic Information -->
-                <div class="form-section active" id="step1">
-                  <div class="form-grid">
-                    <div class="form-group full">
-                      <label>Venue Name</label>
-                      {{ form.name }} {% if form.name.errors %}
-                      <div class="error">{{ form.name.errors }}</div>
-                      {% endif %}
-                    </div>
-                
-                    <div class="form-group full">
-                      <label>Venue Description</label>
-                      {{ form.description }} {% if form.description.errors %}
-                      <div class="error">{{ form.description.errors }}</div>
-                      {% endif %}
-                    </div>
-                
-                    <div style="display: flex; gap: 15px; width: 100%">
-                      <div class="form-group" style="flex: 1">
-                        <label>Chambermarie</label>
-                        {{ form.chambermarie }} {% if form.chambermarie.errors %}
-                        <div class="error">{{ form.chambermarie.errors }}</div>
-                        {% endif %}
-                      </div>
-                      <div class="form-group" style="flex: 1">
-                        <label>Upload Chambermarie Image</label>
-                        {{ form.chambermarie_image }} {% if form.chambermarie_image.errors %}
-                        <div class="error">
-                          {{ form.chambermarie_image.errors }}
-                        </div>
-                        {% endif %}
-                      </div>
-                    </div>
-                
-                    <div class="form-group full">
-                      <label>Select Categories</label>
-                
-                      <div class="form-check">
-                        {{ form.is_beach }}
-                        <label
-                          class="form-check-label"
-                          for="{{ form.is_beach.id_for_label }}"
-                          >Beach</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        {{ form.is_city }}
-                        <label
-                          class="form-check-label"
-                          for="{{ form.is_city.id_for_label }}"
-                          >City</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        {{ form.is_hotel }}
-                        <label
-                          class="form-check-label"
-                          for="{{ form.is_hotel.id_for_label }}"
-                          >Hotel</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        {{ form.is_countryside }}
-                        <label
-                          class="form-check-label"
-                          for="{{ form.is_countryside.id_for_label }}"
-                          >Countryside</label
-                        >
-                      </div>
-                    </div>
-                
-                    <div style="display: flex; gap: 40px; width: 100%">
-                      <div class="form-group" style="flex: 1">
-                        <label>Price</label>
-                        {{ form.price }} {% if form.price.errors %}
-                        <div class="error">{{ form.price.errors }}</div>
-                        {% endif %}
-                      </div>
-                      <div class="form-group" style="flex: 1">
-                        <label>Contact</label>
-                        {{ form.contact }} {% if form.contact.errors %}
-                        <div class="error">{{ form.contact.errors }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                
-                    <!-- ✅ Added Capacity Field -->
-                    <div class="form-group full">
-                      <label>Capacity</label>
-                      {{ form.capacity }} {% if form.capacity.errors %}
-                      <div class="error">{{ form.capacity.errors }}</div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-                <!-- Step 2: Gallery -->
-                <div class="form-section" id="step2" style="margin-top: 30px">
-                  <div class="same_div">
-                    <label style="font-weight: 500">Venue Thumbnail</label>
-                    {{ form.thumbnail }} 
-                    {% if form.thumbnail.errors %}
-                    <div class="error">{{ form.thumbnail.errors }}</div>
-                    {% endif %}
-                    
-                    <label style="font-weight: 500;">Venue Gallery</label>
-        <div class="dropzone" id="dropzone">
-            <p>Click to browse or drag and drop images here</p>
-            <input type="file" id="galleryInput" name="gallery_images[]" multiple accept="image/*" style="display: none;">
-            <div id="imagePreview"></div>
-            
-            <small>* You can upload up to 5 images for your listing</small><br>
-            <small>* Listing images should be at least 620x480 in dimensions</small>
         </div>
-                  </div>
-                </div>
-
-                <!-- Step 3: Location -->
-                <div class="form-section" id="step3">
-                  <div class="location same_div">
-                    {% comment %}
-                    <div class="">
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423817.9663201953!2d18.032266843830698!3d-33.913395580156234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sin!4v1743676276759!5m2!1sen!2sin"
-                        width="100%"
-                        height="450"
-                        style="border: 0"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                    <p class="text-muted">
-                      Drag and drop the marker to identify your
-                      <b>Latitude</b> and <b>Longitude</b>
-                    </p>
-                    {% endcomment %}
-                    <div class="form-group mt2">
-                      <label for="fullAddress">Full Address</label>
-                      {{ form.full_address }} {% if form.full_address.errors %}
-                      <div class="error">{{ form.full_address.errors }}</div>
-                      {% endif %}
-                    </div>
-                    <div class="form-group">
-                      <label for="region">Region</label>
-                      {{ form.region }} {% if form.region.errors %}
-                      <div class="error">{{ form.region.errors }}</div>
-                      {% endif %}
-                    </div>
-                    <div class="form-row" style="display: flex; gap: 15px">
-                      <div class="form-group" style="flex: 1">
-                        <label for="longitude">Longitude</label>
-                        {{ form.longitude }} {% if form.longitude.errors %}
-                        <div class="error">{{ form.longitude.errors }}</div>
-                        {% endif %}
-                      </div>
-                      <div class="form-group" style="flex: 1">
-                        <label for="latitude">Latitude</label>
-                        {{ form.latitude }} {% if form.latitude.errors %}
-                        <div class="error">{{ form.latitude.errors }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Step 4: Amenities -->
-                <div class="form-section" id="step4">
-                  <div class="location same_div">
-                    <div class="feature-grid">
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'parking')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-parking"></i>
-                          <p>Parking</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="parking"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_parking.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'prayer_rooms')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-praying-hands"></i>
-                          <p>Prayer Rooms</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="prayer_rooms"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_prayer_rooms.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'dj')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-music"></i>
-                          <p>DJ</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="dj"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_dj.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'photographer')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-camera"></i>
-                          <p>Photographer</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="photographer"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_photographer.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'wifi')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-wifi"></i>
-                          <p>WiFi</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="wifi"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_wifi.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-
-                      <div
-                        class="feature-box"
-                        onclick="toggleAmenity(this, 'swimming_pool')"
-                      >
-                        <div class="feature-content">
-                          <i class="fas fa-swimming-pool"></i>
-                          <p>Swimming Pool</p>
-                        </div>
-                        <div class="checkbox-indicator">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="check-icon"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </div>
-                        <input
-                          type="checkbox"
-                          name="amenities"
-                          value="swimming_pool"
-                          style="display: none"
-                          {%
-                          if
-                          form.has_swimming_pool.value
-                          %}checked{%
-                          endif
-                          %}
-                        />
-                      </div>
-                    </div>
-
-                    <div class="venue-butn">
-                      <button type="submit" class="submitbtn">Add Venue</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <!-- About -->
-          <div class="col-md-3">
-            <h5>About Weddlist</h5>
-            <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-            <p>
-              Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
-              poris suscipit labo riosam.
-            </p>
-            <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
-          </div>
-          <!-- Pages -->
-          <div class="col-md-3 links">
-            <h5>Pages</h5>
-            <a href="#">Contact Us</a>
-            <a href="#">Blog</a>
-            <a href="#">Help</a>
-            <a href="#">Gallery</a>
-            <a href="#">FAQs</a>
-          </div>
-          <!-- Categories -->
-          <div class="col-md-3 links">
-            <h5>Categories</h5>
-            <a href="#">Beauty</a>
-            <a href="#">Catering</a>
-            <a href="#">Dresses</a>
-            <a href="#">Invitations</a>
-            <a href="#">Music</a>
-          </div>
-          <!-- Newsletter -->
-          <div class="col-md-3">
-            <h5>Newsletter</h5>
-            <div class="d-flex">
-              <input
-                type="email"
-                class="newsletter-input"
-                placeholder="EMAIL ADDRESS"
-              />
-              <button class="newsletter-btn">
-                <i class="fas fa-paper-plane"></i>
-              </button>
+        <div class="container">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3">
+                    <h5>About Weddlist</h5>
+                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
+                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                </div>
+                <!-- Pages -->
+                <div class="col-md-3 links">
+                    <h5>Pages</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Help</a>
+                    <a href="#">Gallery</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <!-- Categories -->
+                <div class="col-md-3 links">
+                    <h5>Categories</h5>
+                    <a href="#">Beauty</a>
+                    <a href="#">Catering</a>
+                    <a href="#">Dresses</a>
+                    <a href="#">Invitations</a>
+                    <a href="#">Music</a>
+                </div>
+                <!-- Newsletter -->
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <div class="d-flex">
+                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="social-icons mt-3">
-              <a href="#">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="copyright">© 2025 All rights reserved.</div>
+        <div class="copyright"> © 2025 All rights reserved. </div>
     </footer>
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      // Step navigation
-      function showStep(step) {
-        // Hide all sections
-        document
-          .querySelectorAll(".form-section")
-          .forEach((section) => section.classList.remove("active"));
-        // Show selected
-        document.getElementById("step" + step).classList.add("active");
-
-        // Reset all steps
-        document
-          .querySelectorAll(".step")
-          .forEach((s) => s.classList.remove("active"));
-        // Activate clicked step
-        document.querySelectorAll(".step")[step - 1].classList.add("active");
-      }
-
-      // Toggle amenity selection
-      function toggleAmenity(element, amenityName) {
-        element.classList.toggle("selected");
-        const checkbox = element.querySelector('input[type="checkbox"]');
-        checkbox.checked = !checkbox.checked;
-      }
-
-      // Initialize amenities based on model values
-      document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".feature-box").forEach((box) => {
-          const checkbox = box.querySelector('input[type="checkbox"]');
-          if (checkbox.checked) {
-            box.classList.add("selected");
-          }
+        // Step navigation
+        function showStep(step) {
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+            // Show selected
+            document.getElementById('step' + step).classList.add('active');
+       
+            // Reset all steps
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            // Activate clicked step
+            document.querySelectorAll('.step')[step - 1].classList.add('active');
+        }
+       
+        // Toggle amenity selection
+        function toggleAmenity(element, amenityName) {
+            element.classList.toggle('selected');
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+        }
+       
+        // Initialize amenities based on model values
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.feature-box').forEach(box => {
+                const checkbox = box.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    box.classList.add('selected');
+                }
+            });
         });
-      });
     </script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          const dropzone = document.getElementById('dropzone');
-          const input = document.getElementById('galleryInput');
-          const preview = document.getElementById('imagePreview');
-          let uploadedFiles = []; // Store the current files
-          
-          // Click to open file dialog
-          dropzone.addEventListener('click', function() {
-              input.click();
-          });
-          
-          // Drag and drop functionality
-          dropzone.addEventListener('dragover', function(e) {
-              e.preventDefault();
-              dropzone.style.backgroundColor = '#e9e9e9';
-          });
-          
-          dropzone.addEventListener('dragleave', function() {
-              dropzone.style.backgroundColor = '#f9f9f9';
-          });
-          
-          dropzone.addEventListener('drop', function(e) {
-              e.preventDefault();
-              dropzone.style.backgroundColor = '#f9f9f9';
-              
-              const files = e.dataTransfer.files;
-              handleFiles(files);
-          });
-          
-          // Handle file input change
-          input.addEventListener('change', function() {
-              const files = input.files;
-              handleFiles(files);
-          });
-          
-          function handleFiles(files) {
-              // Check if adding these files would exceed the limit
-              if (uploadedFiles.length + files.length > 5) {
-                  alert("You can upload a maximum of 5 images.");
-                  return;
-              }
-              
-              for (let i = 0; i < files.length; i++) {
-                  const file = files[i];
-                  
-                  // Validate file type
-                  if (!file.type.match('image.*')) {
-                      alert("Please select image files only.");
-                      continue;
-                  }
-                  
-                  // Store the file for later use
-                  uploadedFiles.push(file);
-                  
-                  const reader = new FileReader();
-                  reader.onload = function(e) {
-                      // Create container for preview image and remove button
-                      const container = document.createElement("div");
-                      container.className = "preview-container";
-                      
-                      // Create image preview
-                      const img = document.createElement("img");
-                      img.src = e.target.result;
-                      
-                      // Create remove button
-                      const removeBtn = document.createElement("button");
-                      removeBtn.className = "remove-btn";
-                      removeBtn.innerHTML = "×";
-                      removeBtn.dataset.index = uploadedFiles.length - 1;
-                      
-                      // Add event listener to remove button
-                      removeBtn.addEventListener('click', function(e) {
-                          e.stopPropagation(); // Prevent triggering the dropzone click
-                          const index = parseInt(this.dataset.index);
-                          uploadedFiles.splice(index, 1);
-                          updatePreview(); // Refresh the preview
-                      });
-                      
-                      container.appendChild(img);
-                      container.appendChild(removeBtn);
-                      preview.appendChild(container);
-                  };
-                  
-                  reader.readAsDataURL(file);
-              }
-              
-              // Reset the input to allow selecting the same files again
-              input.value = '';
-          }
-          
-          function updatePreview() {
-              // Clear the preview area
-              preview.innerHTML = "";
-              
-              // Rebuild the preview with current files
-              uploadedFiles.forEach((file, index) => {
-                  const reader = new FileReader();
-                  reader.onload = function(e) {
-                      const container = document.createElement("div");
-                      container.className = "preview-container";
-                      
-                      const img = document.createElement("img");
-                      img.src = e.target.result;
-                      
-                      const removeBtn = document.createElement("button");
-                      removeBtn.className = "remove-btn";
-                      removeBtn.innerHTML = "×";
-                      removeBtn.dataset.index = index;
-                      
-                      removeBtn.addEventListener('click', function(e) {
-                          e.stopPropagation();
-                          const index = parseInt(this.dataset.index);
-                          uploadedFiles.splice(index, 1);
-                          updatePreview();
-                      });
-                      
-                      container.appendChild(img);
-                      container.appendChild(removeBtn);
-                      preview.appendChild(container);
-                  };
-                  
-                  reader.readAsDataURL(file);
-              });
-          }
-      });
-  </script>
+        const galleryInput = document.getElementById('galleryInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const errorText = document.getElementById('errorText');
     
-  </body>
+        let imageFiles = [];
+    
+        galleryInput.addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+            
+            // Check total images including new ones
+            if (imageFiles.length + files.length > 4) {
+                errorText.textContent = "You can only upload a maximum of 4 images.";
+                galleryInput.value = ""; // Reset input
+                return;
+            }
+    
+            errorText.textContent = "";
+    
+            files.forEach(file => {
+                imageFiles.push(file);
+    
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumbnail';
+    
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+    
+                    const removeBtn = document.createElement('span');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.onclick = function () {
+                        previewContainer.removeChild(thumb);
+                        imageFiles = imageFiles.filter(f => f !== file);
+                        updateInputFiles();
+                    };
+    
+                    thumb.appendChild(img);
+                    thumb.appendChild(removeBtn);
+                    previewContainer.appendChild(thumb);
+                };
+    
+                reader.readAsDataURL(file);
+            });
+    
+            updateInputFiles();
+        });
+    
+        function updateInputFiles() {
+            // Create a new DataTransfer to simulate the input
+            const dataTransfer = new DataTransfer();
+            imageFiles.forEach(file => dataTransfer.items.add(file));
+            galleryInput.files = dataTransfer.files;
+        }
+    </script>
+    
 </html>

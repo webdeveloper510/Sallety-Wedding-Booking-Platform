@@ -9,10 +9,15 @@ from .models import Venue, User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .models import Venue, VenueImage, User
+from .models import *
 from .models import BookingType, Booking
 from .forms import BookingForm
+from django.http import JsonResponse
+
 from django.shortcuts import render, get_object_or_404
+from django.views import View
+from .forms import VisitRequestForm
+
 
 
 def index(request):
@@ -28,21 +33,16 @@ def index(request):
 def add_venue(request):
     if request.method == 'POST':
         form = VenueForm(request.POST, request.FILES)
-        formset = VenueImageFormSet(request.POST, request.FILES)
-
-        if form.is_valid() and formset.is_valid():
+       
+        if form.is_valid():
             venue = form.save(commit=False)
+           
+            # ✅ Assign user correctly
             venue.user = request.user
             venue.status = 'Active'
             venue.save()
 
-            # Link and save images
-            images = formset.save(commit=False)
-            for image in images:
-                image.venue = venue
-                image.save()
-
-            # Save amenities (if still required)
+            # Process amenities checkboxes
             venue.has_parking = 'parking' in request.POST.getlist('amenities', [])
             venue.has_prayer_rooms = 'prayer_rooms' in request.POST.getlist('amenities', [])
             venue.has_dj = 'dj' in request.POST.getlist('amenities', [])
@@ -50,18 +50,22 @@ def add_venue(request):
             venue.has_wifi = 'wifi' in request.POST.getlist('amenities', [])
             venue.has_swimming_pool = 'swimming_pool' in request.POST.getlist('amenities', [])
             venue.save()
-
+           
+            # Save gallery images
+            if 'gallery_images' in request.FILES:
+                gallery_images = request.FILES.getlist('gallery_images')
+                for image in gallery_images:
+                    VenueImage.objects.create(venue=venue, image=image)
+                   
             messages.success(request, 'Venue added successfully! It will be reviewed by an administrator.')
             return redirect('venue-list')
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = VenueForm()
-        formset = VenueImageFormSet()
-
+   
     return render(request, 'addVenue.html', {
         'form': form,
-        'formset': formset
     })
 
 @login_required
@@ -82,13 +86,13 @@ def contact(request):
     return render(request, 'contact.html')
 
 def venue_list(request):
-    venues = Venue.objects.all().order_by('-id')  # Show latest first, optional
+    venues = Venue.objects.all().order_by('-id')  
     return render(request, 'VenueList.html', {
         'venues': venues
     })
+# def VisitRequest(request):
+#     return render(request, 'VisitRequest.html')
 
-def visit_request(request):
-    return render(request, 'VisitRequest.html')
 
 def table_booking(request):
     return render(request, 'TableBooking.html')
@@ -108,19 +112,19 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-
 def user_register(request):
     if request.method == "POST":
         name = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
+        role = request.POST.get("role")
 
         if User.objects.filter(name=name).exists():
             messages.error(request, "Username already taken.")
         elif User.objects.filter(email=email).exists():
             messages.error(request, "Email already registered.")
         else:
-            user = User.objects.create_user(name=name, email=email, password=password)
+            user = User.objects.create_user(name=name, email=email, password=password, role=role)
             messages.success(request, "Account created successfully!")
             return redirect('user-login')
 
@@ -216,3 +220,45 @@ def booking(request):
         form = BookingForm()
     
     return render(request, 'Booking.html', {'form': form, 'booking_types': booking_types})
+
+
+# class VisitRequestView(View):
+#     def get(self, request):
+#         form = VisitRequestForm()
+#         return render(request, 'visit_request.html', {'form': form})
+    
+#     def post(self, request):
+#         form = VisitRequestForm(request.POST)
+#         print("form------------------",form)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Your visit request has been submitted successfully!")
+#             return redirect('visit_request')
+#         else:
+#             print("Form errors:", form.errors)  # ✅ debug
+#         return render(request, 'visit_request.html', {'form': form})
+
+
+
+
+def visit_request_view(request):
+    print(type(VisitRequest), "-------") 
+
+    if request.method == 'POST':
+        print(request.POST, "------------------>>>>>",request.POST.get('name'))
+
+        # VisitRequest.objects.create
+        
+        add_visit = VisitRequest.objects.create(
+            name=request.POST.get('name'),
+            email=request.POST.get('email'),
+            phone=request.POST.get('phone'),
+            visit_date=request.POST.get('visit_date'),
+            time_slot=request.POST.get('time_slot'),
+        )
+        add_visit.save()
+        messages.success(request, 'Thank you! Your visit request has been submitted.')
+        # messages.info(request, 'Just letting you know.')
+    return render(request, 'VisitRequest.html')
+
+        # return redirect('visit_request')

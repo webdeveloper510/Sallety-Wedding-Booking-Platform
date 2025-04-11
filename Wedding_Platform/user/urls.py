@@ -11,11 +11,11 @@ urlpatterns = [
     path('venue/', views.venue, name='venue'),
     path('contact/', views.contact, name='contact'),
     path('venues/', views.venue_list, name='venue-list'),
-    path('visit_request/', views.visit_request, name='visit-request'),
+    path('visit_request_view/', views.visit_request_view, name='visit_request_view'),
     path('table_booking/', views.table_booking, name='table-booking'),
     path('login/', views.user_login, name='user-login'),
     path('register/', views.user_register, name='user-register'), 
-   path('venue/<int:venue_id>/', views.venue_detail, name='venue-detail'),
+    path('venue/<int:venue_id>/', views.venue_detail, name='venue-detail'),
     path('Booking.html', views.booking, name='booking'),
     path('contact.html', views.contact, name='contact'),
 

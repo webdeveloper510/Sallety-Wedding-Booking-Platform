@@ -109,7 +109,7 @@ hr {
 	color: #888;
 }
 
-input {
+.searbar-top {
 	all: unset;
 	width: 100%;
 	padding: 0px 10px;
@@ -117,7 +117,7 @@ input {
 	font-size: 15px;
 }
 
-input:focus {
+.searbar-top:focus {
 	border-color: #007bff;
 	outline: none;
 }

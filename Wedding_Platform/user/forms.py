@@ -1,17 +1,19 @@
 # forms.py
 from django import forms
 from .models import Venue, VenueImage,Booking, BookingType
+from .models import VisitRequest
+
 
 class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
         fields = [
             'name', 'description', 'chambermarie', 'chambermarie_image',
-            'price', 'contact', 'capacity', 
+            'price', 'contact','capacity',
             'is_beach', 'is_city', 'is_hotel', 'is_countryside',
-            'thumbnail', 
+            'thumbnail',
             'full_address', 'region', 'longitude', 'latitude',
-            'has_parking', 'has_prayer_rooms', 'has_dj', 
+            'has_parking', 'has_prayer_rooms', 'has_dj',
             'has_photographer', 'has_wifi', 'has_swimming_pool'
         ]
         widgets = {
@@ -20,7 +22,7 @@ class VenueForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Venue Description'}),
             'price': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Price'}),
             'contact': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Enter Contact'}),
-            'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Capacity'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Capacity'}),  # <-- Widget added
             'full_address': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Full Address'}),
             'longitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Longitude'}),
             'latitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Latitude'}),
@@ -44,7 +46,7 @@ class VenueImageForm(forms.ModelForm):
     class Meta:
         model = VenueImage
         fields = ['image']
-        
+       
 # FormSet for handling multiple image uploads
 VenueImageFormSet = forms.inlineformset_factory(
     Venue, VenueImage, form=VenueImageForm,
@@ -65,3 +67,23 @@ class BookingForm(forms.ModelForm):
             'guests': forms.Select(attrs={'class': 'form-select Booking-select', 'style': 'height:39px'}, 
                                  choices=[(1, '1'), (2, '2')])
         }
+
+
+        
+class VisitRequestForm(forms.ModelForm):
+    class Meta:
+        model = VisitRequest
+        fields = ['name', 'email', 'phone', 'visit_date', 'time_slot']
+
+
+    #     class VisitRequestForm(forms.ModelForm):
+    # class Meta:
+    #     model = VisitRequest
+    #     fields = ['name', 'email', 'phone', 'visit_date', 'time_slot']
+    #     widgets = {
+    #         'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your name'}),
+    #         'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'}),
+    #         'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your phone'}),
+    #         'visit_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+    #         'time_slot': forms.Select(attrs={'class': 'form-select'}),
+    #     }
