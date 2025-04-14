@@ -50,7 +50,6 @@
                                             <th>Price</th>
                                             <th>Contact</th>
                                             <th>Address</th>
-
                                             <th>Amenities</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -61,23 +60,25 @@
                                         {% for venue in venues %}
                                         <tr>
                                             <td>{{ venue.name }}</td>
-                                            <td>{{ venue.description }}</td>
+                                            <td>{{ venue.description|truncatewords:5 }}</td>
                                             <td>${{ venue.price }}</td>
                                             <td>{{ venue.contact }}</td>
-                                            <td>{{ venue.full_address }}</td>
+                                            <td>{{ venue.full_address|truncatewords:5 }}</td>
                                             <td>
-                                                {% if venue.has_wifi %}WiFi{% endif %}
-                                                {% if venue.has_parking %}, Parking{% endif %}
-                                                {% if venue.has_dj %}, DJ{% endif %}
-                                                {% if venue.has_prayer_rooms %}, Prayer Rooms{% endif %}
-                                                {% if venue.has_photographer %}, Photographer{% endif %}
-                                                {% if venue.has_swimming_pool %}, Swimming Pool{% endif %}
+                                                {% if venue.has_wifi %}WiFi,{% endif %}
+                                                {% if venue.has_parking %}Parking,{% endif %}
+                                                {% if venue.has_dj %}DJ,{% endif %}
+                                                {% if venue.has_prayer_rooms %}Prayer Rooms,{% endif %}
+                                                {% if venue.has_photographer %}Photographer,{% endif %}
+                                                {% if venue.has_swimming_pool %}Swimming Pool,{% endif %}
                                             </td>
                                             <td>
-                                                <select class="form-select">
-                                                    <option value="available" {% if venue.status == "Available" %}selected{% endif %}>Available</option>
-                                                    <option value="not_available" {% if venue.status == "Not Available" %}selected{% endif %}>Not Available</option>
+                                                <select class="form-select" onchange="updateVenueStatus('{{ venue.id }}', this.value)">
+                                                    <option value="active" {% if venue.status == "active" %}selected{% endif %}>Active</option>
+                                                    <option value="pending" {% if venue.status == "pending" %}selected{% endif %}>Pending</option>
+                                                    <option value="rejected" {% if venue.status == "rejected" %}selected{% endif %}>Rejected</option>
                                                 </select>
+                                                
                                             </td>
                                             <td>
                                                 <!-- Action Buttons -->
@@ -90,20 +91,56 @@
                                         <tr><td colspan="8" class="text-center">No venues found.</td></tr>
                                         {% endfor %}
                                     </tbody>
-                                    
                                 </table>
-
-
-
-                            </div>
+                              </div>
                             <!-- Pagination -->
-                            <div class="pagination">
+                            {% comment %} <div class="pagination">
                                 <a href="#">« Prev</a>
                                 <a href="#" class="active">1</a>
                                 <a href="#">2</a>
                                 <a href="#">3</a>
                                 <a href="#">Next »</a>
+                            </div> {% endcomment %}
+                            <div class="d-flex justify-content-center mt-4">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% if venues.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ venues.previous_page_number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo; Prev</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&laquo; Prev</span>
+                                            </li>
+                                        {% endif %}
+                            
+                                        {% for num in venues.paginator.page_range %}
+                                            {% if num > venues.number|add:'-3' and num < venues.number|add:'3' %}
+                                                {% if venues.number == num %}
+                                                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                                {% else %}
+                                                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                            
+                                        {% if venues.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ venues.next_page_number }}" aria-label="Next">
+                                                    <span aria-hidden="true">Next &raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">Next &raquo;</span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -182,5 +219,30 @@
             }
         });
 </script>
-
+<script>
+    function updateVenueStatus(venueId, newStatus) {
+        fetch(`/update-venue-status/${venueId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw new Error("Failed to update status");
+        })
+        .then(data => {
+            alert('Status updated successfully!');
+        })
+        .catch(error => {
+            alert('Error updating status.');
+            console.error(error);
+        });
+    }
+    </script>
+    
 </html>

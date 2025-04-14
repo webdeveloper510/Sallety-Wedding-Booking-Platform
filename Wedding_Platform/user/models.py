@@ -134,11 +134,13 @@ class BookingType(models.Model):
         return f"{self.name} (${self.price})"
 
 class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Add this line
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     booking_date = models.DateField()
     guests = models.IntegerField()
+    venue_id = models.IntegerField(default=1)
     types = models.ManyToManyField(BookingType)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -149,10 +151,17 @@ class Booking(models.Model):
 
 
 class VisitRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     visit_date = models.DateField()
+    venue_id = models.IntegerField(default=1)
     time_slot = models.CharField(
         max_length=50,
         choices=[
@@ -161,6 +170,7 @@ class VisitRequest(models.Model):
             ('Evening (3 PM - 6 PM)', 'Evening (3 PM - 6 PM)'),
         ]
     )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

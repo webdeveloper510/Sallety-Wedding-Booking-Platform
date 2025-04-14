@@ -55,6 +55,7 @@ VenueImageFormSet = forms.inlineformset_factory(
 
 class BookingForm(forms.ModelForm):
     booking_date = forms.DateField(widget=forms.HiddenInput())
+    venue_id = forms.IntegerField(widget=forms.HiddenInput())
     
     # We'll handle booking types with checkboxes in the template
     class Meta:

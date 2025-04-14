@@ -12,11 +12,13 @@ from django.contrib import messages
 from .models import *
 from .models import BookingType, Booking
 from .forms import BookingForm
-from django.http import JsonResponse
-
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .forms import VisitRequestForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.core.paginator import Paginator
 
 
 
@@ -70,14 +72,17 @@ def add_venue(request):
 
 @login_required
 def VenueList(request):
-    # Show all venues for admins, but only user's own venues for regular users
     if request.user.is_staff:
-        venues = Venue.objects.all().order_by('-created_at')
+        venue_list = Venue.objects.all().order_by('-created_at')
     else:
-        venues = Venue.objects.filter(user_id=request.user).order_by('-created_at')
-    
-    return render(request, 'VenuList.html', {'venues': venues})
+        venue_list = Venue.objects.filter(user_id=request.user).order_by('-created_at')
 
+    # Set up pagination: 10 venues per page
+    paginator = Paginator(venue_list, 5)
+    page_number = request.GET.get('page')
+    venues = paginator.get_page(page_number)
+
+    return render(request, 'VenuList.html', {'venues': venues})
 
 def venue(request):
     return render(request, 'single-venue.html')
@@ -103,11 +108,20 @@ def venue_detail(request, venue_id):
     venue_images = venue.images.all()
     context = {
         'venue': venue,
-        'venue_images': venue_images
+        'venue_images': venue_images,
+        'venue_id': venue_id
     }
     return render(request, 'single-venue-detail.html', context)
-def booking(request):
-    return render(request, 'Booking.html')
+# def booking(request):
+#     return render(request, 'Booking.html')
+def booking(request, venue_id):
+    venue = get_object_or_404(Venue, id=venue_id)  # optional but useful
+    return render(request, 'Booking.html', {
+        'venue': venue,
+        'venue_id': venue_id
+    })
+
+
 def contact(request):
     return render(request, 'contact.html')
 
@@ -173,7 +187,7 @@ def user_login(request):
 
 
 
-def booking(request):
+def booking(request, venue_id):
     # Get all booking types to display on the form
     booking_types = BookingType.objects.all()
     
@@ -197,7 +211,11 @@ def booking(request):
             
             if not selected_types:
                 messages.error(request, "Please select at least one booking type.")
-                return render(request, 'Booking.html', {'form': form, 'booking_types': booking_types})
+                return render(request, 'Booking.html', {
+                    'form': form, 
+                    'booking_types': booking_types,
+                    'venue_id': venue_id
+                })
             
             # Calculate total price
             total_price = 0
@@ -206,6 +224,12 @@ def booking(request):
                 total_price += booking_type.price
             
             booking.total_price = total_price
+            booking.venue_id = venue_id  # Set the venue_id
+            
+            # Associate the booking with the current user if they're logged in
+            if request.user.is_authenticated:
+                booking.user = request.user
+            
             booking.save()
             
             # Add the selected booking types
@@ -213,15 +237,18 @@ def booking(request):
                 booking.types.add(BookingType.objects.get(id=type_id))
             
             messages.success(request, "Booking confirmed successfully!")
-            return redirect('booking')
+            return redirect('venue-detail', venue_id=venue_id)
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = BookingForm()
+        # For GET requests, initialize form with venue_id
+        form = BookingForm(initial={'venue_id': venue_id})
     
-    return render(request, 'Booking.html', {'form': form, 'booking_types': booking_types})
-
-
+    return render(request, 'Booking.html', {
+        'form': form, 
+        'booking_types': booking_types,
+        'venue_id': venue_id  # Pass venue_id to template
+    })
 # class VisitRequestView(View):
 #     def get(self, request):
 #         form = VisitRequestForm()
@@ -242,23 +269,67 @@ def booking(request):
 
 
 def visit_request_view(request):
-    print(type(VisitRequest), "-------") 
-
     if request.method == 'POST':
-        print(request.POST, "------------------>>>>>",request.POST.get('name'))
-
-        # VisitRequest.objects.create
+        # print(request.user, "herere")
         
         add_visit = VisitRequest.objects.create(
             name=request.POST.get('name'),
             email=request.POST.get('email'),
             phone=request.POST.get('phone'),
             visit_date=request.POST.get('visit_date'),
+            venue_id=request.POST.get('venue_id'),
             time_slot=request.POST.get('time_slot'),
         )
         add_visit.save()
         messages.success(request, 'Thank you! Your visit request has been submitted.')
-        # messages.info(request, 'Just letting you know.')
-    return render(request, 'VisitRequest.html')
+
+    visit_requests = VisitRequest.objects.all().order_by('-created_at')  # fetch all requests
+    return render(request, 'VisitRequest.html', {'visit_requests': visit_requests})
+
 
         # return redirect('visit_request')
+
+# class VenueDetailView(DetailView):
+    model = Venue
+    template_name = 'venue_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        print(f"ID from path: {pk}")
+        return super().get(request, *args, **kwargs)
+
+@csrf_exempt
+def update_visit_status(request, visit_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_status = data.get('status')
+
+            visit = VisitRequest.objects.get(id=visit_id)
+            visit.status = new_status
+            visit.save()
+
+            return JsonResponse({'success': True})
+        except VisitRequest.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Visit not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+
+
+
+@csrf_exempt
+def update_venue_status(request, venue_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_status = data.get('status')
+        try:
+            venue = Venue.objects.get(id=venue_id)
+            venue.status = new_status
+            venue.save()
+            return JsonResponse({'message': 'Status updated successfully'})
+        except Venue.DoesNotExist:
+            return JsonResponse({'error': 'Venue not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request method'}, status=400)

@@ -16,7 +16,8 @@ urlpatterns = [
     path('login/', views.user_login, name='user-login'),
     path('register/', views.user_register, name='user-register'), 
     path('venue/<int:venue_id>/', views.venue_detail, name='venue-detail'),
-    path('Booking.html', views.booking, name='booking'),
+    path('venue/<int:venue_id>/booking/', views.booking, name='booking'),
     path('contact.html', views.contact, name='contact'),
-
+    path('update-visit-status/<int:visit_id>/', views.update_visit_status, name='update_visit_status'),
+    path('update-venue-status/<int:venue_id>/', views.update_venue_status, name='update_venue_status'),
 ]

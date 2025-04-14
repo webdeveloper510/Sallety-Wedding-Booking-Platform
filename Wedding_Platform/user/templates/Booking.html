@@ -117,10 +117,11 @@
 
             <!-- Form Section -->
             <div class="col-md-8">
-              <form id="bookingForm" class="bookingForm" method="post" action="{% url 'booking' %}">
+                <form id="bookingForm" class="bookingForm" method="post" action="{% url 'booking' venue_id %}">
+
                   {% csrf_token %}
                   <input type="hidden" id="chosenDate" name="booking_date">
-                  
+                  <input type="hidden" name="venue_id" value="{{ venue_id }}">
                   <div class="mb-3">
                       <label class="form-label">Select Booking Type:</label>
                       <div class="d-flex flex-column gap-2">
@@ -297,5 +298,6 @@
             });
         });
     </script>
+    
 </body>
 </html>
