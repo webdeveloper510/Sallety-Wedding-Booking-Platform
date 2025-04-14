@@ -188,10 +188,8 @@ def user_login(request):
 
 
 def booking(request, venue_id):
-    # Get all booking types to display on the form
     booking_types = BookingType.objects.all()
     
-    # If there are no booking types in the database, create default ones
     if not booking_types.exists():
         BookingType.objects.create(name="Lunch", price=500)
         BookingType.objects.create(name="Coffee", price=200)
@@ -203,10 +201,7 @@ def booking(request, venue_id):
         form = BookingForm(request.POST)
         
         if form.is_valid():
-            # Create booking without saving to DB yet
             booking = form.save(commit=False)
-            
-            # Get selected booking types
             selected_types = request.POST.getlist('booking_types')
             
             if not selected_types:
@@ -217,37 +212,35 @@ def booking(request, venue_id):
                     'venue_id': venue_id
                 })
             
-            # Calculate total price
             total_price = 0
             for type_id in selected_types:
                 booking_type = BookingType.objects.get(id=type_id)
                 total_price += booking_type.price
             
             booking.total_price = total_price
-            booking.venue_id = venue_id  # Set the venue_id
+            booking.venue_id = venue_id
             
-            # Associate the booking with the current user if they're logged in
             if request.user.is_authenticated:
                 booking.user = request.user
             
             booking.save()
             
-            # Add the selected booking types
             for type_id in selected_types:
                 booking.types.add(BookingType.objects.get(id=type_id))
             
             messages.success(request, "Booking confirmed successfully!")
-            return redirect('venue-detail', venue_id=venue_id)
+
+            # Reinitialize a new blank form after submission
+            form = BookingForm(initial={'venue_id': venue_id})
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        # For GET requests, initialize form with venue_id
         form = BookingForm(initial={'venue_id': venue_id})
     
     return render(request, 'Booking.html', {
         'form': form, 
         'booking_types': booking_types,
-        'venue_id': venue_id  # Pass venue_id to template
+        'venue_id': venue_id
     })
 # class VisitRequestView(View):
 #     def get(self, request):
