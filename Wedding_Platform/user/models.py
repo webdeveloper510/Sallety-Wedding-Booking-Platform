@@ -129,12 +129,19 @@ class VenueImage(models.Model):
 class BookingType(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    
+
     def __str__(self):
         return f"{self.name} (${self.price})"
 
+
 class Booking(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Add this line
+    STATUS_CHOICES = [
+        ('confirmed', 'Confirmed'),
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
@@ -144,11 +151,10 @@ class Booking(models.Model):
     types = models.ManyToManyField(BookingType)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
         return f"Booking by {self.name} on {self.booking_date}"
-
-
 
 class VisitRequest(models.Model):
     STATUS_CHOICES = [

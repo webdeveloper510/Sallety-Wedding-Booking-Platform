@@ -99,8 +99,8 @@ def venue_list(request):
 #     return render(request, 'VisitRequest.html')
 
 
-def table_booking(request):
-    return render(request, 'TableBooking.html')
+# def table_booking(request):
+#     return render(request, 'TableBooking.html')
 
 def venue_detail(request, venue_id):
     venue = get_object_or_404(Venue, id=venue_id)
@@ -186,10 +186,10 @@ def user_login(request):
     return render(request, 'register.html')
 
 
-
+###########################Booking################################################
 def booking(request, venue_id):
     booking_types = BookingType.objects.all()
-    
+
     if not booking_types.exists():
         BookingType.objects.create(name="Lunch", price=500)
         BookingType.objects.create(name="Coffee", price=200)
@@ -199,7 +199,6 @@ def booking(request, venue_id):
     
     if request.method == 'POST':
         form = BookingForm(request.POST)
-        
         if form.is_valid():
             booking = form.save(commit=False)
             selected_types = request.POST.getlist('booking_types')
@@ -207,40 +206,42 @@ def booking(request, venue_id):
             if not selected_types:
                 messages.error(request, "Please select at least one booking type.")
                 return render(request, 'Booking.html', {
-                    'form': form, 
+                    'form': form,
                     'booking_types': booking_types,
-                    'venue_id': venue_id
+                    'venue_id': venue_id,
                 })
             
             total_price = 0
             for type_id in selected_types:
                 booking_type = BookingType.objects.get(id=type_id)
                 total_price += booking_type.price
-            
+
             booking.total_price = total_price
             booking.venue_id = venue_id
-            
+
             if request.user.is_authenticated:
                 booking.user = request.user
             
             booking.save()
-            
+
             for type_id in selected_types:
                 booking.types.add(BookingType.objects.get(id=type_id))
-            
-            messages.success(request, "Booking confirmed successfully!")
 
-            # Reinitialize a new blank form after submission
+            messages.success(request, "Booking confirmed successfully!")
             form = BookingForm(initial={'venue_id': venue_id})
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = BookingForm(initial={'venue_id': venue_id})
     
+    # ✅ Fetch bookings
+    bookings = Booking.objects.filter(venue_id=venue_id)
+
     return render(request, 'Booking.html', {
-        'form': form, 
+        'form': form,
         'booking_types': booking_types,
-        'venue_id': venue_id
+        'venue_id': venue_id,
+        'bookings': bookings  # ✅ Pass this to the template
     })
 # class VisitRequestView(View):
 #     def get(self, request):
@@ -260,7 +261,7 @@ def booking(request, venue_id):
 
 
 
-
+###########################Visite Request ################################################
 def visit_request_view(request):
     if request.method == 'POST':
         # print(request.user, "herere")
@@ -291,6 +292,8 @@ def visit_request_view(request):
         print(f"ID from path: {pk}")
         return super().get(request, *args, **kwargs)
 
+
+###########################Update visite status################################################
 @csrf_exempt
 def update_visit_status(request, visit_id):
     if request.method == 'POST':
@@ -311,7 +314,7 @@ def update_visit_status(request, visit_id):
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
-
+###########################Update venue status################################################
 
 @csrf_exempt
 def update_venue_status(request, venue_id):
@@ -326,3 +329,29 @@ def update_venue_status(request, venue_id):
         except Venue.DoesNotExist:
             return JsonResponse({'error': 'Venue not found'}, status=404)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+###########################Tabel booking list################################################
+def table_booking(request):
+    bookings = Booking.objects.all()
+    return render(request, 'TableBooking.html', {'bookings': bookings})
+
+
+
+###########################Updatebooking status################################################
+@csrf_exempt
+def update_booking_status(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        booking_id = data.get("booking_id")
+        new_status = data.get("status")
+
+        try:
+            booking = Booking.objects.get(id=booking_id)
+            booking.status = new_status
+            booking.save()
+            return JsonResponse({"success": True})
+        except Booking.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Booking not found"})
+
+    return JsonResponse({"success": False, "error": "Invalid request method"})
