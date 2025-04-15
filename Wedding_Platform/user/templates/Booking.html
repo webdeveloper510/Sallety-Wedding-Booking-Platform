@@ -111,7 +111,7 @@
 .selected-date {
     background-color: #cce5ff !important;
     border: 2px solid #007bff;
-    border-radius: 50%;
+    border-radius: 0px;
 }
 </style>
 <body>
@@ -263,212 +263,222 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
     <script>
-     document.addEventListener("DOMContentLoaded", function () {
-    let calendarEl = document.getElementById("calendar");
-    let selectedDateText = document.getElementById("selectedDateText");
-    let chosenDateInput = document.getElementById("chosenDate");
-    let totalPriceElement = document.getElementById("totalPrice");
-    
-    // Parse existing bookings data passed from the backend
-    const existingBookings = JSON.parse('{{ bookings_json|safe }}');
-    const venueId = {{ venue_id }};
-    
-    // Get all booking types and their IDs
-    const allBookingTypeIds = [];
-    document.querySelectorAll(".booking-type").forEach((checkbox) => {
-        allBookingTypeIds.push(parseInt(checkbox.value));
-    });
-    console.log("All booking type IDs:", allBookingTypeIds);
-    
-    // Store original labels to restore them when needed
-    const originalLabels = {};
-    document.querySelectorAll(".booking-type").forEach((checkbox) => {
-        const id = checkbox.id;
-        const label = checkbox.nextElementSibling;
-        if (label) {
-            originalLabels[id] = label.innerHTML;
-        }
-    });
-    
-    // Get today's date and one month from today
-    const today = new Date();
-    const oneMonthLater = new Date();
-    oneMonthLater.setMonth(today.getMonth() + 1);
-    
-    // Format date to YYYY-MM-DD
-    function formatDate(date) {
-        const d = new Date(date);
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-    
-    // Print all booking data to debug
-    console.log("Existing bookings:", existingBookings);
-    
-    // Find fully booked dates (where all booking types are taken)
-    const fullyBookedDates = findFullyBookedDates();
-    console.log("Fully booked dates:", fullyBookedDates);
-    
-    // Find dates where all booking types are booked
-    function findFullyBookedDates() {
-        const dateBookings = {};
-        
-        // Group bookings by date to track which types are booked on each date
-        existingBookings.forEach(booking => {
-            if (booking.venue_id === venueId) {
-                const date = booking.booking_date;
+        document.addEventListener("DOMContentLoaded", function () {
+            let calendarEl = document.getElementById("calendar");
+            let selectedDateText = document.getElementById("selectedDateText");
+            let chosenDateInput = document.getElementById("chosenDate");
+            let totalPriceElement = document.getElementById("totalPrice");
+            let lastClickedEl = null; // Track the last clicked date element
+            
+            // Parse existing bookings data passed from the backend
+            const existingBookings = JSON.parse('{{ bookings_json|safe }}');
+            const venueId = {{ venue_id }};
+            
+            // Get all booking types and their IDs
+            const allBookingTypeIds = [];
+            document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                allBookingTypeIds.push(parseInt(checkbox.value));
+            });
+            console.log("All booking type IDs:", allBookingTypeIds);
+            
+            // Store original labels to restore them when needed
+            const originalLabels = {};
+            document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                const id = checkbox.id;
+                const label = checkbox.nextElementSibling;
+                if (label) {
+                    originalLabels[id] = label.innerHTML;
+                }
+            });
+            
+            // Get today's date and one month from today
+            const today = new Date();
+            const oneMonthLater = new Date();
+            oneMonthLater.setMonth(today.getMonth() + 1);
+            
+            // Format date to YYYY-MM-DD
+            function formatDate(date) {
+                const d = new Date(date);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // Print all booking data to debug
+            console.log("Existing bookings:", existingBookings);
+            
+            // Find fully booked dates (where all booking types are taken)
+            const fullyBookedDates = findFullyBookedDates();
+            console.log("Fully booked dates:", fullyBookedDates);
+            
+            // Find dates where all booking types are booked
+            function findFullyBookedDates() {
+                const dateBookings = {};
                 
-                if (!dateBookings[date]) {
-                    dateBookings[date] = new Set();
+                // Group bookings by date to track which types are booked on each date
+                existingBookings.forEach(booking => {
+                    if (booking.venue_id === venueId) {
+                        const date = booking.booking_date;
+                        
+                        if (!dateBookings[date]) {
+                            dateBookings[date] = new Set();
+                        }
+                        
+                        // Add all booked types for this date
+                        booking.booking_types.forEach(typeId => {
+                            dateBookings[date].add(typeId);
+                        });
+                    }
+                });
+                
+                // Find dates where all types are booked
+                const fullyBooked = [];
+                for (const date in dateBookings) {
+                    console.log(`Date ${date} has ${dateBookings[date].size} booked types out of ${allBookingTypeIds.length}`);
+                    if (dateBookings[date].size >= allBookingTypeIds.length) {
+                        fullyBooked.push(date);
+                    }
                 }
                 
-                // Add all booked types for this date
-                booking.booking_types.forEach(typeId => {
-                    dateBookings[date].add(typeId);
-                });
-            }
-        });
-        
-        // Find dates where all types are booked
-        const fullyBooked = [];
-        for (const date in dateBookings) {
-            console.log(`Date ${date} has ${dateBookings[date].size} booked types out of ${allBookingTypeIds.length}`);
-            if (dateBookings[date].size >= allBookingTypeIds.length) {
-                fullyBooked.push(date);
-            }
-        }
-        
-        return fullyBooked;
-    }
-    
-    // Initialize FullCalendar with validRange
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        selectable: true,
-        validRange: {
-            start: formatDate(today),
-            end: formatDate(oneMonthLater)
-        },
-        dateClick: function (info) {
-            const clickedDate = formatDate(info.date);
-            
-            // Check if this date is fully booked
-            if (fullyBookedDates.includes(clickedDate)) {
-                alert("This date is fully booked. Please select another date.");
-                return;
+                return fullyBooked;
             }
             
-            selectedDateText.innerText = "Selected Date: " + clickedDate;
-            chosenDateInput.value = clickedDate;
-            
-            // Update available booking types based on selected date
-            updateAvailableBookingTypes(clickedDate);
-        },
-        // Add visual indicator for fully booked dates
-        dayCellDidMount: function(info) {
-            const cellDate = formatDate(info.date);
-            
-            // Check if this date is fully booked
-            if (fullyBookedDates.includes(cellDate)) {
-                info.el.classList.add('fully-booked-date');
-                info.el.setAttribute('title', 'Fully Booked');
-                
-                // Make it visually distinct
-                info.el.style.backgroundColor = '#ffdddd';
-                info.el.style.color = '#dc3545';
-                info.el.style.textDecoration = 'line-through';
-                info.el.style.cursor = 'not-allowed';
-            }
-        }
-    });
-    
-    calendar.render();
-    
-    // Function to update booking types based on availability
-    function updateAvailableBookingTypes(selectedDate) {
-        // Reset all booking types to enabled and restore original labels
-        document.querySelectorAll(".booking-type").forEach((checkbox) => {
-            const id = checkbox.id;
-            checkbox.disabled = false;
-            checkbox.checked = false;
-            checkbox.parentElement.classList.remove("text-muted");
-            
-            // Restore original label text
-            const label = checkbox.nextElementSibling;
-            if (label && originalLabels[id]) {
-                label.innerHTML = originalLabels[id];
-            }
-        });
-        
-        // Calculate total price (should be 0 now as we unchecked all)
-        calculateTotalPrice();
-        
-        // Find bookings for this specific date and venue
-        const bookingsForSelectedDate = [];
-        for (let i = 0; i < existingBookings.length; i++) {
-            const booking = existingBookings[i];
-            if (booking.booking_date === selectedDate && booking.venue_id === venueId) {
-                bookingsForSelectedDate.push(booking);
-            }
-        }
-        
-        // If there are bookings for this date and venue, disable the booked types
-        for (let i = 0; i < bookingsForSelectedDate.length; i++) {
-            const booking = bookingsForSelectedDate[i];
-            for (let j = 0; j < booking.booking_types.length; j++) {
-                const bookedType = booking.booking_types[j];
-                // Find and disable the booked type
-                const typeId = `type_${bookedType}`;
-                const typeCheckbox = document.getElementById(typeId);
-                if (typeCheckbox) {
-                    typeCheckbox.disabled = true;
-                    typeCheckbox.parentElement.classList.add("text-muted");
+            // Initialize FullCalendar with validRange
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                selectable: true,
+                validRange: {
+                    start: formatDate(today),
+                    end: formatDate(oneMonthLater)
+                },
+                dateClick: function (info) {
+                    const clickedDate = formatDate(info.date);
                     
-                    // Add a note that this booking type is unavailable
-                    const label = typeCheckbox.nextElementSibling;
-                    if (label) {
-                        label.innerHTML = originalLabels[typeId] + " <span class='text-danger'>(Unavailable)</span>";
+                    // Check if this date is fully booked
+                    if (fullyBookedDates.includes(clickedDate)) {
+                        alert("This date is fully booked. Please select another date.");
+                        return;
+                    }
+                    
+                    // Remove the selected class from the previously selected date
+                    if (lastClickedEl) {
+                        lastClickedEl.classList.remove('selected-date');
+                    }
+                    
+                    // Add the selected class to the newly clicked date
+                    info.dayEl.classList.add('selected-date');
+                    lastClickedEl = info.dayEl;
+                    
+                    selectedDateText.innerText = "Selected Date: " + clickedDate;
+                    chosenDateInput.value = clickedDate;
+                    
+                    // Update available booking types based on selected date
+                    updateAvailableBookingTypes(clickedDate);
+                },
+                // Add visual indicator for fully booked dates
+                dayCellDidMount: function(info) {
+                    const cellDate = formatDate(info.date);
+                    
+                    // Check if this date is fully booked
+                    if (fullyBookedDates.includes(cellDate)) {
+                        info.el.classList.add('fully-booked-date');
+                        info.el.setAttribute('title', 'Fully Booked');
+                        
+                        // Make it visually distinct
+                        info.el.style.backgroundColor = '#ffdddd';
+                        info.el.style.color = '#dc3545';
+                        info.el.style.textDecoration = 'line-through';
+                        info.el.style.cursor = 'not-allowed';
+                    }
+                }
+            });
+            
+            calendar.render();
+            
+            // Function to update booking types based on availability
+            function updateAvailableBookingTypes(selectedDate) {
+                // Reset all booking types to enabled and restore original labels
+                document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                    const id = checkbox.id;
+                    checkbox.disabled = false;
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove("text-muted");
+                    
+                    // Restore original label text
+                    const label = checkbox.nextElementSibling;
+                    if (label && originalLabels[id]) {
+                        label.innerHTML = originalLabels[id];
+                    }
+                });
+                
+                // Calculate total price (should be 0 now as we unchecked all)
+                calculateTotalPrice();
+                
+                // Find bookings for this specific date and venue
+                const bookingsForSelectedDate = [];
+                for (let i = 0; i < existingBookings.length; i++) {
+                    const booking = existingBookings[i];
+                    if (booking.booking_date === selectedDate && booking.venue_id === venueId) {
+                        bookingsForSelectedDate.push(booking);
+                    }
+                }
+                
+                // If there are bookings for this date and venue, disable the booked types
+                for (let i = 0; i < bookingsForSelectedDate.length; i++) {
+                    const booking = bookingsForSelectedDate[i];
+                    for (let j = 0; j < booking.booking_types.length; j++) {
+                        const bookedType = booking.booking_types[j];
+                        // Find and disable the booked type
+                        const typeId = `type_${bookedType}`;
+                        const typeCheckbox = document.getElementById(typeId);
+                        if (typeCheckbox) {
+                            typeCheckbox.disabled = true;
+                            typeCheckbox.parentElement.classList.add("text-muted");
+                            
+                            // Add a note that this booking type is unavailable
+                            const label = typeCheckbox.nextElementSibling;
+                            if (label) {
+                                label.innerHTML = originalLabels[typeId] + " <span class='text-danger'>(Unavailable)</span>";
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-    
-    // Price Calculation
-    function calculateTotalPrice() {
-        let total = 0;
-        document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-            total += parseInt(checkbox.getAttribute("data-price"));
+            
+            // Price Calculation
+            function calculateTotalPrice() {
+                let total = 0;
+                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                    total += parseInt(checkbox.getAttribute("data-price"));
+                });
+                totalPriceElement.innerText = total;
+            }
+            
+            // Checkbox listeners
+            document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                checkbox.addEventListener("change", calculateTotalPrice);
+            });
+            
+            // Form submission check
+            document.getElementById("bookingForm").addEventListener("submit", function (event) {
+                if (!chosenDateInput.value) {
+                    event.preventDefault();
+                    alert("Please select a date before confirming.");
+                    return;
+                }
+                
+                let selectedTypes = [];
+                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                    selectedTypes.push(checkbox.value);
+                });
+                
+                if (selectedTypes.length === 0) {
+                    event.preventDefault();
+                    alert("Please select at least one booking type.");
+                }
+            });
         });
-        totalPriceElement.innerText = total;
-    }
-    
-    // Checkbox listeners
-    document.querySelectorAll(".booking-type").forEach((checkbox) => {
-        checkbox.addEventListener("change", calculateTotalPrice);
-    });
-    
-    // Form submission check
-    document.getElementById("bookingForm").addEventListener("submit", function (event) {
-        if (!chosenDateInput.value) {
-            event.preventDefault();
-            alert("Please select a date before confirming.");
-            return;
-        }
-        
-        let selectedTypes = [];
-        document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-            selectedTypes.push(checkbox.value);
-        });
-        
-        if (selectedTypes.length === 0) {
-            event.preventDefault();
-            alert("Please select at least one booking type.");
-        }
-    });
-});  
     </script>
 </body>
 </html>
