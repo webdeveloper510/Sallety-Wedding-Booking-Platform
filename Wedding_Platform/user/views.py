@@ -211,6 +211,28 @@ def booking(request, venue_id):
                     'venue_id': venue_id,
                 })
             
+            # Check if any of the selected booking types are already booked for this date
+            booking_date = form.cleaned_data['booking_date']
+            existing_bookings = Booking.objects.filter(
+                venue_id=venue_id,
+                booking_date=booking_date,
+                status__in=['confirmed', 'pending']
+            )
+            
+            unavailable_types = []
+            for existing in existing_bookings:
+                for booked_type in existing.types.all():
+                    if str(booked_type.id) in selected_types:
+                        unavailable_types.append(booked_type.name)
+            
+            if unavailable_types:
+                messages.error(request, f"The following booking types are no longer available for this date: {', '.join(unavailable_types)}. Please refresh and try again.")
+                return render(request, 'Booking.html', {
+                    'form': form,
+                    'booking_types': booking_types,
+                    'venue_id': venue_id,
+                })
+            
             total_price = 0
             for type_id in selected_types:
                 booking_type = BookingType.objects.get(id=type_id)
@@ -228,20 +250,37 @@ def booking(request, venue_id):
                 booking.types.add(BookingType.objects.get(id=type_id))
 
             messages.success(request, "Booking confirmed successfully!")
-            form = BookingForm(initial={'venue_id': venue_id})
+            return redirect('booking', venue_id=venue_id)  # Redirect to clear the form
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = BookingForm(initial={'venue_id': venue_id})
     
-    # ✅ Fetch bookings
-    bookings = Booking.objects.filter(venue_id=venue_id)
+    # Fetch all bookings for this venue
+    bookings = Booking.objects.filter(
+        venue_id=venue_id,
+        status__in=['confirmed', 'pending']
+    )
+    
+    # Prepare booking data for JavaScript
+    bookings_data = []
+    for booking in bookings:
+        booking_types_ids = [bt.id for bt in booking.types.all()]
+        bookings_data.append({
+            'booking_date': booking.booking_date.strftime('%Y-%m-%d'),
+            'venue_id': booking.venue_id,
+            'booking_types': booking_types_ids
+        })
+    
+    # Convert to JSON for template
+    bookings_json = json.dumps(bookings_data)
 
     return render(request, 'Booking.html', {
         'form': form,
         'booking_types': booking_types,
         'venue_id': venue_id,
-        'bookings': bookings  # ✅ Pass this to the template
+        'bookings': bookings,
+        'bookings_json': bookings_json  # Pass JSON data to template
     })
 # class VisitRequestView(View):
 #     def get(self, request):

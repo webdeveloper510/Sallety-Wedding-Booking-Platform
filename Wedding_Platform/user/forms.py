@@ -66,7 +66,7 @@ class BookingForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control booking-form-input', 'placeholder': 'Enter Your Email'}),
             'phone': forms.TextInput(attrs={'class': 'form-control booking-form-input', 'placeholder': 'Enter Your Phone'}),
             'guests': forms.Select(attrs={'class': 'form-select Booking-select', 'style': 'height:39px'}, 
-                                 choices=[(1, '1'), (2, '2')])
+                                 choices=[(1, '1'), (2, '2'),(3,'3'),(4,'4'),(5,'5')])
         }
 
 

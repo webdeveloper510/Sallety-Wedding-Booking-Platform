@@ -108,78 +108,78 @@
                 </div>
             {% endif %}
             
-            <!-- Calendar Section -->
-            <div class="col-md-4">
-               
-                <div id="calendar"></div>
-                <p id="selectedDateText" class="mt-2 text-primary"></p>
+<!-- Calendar Section -->
+<div class="col-md-4">
+    <div id="calendar"></div>
+    <p id="selectedDateText" class="mt-2 text-primary"></p>
+</div>
+
+<!-- Form Section -->
+<div class="col-md-8">
+    <form id="bookingForm" class="bookingForm" method="post" action="{% url 'booking' venue_id %}">
+        {% csrf_token %}
+        <input type="hidden" id="chosenDate" name="booking_date">
+        <input type="hidden" name="venue_id" value="{{ venue_id }}">
+        <div class="mb-3">
+            <label class="form-label">Select Booking Type:</label>
+            <div class="d-flex flex-column gap-2" id="bookingTypesContainer">
+                {% for booking_type in booking_types %}
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input booking-type p-0" 
+                           id="type_{{ booking_type.id }}" 
+                           name="booking_types" 
+                           value="{{ booking_type.id }}" 
+                           data-price="{{ booking_type.price }}"
+                           data-name="{{ booking_type.name }}">
+                    <label class="form-check-label" for="type_{{ booking_type.id }}">
+                        {{ booking_type.name }} (${{ booking_type.price }})
+                    </label>
+                </div>
+                {% endfor %}
             </div>
-
-            <!-- Form Section -->
-            <div class="col-md-8">
-                <form id="bookingForm" class="bookingForm" method="post" action="{% url 'booking' venue_id %}">
-
-                  {% csrf_token %}
-                  <input type="hidden" id="chosenDate" name="booking_date">
-                  <input type="hidden" name="venue_id" value="{{ venue_id }}">
-                  <div class="mb-3">
-                      <label class="form-label">Select Booking Type:</label>
-                      <div class="d-flex flex-column gap-2">
-                          {% for booking_type in booking_types %}
-                          <div class="form-check">
-                              <input type="checkbox" class="form-check-input booking-type p-0" 
-                                     id="type_{{ booking_type.id }}" 
-                                     name="booking_types" 
-                                     value="{{ booking_type.id }}" 
-                                     data-price="{{ booking_type.price }}">
-                              <label class="form-check-label" for="type_{{ booking_type.id }}">
-                                  {{ booking_type.name }} (${{ booking_type.price }})
-                              </label>
-                          </div>
-                          {% endfor %}
-                      </div>
-                  </div>
-                  
-                  <div class="row w-100">
-                      <div class="col-md-6 mb-3">
-                          <label for="guests" class="form-label">Number of Guests</label>
-                          {{ form.guests }}
-                          {% if form.guests.errors %}
-                              <div class="text-danger">{{ form.guests.errors }}</div>
-                          {% endif %}
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="name" class="form-label">Full Name</label>
-                          {{ form.name }}
-                          {% if form.name.errors %}
-                              <div class="text-danger">{{ form.name.errors }}</div>
-                          {% endif %}
-                      </div>
-                  </div>
-                  
-                  <div class="row w-100">
-                      <div class="col-md-6 mb-3">
-                          <label for="phone" class="form-label">Phone</label>
-                          {{ form.phone }}
-                          {% if form.phone.errors %}
-                              <div class="text-danger">{{ form.phone.errors }}</div>
-                          {% endif %}
-                      </div>
-                      <div class="col-md-6 mb-3 last_col">
-                          <label for="email" class="form-label">Email</label>
-                          {{ form.email }}
-                          {% if form.email.errors %}
-                              <div class="text-danger">{{ form.email.errors }}</div>
-                          {% endif %}
-                      </div>
-                  </div>
-                  
-                  <div class="d-flex justify-content-between align-items-center mt-3">
-                      <p class="m-0"><strong>Total Price: $<span id="totalPrice">0</span></strong></p>
-                      <button type="submit" class="btn btn-primary Confirm-btn">Confirm Booking</button>
-                  </div>
-              </form>
-          </div>
+        </div>
+        
+        <!-- Rest of form remains unchanged -->
+        <div class="row w-100">
+            <div class="col-md-6 mb-3">
+                <label for="guests" class="form-label">Number of Guests</label>
+                {{ form.guests }}
+                {% if form.guests.errors %}
+                    <div class="text-danger">{{ form.guests.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="row w-100">
+            <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="text-danger">{{ form.phone.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3 last_col">
+                <label for="email" class="form-label">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <p class="m-0"><strong>Total Price: $<span id="totalPrice">0</span></strong></p>
+            <button type="submit" class="btn btn-primary Confirm-btn">Confirm Booking</button>
+        </div>
+    </form>
+</div>
           
       </div>
     </div>
@@ -248,20 +248,101 @@
             let selectedDateText = document.getElementById("selectedDateText");
             let chosenDateInput = document.getElementById("chosenDate");
             let totalPriceElement = document.getElementById("totalPrice");
-
-            // Initialize FullCalendar
+            
+            // Parse existing bookings data passed from the backend
+            const existingBookings = JSON.parse('{{ bookings_json|safe }}');
+            const venueId = {{ venue_id }};
+            
+            // Store original labels to restore them when needed
+            const originalLabels = {};
+            document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                const id = checkbox.id;
+                const label = checkbox.nextElementSibling;
+                if (label) {
+                    originalLabels[id] = label.innerHTML;
+                }
+            });
+            
+            // Get today's date and one month from today
+            const today = new Date();
+            const oneMonthLater = new Date();
+            oneMonthLater.setMonth(today.getMonth() + 1);
+            
+            // Format date to YYYY-MM-DD
+            function formatDate(date) {
+                return date.toISOString().split("T")[0];
+            }
+            
+            // Initialize FullCalendar with validRange
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: "dayGridMonth",
                 selectable: true,
+                validRange: {
+                    start: formatDate(today),
+                    end: formatDate(oneMonthLater)
+                },
                 dateClick: function (info) {
                     selectedDateText.innerText = "Selected Date: " + info.dateStr;
-                    chosenDateInput.value = info.dateStr; // Store selected date for form submission
-                },
+                    chosenDateInput.value = info.dateStr;
+                    
+                    // Update available booking types based on selected date
+                    updateAvailableBookingTypes(info.dateStr);
+                }
             });
-
+            
             calendar.render();
-
-            // Calculate total price function
+            
+            // Function to update booking types based on availability
+            function updateAvailableBookingTypes(selectedDate) {
+                // Reset all booking types to enabled and restore original labels
+                document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                    const id = checkbox.id;
+                    checkbox.disabled = false;
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove("text-muted");
+                    
+                    // Restore original label text
+                    const label = checkbox.nextElementSibling;
+                    if (label && originalLabels[id]) {
+                        label.innerHTML = originalLabels[id];
+                    }
+                });
+                
+                // Calculate total price (should be 0 now as we unchecked all)
+                calculateTotalPrice();
+                
+                // Find bookings for this specific date and venue
+                const bookingsForSelectedDate = [];
+                for (let i = 0; i < existingBookings.length; i++) {
+                    const booking = existingBookings[i];
+                    if (booking.booking_date === selectedDate && booking.venue_id === venueId) {
+                        bookingsForSelectedDate.push(booking);
+                    }
+                }
+                
+                // If there are bookings for this date and venue, disable the booked types
+                for (let i = 0; i < bookingsForSelectedDate.length; i++) {
+                    const booking = bookingsForSelectedDate[i];
+                    for (let j = 0; j < booking.booking_types.length; j++) {
+                        const bookedType = booking.booking_types[j];
+                        // Find and disable the booked type
+                        const typeId = `type_${bookedType}`;
+                        const typeCheckbox = document.getElementById(typeId);
+                        if (typeCheckbox) {
+                            typeCheckbox.disabled = true;
+                            typeCheckbox.parentElement.classList.add("text-muted");
+                            
+                            // Add a note that this booking type is unavailable
+                            const label = typeCheckbox.nextElementSibling;
+                            if (label) {
+                                label.innerHTML = originalLabels[typeId] + " <span class='text-danger'>(Unavailable)</span>";
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Price Calculation
             function calculateTotalPrice() {
                 let total = 0;
                 document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
@@ -269,35 +350,31 @@
                 });
                 totalPriceElement.innerText = total;
             }
-
-            // Listen for checkbox changes to update price
+            
+            // Checkbox listeners
             document.querySelectorAll(".booking-type").forEach((checkbox) => {
                 checkbox.addEventListener("change", calculateTotalPrice);
             });
-
-            // Handle Form Submission
+            
+            // Form submission check
             document.getElementById("bookingForm").addEventListener("submit", function (event) {
-                // Only prevent default if we're showing an alert
                 if (!chosenDateInput.value) {
                     event.preventDefault();
                     alert("Please select a date before confirming.");
                     return;
                 }
-
+                
                 let selectedTypes = [];
                 document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
                     selectedTypes.push(checkbox.value);
                 });
-
+                
                 if (selectedTypes.length === 0) {
                     event.preventDefault();
                     alert("Please select at least one booking type.");
-                    return;
                 }
-
             });
-        });
+        });    
     </script>
-    
 </body>
 </html>

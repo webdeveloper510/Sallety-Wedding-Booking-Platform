@@ -200,3 +200,27 @@ a#userDropdown i.fas.fa-user {
 		margin-top: 10px;
 	}
 }
+@media (max-width: 767px) {
+.top-bar {
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.logo img {
+    height: 65px;
+    margin-right: 0px;
+}
+.btn-group, .btn-group-vertical {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    width: 100%;
+}
+}

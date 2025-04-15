@@ -156,6 +156,12 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking by {self.name} on {self.booking_date}"
 
+    def get_booking_types_display(self):
+        types = list(self.types.all())
+        if len(types) == 2:
+            return f"{types[0].name} + {types[1].name}"
+        return ", ".join([t.name for t in types])
+
 class VisitRequest(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),

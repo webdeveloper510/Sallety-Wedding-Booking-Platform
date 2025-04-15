@@ -45,6 +45,7 @@
                                         <th>Number of Guests</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Booking Type</th> 
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -55,6 +56,7 @@
                                         <td>{{ booking.guests }}</td>
                                         <td>{{ booking.email }}</td>
                                         <td>{{ booking.phone }}</td>
+                                          <td>{{ booking.get_booking_types_display }}</td> 
                                         <td>
                                             <select class="status-dropdown">
                                                 <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
