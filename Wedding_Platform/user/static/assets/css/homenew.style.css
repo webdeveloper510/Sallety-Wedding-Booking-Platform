@@ -172,6 +172,20 @@ a#userDropdown i.fas.fa-user {
     padding-right: 30px;
 }
 
+.wedding-card h5.fw-bold {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.outer_check {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.outer_check .form-check {
+    width: 31%;
+}
 /* Responsive for mobile */
 @media (max-width: 768px) {
 	.search-bar {
@@ -201,6 +215,7 @@ a#userDropdown i.fas.fa-user {
 	}
 }
 @media (max-width: 767px) {
+	
 .top-bar {
     display: block;
     justify-content: space-between;
@@ -222,5 +237,22 @@ a#userDropdown i.fas.fa-user {
     display: inline-flex;
     vertical-align: middle;
     width: 100%;
+}
+}
+
+
+@media (max-width: 767px) {
+    .sidebar {
+        width: 100%;
+    }	
+.footer .col-md-3 {
+    margin-bottom: 30px;
+}
+.social-icons {
+    justify-content: left;
+    gap: 10px;
+}
+.outer_check .form-check {
+    width: 46%;
 }
 }

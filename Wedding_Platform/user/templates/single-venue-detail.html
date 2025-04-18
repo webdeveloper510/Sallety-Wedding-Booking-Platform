@@ -259,11 +259,17 @@
                     <!-- Date -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Preferred Visit Date:</label>
-                        <input type="date" name="visit_date" class="form-control" id="{{ form.visit_date.id_for_label }}" >
+                        <input 
+                          type="date" 
+                          name="visit_date" 
+                          class="form-control" 
+                          id="{{ form.visit_date.id_for_label }}" 
+                          min="{{ today }}"
+                        >
                         {% if form.visit_date.errors %}
-                            <div class="text-danger">{{ form.visit_date.errors }}</div>
+                          <div class="text-danger">{{ form.visit_date.errors }}</div>
                         {% endif %}
-                    </div>
+                      </div>
                     
                     <!-- Time Slot -->
                     <label class="fw-bold">Preferred Time Slot:</label>
@@ -416,6 +422,13 @@
                             
     </script>
 
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const dateInput = document.querySelector('input[name="visit_date"]');
+          const today = new Date().toISOString().split("T")[0];
+          dateInput.min = today;
+        });
+      </script>
+      
 
 </html>

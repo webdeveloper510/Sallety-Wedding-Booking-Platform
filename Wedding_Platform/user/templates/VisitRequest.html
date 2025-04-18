@@ -151,21 +151,7 @@
     <!-- Bootstrap 5.3.3 JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
-<script>
-    // Toggle dropdown menu on user icon click
-        document.getElementById("userDropdown").addEventListener("click", function () {
-            document.getElementById("dropdownMenu").classList.toggle("show");
-        });
 
-        // Close dropdown if clicked outside
-        document.addEventListener("click", function (event) {
-            let dropdown = document.getElementById("dropdownMenu");
-            let userIcon = document.getElementById("userDropdown");
-            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.remove("show");
-            }
-        });
-</script>
 <script>
     document.querySelectorAll('.status-dropdown').forEach(dropdown => {
         dropdown.addEventListener('change', function () {

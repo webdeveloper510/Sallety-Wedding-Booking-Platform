@@ -88,6 +88,12 @@ class Venue(models.Model):
     is_city = models.BooleanField(default=False)
     is_hotel = models.BooleanField(default=False)
     is_countryside = models.BooleanField(default=False)
+    is_mountain = models.BooleanField(default=False)
+    is_resort = models.BooleanField(default=False)
+    is_forest = models.BooleanField(default=False)
+    is_rooftop = models.BooleanField(default=False)
+    is_garden = models.BooleanField(default=False)
+
 
     # Gallery
     thumbnail = models.ImageField(upload_to='venues/thumbnails/')

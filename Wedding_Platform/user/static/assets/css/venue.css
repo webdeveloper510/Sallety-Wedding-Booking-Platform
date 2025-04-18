@@ -500,7 +500,7 @@ margin-top: 30px ;
 /* Responsive Sidebar */
 @media (max-width: 768px) {
     .sidebar {
-        width: 200px;
+        width: 100%;
     }
 
     .main-content {
@@ -1272,4 +1272,17 @@ width: 97% !important;
     padding-top: 7px;
     border: 1px solid #ddd;
     width: 94%;
+}
+
+@media (max-width: 767px) {
+.feature-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+}
+.top-bar.inner_head {
+    padding: 10px 10px !important;
+}
+.top-bar.inner_head .logo {
+    margin-bottom: 10px;
+}
 }

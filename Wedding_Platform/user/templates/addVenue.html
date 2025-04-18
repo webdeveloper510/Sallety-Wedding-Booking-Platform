@@ -140,26 +140,56 @@
                                    
                                     <div class="form-group full">
                                         <label>Select Categories</label>
-                                   
+                                      
+                                       <div class="outer_check"> 
                                         <div class="form-check">
-                                            {{ form.is_beach }}
-                                            <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
+                                          {{ form.is_beach }}
+                                          <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          {{ form.is_city }}
+                                          <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          {{ form.is_hotel }}
+                                          <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          {{ form.is_countryside }}
+                                          <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">Countryside</label>
+                                        </div>
+                                      
+                                        <!-- ✅ New checkboxes -->
+                                        <div class="form-check">
+                                          {{ form.is_mountain }}
+                                          <label class="form-check-label" for="{{ form.is_mountain.id_for_label }}">Mountain</label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          {{ form.is_resort }}
+                                          <label class="form-check-label" for="{{ form.is_resort.id_for_label }}">Resort</label>
+                                        </div>
+                                      
+                                        <div class="form-check">
+                                          {{ form.is_forest }}
+                                          <label class="form-check-label" for="{{ form.is_forest.id_for_label }}">Forest</label>
                                         </div>
                                         <div class="form-check">
-                                            {{ form.is_city }}
-                                            <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
-                                        </div>
-                                        <!-- and so on -->
-                                        <div class="form-check">
-                                            {{ form.is_hotel }}
-                                            <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
+                                            {{ form.is_rooftop }}
+                                            <label class="form-check-label" for="{{ form.is_rooftop.id_for_label }}">Rooftop</label>
                                         </div>
                                         <div class="form-check">
-                                            {{ form.is_countryside }}
-                                            <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">countryside</label>
-                                        </div>
-                                   
-                                    </div>
+                                            {{ form.is_garden }}
+                                            <label class="form-check-label" for="{{ form.is_garden.id_for_label }}">Garden</label>
+                                          </div>
+                                          
+                                          </div>
+                                      </div>
+                                      
+                                      
                                    
                                    
                                     <div style="display: flex; gap: 40px; width: 100%;">

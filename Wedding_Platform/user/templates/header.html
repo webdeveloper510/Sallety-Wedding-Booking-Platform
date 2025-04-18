@@ -1,6 +1,6 @@
 {% load static %}
 <div class="header_part">
-    <div class="top-bar" style="padding: 10px 100px;" >
+    <div class="top-bar inner_head" style="padding: 10px 100px;" >
         <!-- Logo -->
         <div class="logo">
             <a class="navbar-brand" href="{% url 'index' %}">
@@ -29,18 +29,35 @@
 
         <!-- Buttons & User Dropdown -->
         <div class="btn-group new_group">
-            {% if request.user.is_authenticated %}
-            <a type="button" href="{% url 'addVenue' %}" class="btn btn-primary Venue_btn">Add Venue</a>{% endif %}
-            <a href="{% url 'contact' %}" class="fw-bold" style="color:black;font-size:15px">Contact</a>
+            <a 
+            href="{% if request.user.is_authenticated %}{% url 'addVenue' %}{% else %}{% url 'user-login' %}?next={% url 'addVenue' %}{% endif %}" 
+            class="btn btn-primary Venue_btn"
+          >
+            Add Venue
+          </a>
+          <a 
+  href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
+  class="fw-bold" 
+  style="color:black;font-size:15px"
+>
+  Account
+</a>
             <div class="dropdown">
                 <a class="nav-link user-icon" id="userDropdown" role="button">
                     <i class="fas fa-user"></i>
                 </a>
                 <ul class="dropdown-menu" id="dropdownMenu">
+                    <li> <a class="dropdown-item"
+                        href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
+                        class="fw-bold" 
+                        style="color:black;font-size:15px"
+                      >
+                        Account
+                      </a></li>
                     <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
                     <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li> 
-                    <li><a  class="dropdown-item"> {% if request.user.is_authenticated %}
-                        <a href="{% url 'logout' %}">Logout</a>
+                    <li><a href="{% url 'logout' %}" class="dropdown-item"> {% if request.user.is_authenticated %}
+                        Logout
                     {% endif %}</a></li>  
                 </ul>
             </div>
