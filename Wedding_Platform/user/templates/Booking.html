@@ -1,484 +1,523 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking</title>
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static  'assets/css/homenew.style.css' %}">
-    <link rel="stylesheet" href="{% static  'assets/css/venue.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static  'assets/css/homenew.style.css' %}"
+    />
+    <link rel="stylesheet" href="{% static  'assets/css/venue.css' %}" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 
     <!-- Bootstrap JavaScript (Include this before closing </body>) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-   <!-- FullCalendar CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <!-- FullCalendar CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    .booking-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
+    }
 
-</head>
- <style>
-  
-  .booking-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-  }
+    .booking-form-input,
+    .Booking-select {
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.05);
+    }
 
-  .booking-form-input, .Booking-select {
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.05);
-	
-  }
- 
-  .Confirm-btn {
-    background: #fe3f72;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 20px;
-    transition: 0.3s;
-    width:200px
-  }
-  .Confirm-btn:hover {
-    background: #fe3f72;
-  }
-  .bookingForm {
-    border-radius: 10px;
-    background: #f9f9f9;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-  .fc .fc-daygrid-day-top {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.fc-daygrid-day-events {
-    display: none;
-}
-.fc .fc-daygrid-day-frame {
-    position: relative;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.bookingForm input#phone {
-    width: 96%;
-}
+    .Confirm-btn {
+      background: #fe3f72;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      transition: 0.3s;
+      width: 200px;
+    }
+    .Confirm-btn:hover {
+      background: #fe3f72;
+    }
+    .bookingForm {
+      border-radius: 10px;
+      background: #f9f9f9;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .fc .fc-daygrid-day-top {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .fc-daygrid-day-events {
+      display: none;
+    }
+    .fc .fc-daygrid-day-frame {
+      position: relative;
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .bookingForm input#phone {
+      width: 96%;
+    }
 
-.last_col input#email {
-    width: 100%;
-}
-.fully-booked-date {
-    background-color: #ffdddd !important;
-    color: #dc3545 !important;
-    text-decoration: line-through;
-    cursor: not-allowed !important;
-}
+    .last_col input#email {
+      width: 100%;
+    }
+    .fully-booked-date {
+      background-color: #ffdddd !important;
+      color: #dc3545 !important;
+      text-decoration: line-through;
+      cursor: not-allowed !important;
+    }
+    .fc-event.fully-booked-date {
+      opacity: 0.8;
+    }
 
-/* Style for fully booked date events */
-.fc-event.fully-booked-date {
-    opacity: 0.8;
-}
+    .fully-booked-date:hover {
+      background-color: #ffcccc !important;
+    }
+    .selected-date {
+      background-color: #cce5ff !important;
+      border: 2px solid #007bff;
+      border-radius: 0px;
+    }
+  </style>
+  <body>
+    {% include 'header.html' %}
+    <div class="container mt-5 mb-4">
+      <div class="row">
+        {% if messages %}
+        <div class="col-12 mb-3">
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
 
-/* Add a slightly different shade for hover state */
-.fully-booked-date:hover {
-    background-color: #ffcccc !important;
-}
-.selected-date {
-    background-color: #cce5ff !important;
-    border: 2px solid #007bff;
-    border-radius: 0px;
-}
-</style>
-<body>
-  {% include 'header.html' %}
-      <div class="container mt-5 mb-4">
-        <div class="row">
-          {% if messages %}
-                <div class="col-12 mb-3">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
-<!-- Calendar Section -->
-<div class="col-md-4">
-    <div id="calendar"></div>
-    <p id="selectedDateText" class="mt-2 text-primary"></p>
-</div>
+        <!-- Calendar Section -->
+        <div class="col-md-4">
+          <div id="calendar"></div>
+          <p id="selectedDateText" class="mt-2 text-primary"></p>
+        </div>
 
-<!-- Form Section -->
-<div class="col-md-8">
-    <form id="bookingForm" class="bookingForm" method="post" action="{% url 'booking' venue_id %}">
-        {% csrf_token %}
-        <input type="hidden" id="chosenDate" name="booking_date">
-        <input type="hidden" name="venue_id" value="{{ venue_id }}">
-        <div class="mb-3">
-            <label class="form-label">Select Booking Type:</label>
-            <div class="d-flex flex-column gap-2" id="bookingTypesContainer">
+        <!-- Form Section -->
+        <div class="col-md-8">
+          <form
+            id="bookingForm"
+            class="bookingForm"
+            method="post"
+            action="{% url 'booking' venue_id %}"
+          >
+            {% csrf_token %}
+            <input type="hidden" id="chosenDate" name="booking_date" />
+            <input type="hidden" name="venue_id" value="{{ venue_id }}" />
+            <div class="mb-3">
+              <label class="form-label">Select Booking Type:</label>
+              <div class="d-flex flex-column gap-2" id="bookingTypesContainer">
                 {% for booking_type in booking_types %}
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input booking-type p-0" 
-                           id="type_{{ booking_type.id }}" 
-                           name="booking_types" 
-                           value="{{ booking_type.id }}" 
-                           data-price="{{ booking_type.price }}"
-                           data-name="{{ booking_type.name }}">
-                    <label class="form-check-label" for="type_{{ booking_type.id }}">
-                        {{ booking_type.name }} (${{ booking_type.price }})
-                    </label>
+                  <input
+                    type="checkbox"
+                    class="form-check-input booking-type p-0"
+                    id="type_{{ booking_type.id }}"
+                    name="booking_types"
+                    value="{{ booking_type.id }}"
+                    data-price="{{ booking_type.price }}"
+                    data-name="{{ booking_type.name }}"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="type_{{ booking_type.id }}"
+                  >
+                    {{ booking_type.name }} (${{ booking_type.price }})
+                  </label>
                 </div>
                 {% endfor %}
+              </div>
             </div>
-        </div>
-        
-        <!-- Rest of form remains unchanged -->
-        <div class="row w-100">
-            <div class="col-md-6 mb-3">
+
+            <!-- Rest of form remains unchanged -->
+            <div class="row w-100">
+              <div class="col-md-6 mb-3">
                 <label for="guests" class="form-label">Number of Guests</label>
-                {{ form.guests }}
-                {% if form.guests.errors %}
-                    <div class="text-danger">{{ form.guests.errors }}</div>
+                {{ form.guests }} {% if form.guests.errors %}
+                <div class="text-danger">{{ form.guests.errors }}</div>
                 {% endif %}
-            </div>
-            <div class="col-md-6 mb-3">
+              </div>
+              <div class="col-md-6 mb-3">
                 <label for="name" class="form-label">Full Name</label>
-                {{ form.name }}
-                {% if form.name.errors %}
-                    <div class="text-danger">{{ form.name.errors }}</div>
+                {{ form.name }} {% if form.name.errors %}
+                <div class="text-danger">{{ form.name.errors }}</div>
                 {% endif %}
+              </div>
             </div>
-        </div>
-        
-        <div class="row w-100">
-            <div class="col-md-6 mb-3">
+
+            <div class="row w-100">
+              <div class="col-md-6 mb-3">
                 <label for="phone" class="form-label">Phone</label>
-                {{ form.phone }}
-                {% if form.phone.errors %}
-                    <div class="text-danger">{{ form.phone.errors }}</div>
+                {{ form.phone }} {% if form.phone.errors %}
+                <div class="text-danger">{{ form.phone.errors }}</div>
                 {% endif %}
-            </div>
-            <div class="col-md-6 mb-3 last_col">
+              </div>
+              <div class="col-md-6 mb-3 last_col">
                 <label for="email" class="form-label">Email</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="text-danger">{{ form.email.errors }}</div>
+                {{ form.email }} {% if form.email.errors %}
+                <div class="text-danger">{{ form.email.errors }}</div>
                 {% endif %}
+              </div>
             </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <p class="m-0">
+                <strong>Total Price: $<span id="totalPrice">0</span></strong>
+              </p>
+              <button type="submit" class="btn btn-primary Confirm-btn">
+                Confirm Booking
+              </button>
+            </div>
+          </form>
         </div>
-        
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <p class="m-0"><strong>Total Price: $<span id="totalPrice">0</span></strong></p>
-            <button type="submit" class="btn btn-primary Confirm-btn">Confirm Booking</button>
-        </div>
-    </form>
-</div>
-          
       </div>
     </div>
     <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <!-- About -->
-                <div class="col-md-3">
-                    <h5>About Weddlist</h5>
-                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
-                </div>
-                <!-- Pages -->
-                <div class="col-md-3 links">
-                    <h5>Pages</h5>
-                    <a href="#">Contact Us</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Help</a>
-                    <a href="#">Gallery</a>
-                    <a href="#">FAQs</a>
-                </div>
-                <!-- Categories -->
-                <div class="col-md-3 links">
-                    <h5>Categories</h5>
-                    <a href="#">Beauty</a>
-                    <a href="#">Catering</a>
-                    <a href="#">Dresses</a>
-                    <a href="#">Invitations</a>
-                    <a href="#">Music</a>
-                </div>
-                <!-- Newsletter -->
-                <div class="col-md-3">
-                    <h5>Newsletter</h5>
-                    <div class="d-flex">
-                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
-                        <button class="newsletter-btn">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                    <div class="social-icons mt-3">
-                        <a href="#">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <!-- About -->
+          <div class="col-md-3">
+            <h5>About Weddlist</h5>
+            <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
+            <p>
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
+              poris suscipit labo riosam.
+            </p>
+            <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+          </div>
+          <!-- Pages -->
+          <div class="col-md-3 links">
+            <h5>Pages</h5>
+            <a href="#">Contact Us</a>
+            <a href="#">Blog</a>
+            <a href="#">Help</a>
+            <a href="#">Gallery</a>
+            <a href="#">FAQs</a>
+          </div>
+          <!-- Categories -->
+          <div class="col-md-3 links">
+            <h5>Categories</h5>
+            <a href="#">Beauty</a>
+            <a href="#">Catering</a>
+            <a href="#">Dresses</a>
+            <a href="#">Invitations</a>
+            <a href="#">Music</a>
+          </div>
+          <!-- Newsletter -->
+          <div class="col-md-3">
+            <h5>Newsletter</h5>
+            <div class="d-flex">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="EMAIL ADDRESS"
+              />
+              <button class="newsletter-btn">
+                <i class="fas fa-paper-plane"></i>
+              </button>
             </div>
+            <div class="social-icons mt-3">
+              <a href="#">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="copyright"> © 2025 All rights reserved. </div>
+      </div>
+      <div class="copyright">© 2025 All rights reserved.</div>
     </footer>
-  
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let calendarEl = document.getElementById("calendar");
-            let selectedDateText = document.getElementById("selectedDateText");
-            let chosenDateInput = document.getElementById("chosenDate");
-            let totalPriceElement = document.getElementById("totalPrice");
-            let lastClickedEl = null; // Track the last clicked date element
-            
-            // Parse existing bookings data passed from the backend
-            const existingBookings = JSON.parse('{{ bookings_json|safe }}');
-            const venueId = {{ venue_id }};
-            
-            // Get all booking types and their IDs
-            const allBookingTypeIds = [];
-            document.querySelectorAll(".booking-type").forEach((checkbox) => {
-                allBookingTypeIds.push(parseInt(checkbox.value));
-            });
-            console.log("All booking type IDs:", allBookingTypeIds);
-            
-            // Store original labels to restore them when needed
-            const originalLabels = {};
-            document.querySelectorAll(".booking-type").forEach((checkbox) => {
-                const id = checkbox.id;
-                const label = checkbox.nextElementSibling;
-                if (label) {
-                    originalLabels[id] = label.innerHTML;
-                }
-            });
-            
-            // Get today's date and one month from today
-            const today = new Date();
-            const oneMonthLater = new Date();
-            oneMonthLater.setMonth(today.getMonth() + 1);
-            
-            // Format date to YYYY-MM-DD
-            function formatDate(date) {
-                const d = new Date(date);
-                const year = d.getFullYear();
-                const month = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            
-            // Print all booking data to debug
-            console.log("Existing bookings:", existingBookings);
-            
-            // Find fully booked dates (where all booking types are taken)
-            const fullyBookedDates = findFullyBookedDates();
-            console.log("Fully booked dates:", fullyBookedDates);
-            
-            // Find dates where all booking types are booked
-            function findFullyBookedDates() {
-                const dateBookings = {};
-                
-                // Group bookings by date to track which types are booked on each date
-                existingBookings.forEach(booking => {
-                    if (booking.venue_id === venueId) {
-                        const date = booking.booking_date;
-                        
-                        if (!dateBookings[date]) {
-                            dateBookings[date] = new Set();
-                        }
-                        
-                        // Add all booked types for this date
-                        booking.booking_types.forEach(typeId => {
-                            dateBookings[date].add(typeId);
-                        });
-                    }
-                });
-                
-                // Find dates where all types are booked
-                const fullyBooked = [];
-                for (const date in dateBookings) {
-                    console.log(`Date ${date} has ${dateBookings[date].size} booked types out of ${allBookingTypeIds.length}`);
-                    if (dateBookings[date].size >= allBookingTypeIds.length) {
-                        fullyBooked.push(date);
-                    }
-                }
-                
-                return fullyBooked;
-            }
-            
-            // Initialize FullCalendar with validRange
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: "dayGridMonth",
-                selectable: true,
-                validRange: {
-                    start: formatDate(today),
-                    end: formatDate(oneMonthLater)
-                },
-                dateClick: function (info) {
-                    const clickedDate = formatDate(info.date);
-                    
-                    // Check if this date is fully booked
-                    if (fullyBookedDates.includes(clickedDate)) {
-                        alert("This date is fully booked. Please select another date.");
-                        return;
-                    }
-                    
-                    // Remove the selected class from the previously selected date
-                    if (lastClickedEl) {
-                        lastClickedEl.classList.remove('selected-date');
-                    }
-                    
-                    // Add the selected class to the newly clicked date
-                    info.dayEl.classList.add('selected-date');
-                    lastClickedEl = info.dayEl;
-                    
-                    selectedDateText.innerText = "Selected Date: " + clickedDate;
-                    chosenDateInput.value = clickedDate;
-                    
-                    // Update available booking types based on selected date
-                    updateAvailableBookingTypes(clickedDate);
-                },
-                // Add visual indicator for fully booked dates
-                dayCellDidMount: function(info) {
-                    const cellDate = formatDate(info.date);
-                    
-                    // Check if this date is fully booked
-                    if (fullyBookedDates.includes(cellDate)) {
-                        info.el.classList.add('fully-booked-date');
-                        info.el.setAttribute('title', 'Fully Booked');
-                        
-                        // Make it visually distinct
-                        info.el.style.backgroundColor = '#ffdddd';
-                        info.el.style.color = '#dc3545';
-                        info.el.style.textDecoration = 'line-through';
-                        info.el.style.cursor = 'not-allowed';
-                    }
-                }
-            });
-            
-            calendar.render();
-            
-            // Function to update booking types based on availability
-            function updateAvailableBookingTypes(selectedDate) {
-                // Reset all booking types to enabled and restore original labels
-                document.querySelectorAll(".booking-type").forEach((checkbox) => {
-                    const id = checkbox.id;
-                    checkbox.disabled = false;
-                    checkbox.checked = false;
-                    checkbox.parentElement.classList.remove("text-muted");
-                    
-                    // Restore original label text
-                    const label = checkbox.nextElementSibling;
-                    if (label && originalLabels[id]) {
-                        label.innerHTML = originalLabels[id];
-                    }
-                });
-                
-                // Calculate total price (should be 0 now as we unchecked all)
-                calculateTotalPrice();
-                
-                // Find bookings for this specific date and venue
-                const bookingsForSelectedDate = [];
-                for (let i = 0; i < existingBookings.length; i++) {
-                    const booking = existingBookings[i];
-                    if (booking.booking_date === selectedDate && booking.venue_id === venueId) {
-                        bookingsForSelectedDate.push(booking);
-                    }
-                }
-                
-                // If there are bookings for this date and venue, disable the booked types
-                for (let i = 0; i < bookingsForSelectedDate.length; i++) {
-                    const booking = bookingsForSelectedDate[i];
-                    for (let j = 0; j < booking.booking_types.length; j++) {
-                        const bookedType = booking.booking_types[j];
-                        // Find and disable the booked type
-                        const typeId = `type_${bookedType}`;
-                        const typeCheckbox = document.getElementById(typeId);
-                        if (typeCheckbox) {
-                            typeCheckbox.disabled = true;
-                            typeCheckbox.parentElement.classList.add("text-muted");
-                            
-                            // Add a note that this booking type is unavailable
-                            const label = typeCheckbox.nextElementSibling;
-                            if (label) {
-                                label.innerHTML = originalLabels[typeId] + " <span class='text-danger'>(Unavailable)</span>";
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Price Calculation
-            function calculateTotalPrice() {
-                let total = 0;
-                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-                    total += parseInt(checkbox.getAttribute("data-price"));
-                });
-                totalPriceElement.innerText = total;
-            }
-            
-            // Checkbox listeners
-            document.querySelectorAll(".booking-type").forEach((checkbox) => {
-                checkbox.addEventListener("change", calculateTotalPrice);
-            });
-            
-            // Form submission check
-            document.getElementById("bookingForm").addEventListener("submit", function (event) {
-                if (!chosenDateInput.value) {
-                    event.preventDefault();
-                    alert("Please select a date before confirming.");
-                    return;
-                }
-                
-                let selectedTypes = [];
-                document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
-                    selectedTypes.push(checkbox.value);
-                });
-                
-                if (selectedTypes.length === 0) {
-                    event.preventDefault();
-                    alert("Please select at least one booking type.");
-                }
-            });
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+          let calendarEl = document.getElementById("calendar");
+          let selectedDateText = document.getElementById("selectedDateText");
+          let chosenDateInput = document.getElementById("chosenDate");
+          let totalPriceElement = document.getElementById("totalPrice");
+          let lastClickedEl = null; // Track the last clicked date element
+
+          // Parse existing bookings data passed from the backend
+          const existingBookings = JSON.parse('{{ bookings_json|safe }}');
+          const venueId = {{ venue_id }};
+
+          // Get all booking types and their IDs
+          const allBookingTypeIds = [];
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              allBookingTypeIds.push(parseInt(checkbox.value));
+          });
+          console.log("All booking type IDs:", allBookingTypeIds);
+
+          // Store original labels to restore them when needed
+          const originalLabels = {};
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              const id = checkbox.id;
+              const label = checkbox.nextElementSibling;
+              if (label) {
+                  originalLabels[id] = label.innerHTML;
+              }
+          });
+
+          // Get today's date and one month from today
+          const today = new Date();
+          const oneMonthLater = new Date();
+          oneMonthLater.setMonth(today.getMonth() + 1);
+
+          // Format date to YYYY-MM-DD
+          function formatDate(date) {
+              const d = new Date(date);
+              const year = d.getFullYear();
+              const month = String(d.getMonth() + 1).padStart(2, '0');
+              const day = String(d.getDate()).padStart(2, '0');
+              return `${year}-${month}-${day}`;
+          }
+
+          // Print all booking data to debug
+          console.log("Existing bookings:", existingBookings);
+
+          // Find fully booked dates (where all booking types are taken)
+          const fullyBookedDates = findFullyBookedDates();
+          console.log("Fully booked dates:", fullyBookedDates);
+
+          // Find dates where all booking types are booked
+          function findFullyBookedDates() {
+              const dateBookings = {};
+
+              // Group bookings by date to track which types are booked on each date
+              existingBookings.forEach(booking => {
+                  if (booking.venue_id === venueId) {
+                      const date = booking.booking_date;
+
+                      if (!dateBookings[date]) {
+                          dateBookings[date] = new Set();
+                      }
+
+                      // Add all booked types for this date
+                      booking.booking_types.forEach(typeId => {
+                          dateBookings[date].add(typeId);
+                      });
+                  }
+              });
+
+              // Find dates where all types are booked
+              const fullyBooked = [];
+              for (const date in dateBookings) {
+                  console.log(`Date ${date} has ${dateBookings[date].size} booked types out of ${allBookingTypeIds.length}`);
+                  if (dateBookings[date].size >= allBookingTypeIds.length) {
+                      fullyBooked.push(date);
+                  }
+              }
+
+              return fullyBooked;
+          }
+
+          // Initialize FullCalendar with validRange
+          let calendar = new FullCalendar.Calendar(calendarEl, {
+              initialView: "dayGridMonth",
+              selectable: true,
+              validRange: {
+                  start: formatDate(today),
+                  end: formatDate(oneMonthLater)
+              },
+              dateClick: function (info) {
+                  const clickedDate = formatDate(info.date);
+
+                  // Check if this date is fully booked
+                  if (fullyBookedDates.includes(clickedDate)) {
+                      alert("This date is fully booked. Please select another date.");
+                      return;
+                  }
+
+                  // Remove the selected class from the previously selected date
+                  if (lastClickedEl) {
+                      lastClickedEl.classList.remove('selected-date');
+                  }
+
+                  // Add the selected class to the newly clicked date
+                  info.dayEl.classList.add('selected-date');
+                  lastClickedEl = info.dayEl;
+
+                  selectedDateText.innerText = "Selected Date: " + clickedDate;
+                  chosenDateInput.value = clickedDate;
+
+                  // Update available booking types based on selected date
+                  updateAvailableBookingTypes(clickedDate);
+              },
+              // Add visual indicator for fully booked dates
+              dayCellDidMount: function(info) {
+                  const cellDate = formatDate(info.date);
+
+                  // Check if this date is fully booked
+                  if (fullyBookedDates.includes(cellDate)) {
+                      info.el.classList.add('fully-booked-date');
+                      info.el.setAttribute('title', 'Fully Booked');
+
+                      // Make it visually distinct
+                      info.el.style.backgroundColor = '#ffdddd';
+                      info.el.style.color = '#dc3545';
+                      info.el.style.textDecoration = 'line-through';
+                      info.el.style.cursor = 'not-allowed';
+                  }
+              }
+          });
+
+          calendar.render();
+
+          // Function to update booking types based on availability
+          function updateAvailableBookingTypes(selectedDate) {
+              // Reset all booking types to enabled and restore original labels
+              document.querySelectorAll(".booking-type").forEach((checkbox) => {
+                  const id = checkbox.id;
+                  checkbox.disabled = false;
+                  checkbox.checked = false;
+                  checkbox.parentElement.classList.remove("text-muted");
+
+                  // Restore original label text
+                  const label = checkbox.nextElementSibling;
+                  if (label && originalLabels[id]) {
+                      label.innerHTML = originalLabels[id];
+                  }
+              });
+
+              // Calculate total price (should be 0 now as we unchecked all)
+              calculateTotalPrice();
+
+              // Find bookings for this specific date and venue
+              const bookingsForSelectedDate = [];
+              for (let i = 0; i < existingBookings.length; i++) {
+                  const booking = existingBookings[i];
+                  if (booking.booking_date === selectedDate && booking.venue_id === venueId) {
+                      bookingsForSelectedDate.push(booking);
+                  }
+              }
+
+              // If there are bookings for this date and venue, disable the booked types
+              for (let i = 0; i < bookingsForSelectedDate.length; i++) {
+                  const booking = bookingsForSelectedDate[i];
+                  for (let j = 0; j < booking.booking_types.length; j++) {
+                      const bookedType = booking.booking_types[j];
+                      // Find and disable the booked type
+                      const typeId = `type_${bookedType}`;
+                      const typeCheckbox = document.getElementById(typeId);
+                      if (typeCheckbox) {
+                          typeCheckbox.disabled = true;
+                          typeCheckbox.parentElement.classList.add("text-muted");
+
+                          // Add a note that this booking type is unavailable
+                          const label = typeCheckbox.nextElementSibling;
+                          if (label) {
+                              label.innerHTML = originalLabels[typeId] + " <span class='text-danger'>(Unavailable)</span>";
+                          }
+                      }
+                  }
+              }
+          }
+
+          // Price Calculation
+          function calculateTotalPrice() {
+              let total = 0;
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  total += parseInt(checkbox.getAttribute("data-price"));
+              });
+              totalPriceElement.innerText = total;
+          }
+
+          // Checkbox listeners
+          document.querySelectorAll(".booking-type").forEach((checkbox) => {
+              checkbox.addEventListener("change", calculateTotalPrice);
+          });
+
+          // Form submission check
+          document.getElementById("bookingForm").addEventListener("submit", function (event) {
+              if (!chosenDateInput.value) {
+                  event.preventDefault();
+                  alert("Please select a date before confirming.");
+                  return;
+              }
+
+              let selectedTypes = [];
+              document.querySelectorAll(".booking-type:checked").forEach((checkbox) => {
+                  selectedTypes.push(checkbox.value);
+              });
+
+              if (selectedTypes.length === 0) {
+                  event.preventDefault();
+                  alert("Please select at least one booking type.");
+              }
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
