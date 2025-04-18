@@ -19,6 +19,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.paginator import Paginator
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 
@@ -29,6 +32,11 @@ def index(request):
         'venues': venues
     }
     return render(request, 'new-index.html', context)
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect('index')
 
 
 @login_required
@@ -89,7 +97,7 @@ def venue(request):
 
 def contact(request):
     return render(request, 'contact.html')
-
+@login_required
 def venue_list(request):
     venues = Venue.objects.all().order_by('-id')  
     return render(request, 'VenueList.html', {
@@ -101,7 +109,7 @@ def venue_list(request):
 
 # def table_booking(request):
 #     return render(request, 'TableBooking.html')
-
+@login_required
 def venue_detail(request, venue_id):
     venue = get_object_or_404(Venue, id=venue_id)
     # Get related images for this venue
@@ -151,6 +159,7 @@ def user_login(request):
 
         # Authenticate using email (USERNAME_FIELD)
         user = authenticate(request, username=username_or_email, password=password)
+        print(user,"kookkk")
 
         # Try with name if the first attempt fails
         if user is None:
@@ -187,6 +196,7 @@ def user_login(request):
 
 
 ###########################Booking################################################
+@login_required
 def booking(request, venue_id):
     booking_types = BookingType.objects.all()
 
@@ -301,6 +311,7 @@ def booking(request, venue_id):
 
 
 ###########################Visite Request ################################################
+@login_required
 def visit_request_view(request):
     if request.method == 'POST':
         # print(request.user, "herere")
@@ -371,6 +382,7 @@ def update_venue_status(request, venue_id):
 
 
 ###########################Tabel booking list################################################
+@login_required
 def table_booking(request):
     bookings = Booking.objects.all()
     return render(request, 'TableBooking.html', {'bookings': bookings})

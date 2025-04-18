@@ -21,5 +21,6 @@ urlpatterns = [
     path('update-visit-status/<int:visit_id>/', views.update_visit_status, name='update_visit_status'),
     path('update-venue-status/<int:venue_id>/', views.update_venue_status, name='update_venue_status'),
     path('update-booking-status/', views.update_booking_status, name='update-booking-status'),  
+      path('logout/', views.logout_user, name='logout'),
 
 ]

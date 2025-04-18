@@ -67,11 +67,7 @@ header {
 	z-index: 1030;
 }
 
-/* Carousel */
-.carousel-item img {
-	height: 80vh;
-	object-fit: cover;
-}
+
 
 /* Overlay Search Box */
 .search-box {
@@ -353,9 +349,9 @@ section.wedding-planning {
 	position: relative;
 }
 
-div#galleryCarousel {
+/* div#galleryCarousel {
 	padding: 100px 0px;
-}
+} */
 
 .Explore {
 	background: url(../../assets/images/call-out-parr-new.jpg) no-repeat center center;
@@ -1090,16 +1086,16 @@ span.badge.bg-warning.text-dark.position-absolute.top-0.start-0.m-2 {
 	border-radius: 10px;
 }
 
-div#galleryCarousel {
-	padding: 50px 0px;
-}
+/* div#galleryCarousel {
+	padding: 24px 0px;
+} */
 
 div#weddingCarousel .carousel-item img {
 	height: 80vh;
 }
 
 .carousel-item img {
-	height: 40vh;
+	height: 55vh;
 	object-fit: cover;
 }
 
