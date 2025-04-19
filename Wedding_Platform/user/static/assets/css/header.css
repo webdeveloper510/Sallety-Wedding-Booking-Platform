@@ -176,8 +176,8 @@ hr {
 
 a#userDropdown {
 	background: #5d4e6c;
-	height: 50px;
-	width: 50px;
+	height: 40px;
+	width: 40px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -185,7 +185,7 @@ a#userDropdown {
 }
 
 a#userDropdown i.fas.fa-user {
-	font-size: 24px;
+	font-size: 18px;
 }
 
 .new_group {
