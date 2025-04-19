@@ -37,8 +37,8 @@
             <div class="col-md-10 p-4">
                 <div class="body-content p-2" >
                     <div class="container-fluid ">
-                        <div class="out_alltable">
-                            <table class="property-table">
+                        <div class="out_alltable table-responsive">
+                            <table class="table property-table">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -46,10 +46,11 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Booking Type</th> 
-                                      
-                                        {% if user.role == 'owner' or user.role == 'admin' %}
                                         <th>Status</th>
-                                        {% endif %}
+
+                                        {% comment %} {% if user.role == 'owner' or user.role == 'admin' %}
+                                        <th>Status</th>
+                                        {% endif %} {% endcomment %}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,24 +61,23 @@
                                         <td>{{ booking.email }}</td>
                                         <td>{{ booking.phone }}</td>
                                           <td>{{ booking.get_booking_types_display }}</td> 
-                                          {% if user.role == 'owner' %}
-                                        <td>
-                                          
-                                            <select class="status-dropdown">
-                                                <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
-                                                <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Pending</option>
-                                                <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
-                                            </select>
-                                            
+                                          <td>
+                                            {% if user.role == 'owner' %}
+                                                <select class="status-dropdown">
+                                                    <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                                    <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Pending</option>
+                                                    <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                                </select>
+                                            {% else %}
+                                                {{ booking.status|capfirst }}
+                                            {% endif %}
                                         </td>
-                                        {% endif %}
                                     </tr>
                                     {% empty %}
                                     <tr><td colspan="5">No bookings found.</td></tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            
                         </div>
                         <!-- Pagination -->
                         <div class="pagination">
