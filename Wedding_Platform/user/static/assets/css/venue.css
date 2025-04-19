@@ -1037,7 +1037,7 @@ width: 97% !important;
 
 .toggle-switch input {
     appearance: none;
-    width: 20px;
+    width: 40px;
     height: 20px;
     background: #ccc;
     border-radius: 10px;

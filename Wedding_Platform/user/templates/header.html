@@ -52,10 +52,13 @@
                         class="fw-bold" 
                         style="color:black;font-size:15px"
                       >
-                        Account
+                      My  Account
                       </a></li>
-                    <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
-                    <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li> 
+                    
+                      {% if not request.user.is_authenticated %}
+                      <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
+                      <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
+                  {% endif %} 
                     <li><a href="{% url 'logout' %}" class="dropdown-item"> {% if request.user.is_authenticated %}
                         Logout
                     {% endif %}</a></li>  

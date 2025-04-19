@@ -87,20 +87,26 @@
                         <i class="fas fa-user"></i>
                     </a>
                     <ul class="dropdown-menu" id="dropdownMenu">
-                        <li> <a class="dropdown-item"
-                            href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
-                            class="fw-bold" 
-                            style="color:black;font-size:15px"
-                          >
-                            Account
-                          </a></li>
-                        <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
-                       <li><a href="{% url 'logout' %}" class="dropdown-item"> {% if request.user.is_authenticated %}
-                       Logout
-                    {% endif %}</a></li>
+                        <li>
+                            <a class="dropdown-item" 
+                               href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
+                               class="fw-bold" 
+                               style="color:black;font-size:15px">
+                                Account
+                            </a>
+                        </li>
+                
+                        {% if not request.user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
+                        {% endif %}
+                
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}" class="dropdown-item">Logout</a></li>  
+                        {% endif %}
                     </ul>
                 </div>
+                
             </div>
         </div>
         

@@ -23,7 +23,7 @@ class VenueForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Venue Description'}),
             'price': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Price'}),
             'contact': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Enter Contact'}),
-            'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Capacity'}),  # <-- Widget added
+            'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Enter Capacity (Ex-100)'}),  # <-- Widget added
             'full_address': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Full Address'}),
             'longitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Longitude'}),
             'latitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Latitude'}),
@@ -37,7 +37,7 @@ class VenueForm(forms.ModelForm):
             'is_resort': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_forest': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_rooftop': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-             'is_garden': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # ← Add here
+            'is_garden': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # ← Add here
             'has_parking': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'has_prayer_rooms': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'has_dj': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
