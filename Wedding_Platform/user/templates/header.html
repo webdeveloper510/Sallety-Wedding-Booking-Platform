@@ -29,14 +29,15 @@
 
         <!-- Buttons & User Dropdown -->
         <div class="btn-group new_group">
+            {% if user.role == 'owner' or user.role == 'admin' %}
             <a 
             href="{% if request.user.is_authenticated %}{% url 'addVenue' %}{% else %}{% url 'user-login' %}?next={% url 'addVenue' %}{% endif %}" 
             class="btn btn-primary Venue_btn"
           >
             Add Venue
-          </a>
+          </a>{% endif %}
           <a 
-  href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
+  href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
   class="fw-bold" 
   style="color:black;font-size:15px"
 >
@@ -48,7 +49,7 @@
                 </a>
                 <ul class="dropdown-menu" id="dropdownMenu">
                     <li> <a class="dropdown-item"
-                        href="{% if request.user.is_authenticated %}{% url 'venue-list' %}{% else %}{% url 'user-login' %}?next={% url 'venue-list' %}{% endif %}" 
+                        href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
                         class="fw-bold" 
                         style="color:black;font-size:15px"
                       >

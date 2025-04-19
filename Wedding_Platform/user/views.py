@@ -22,8 +22,18 @@ from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from functools import wraps
 
-
+# Custom decorator for owner-only access
+def owner_required(view_func):
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.role in ['owner', 'admin']:
+            return view_func(request, *args, **kwargs)
+        else:
+            messages.error(request, "You don't have permission to access this page.")
+            return redirect('index')
+    return wrapper
 
 def index(request):
     # Get active venues from the database
@@ -38,8 +48,8 @@ def logout_user(request):
     logout(request)
     return redirect('index')
 
-
 @login_required
+@owner_required  # Only owners can add venues
 def add_venue(request):
     if request.method == 'POST':
         form = VenueForm(request.POST, request.FILES)
@@ -80,7 +90,7 @@ def add_venue(request):
 
 @login_required
 def VenueList(request):
-    if request.user.is_staff:
+    if request.user.role == 'owner':
         venue_list = Venue.objects.all().order_by('-created_at')
     else:
         venue_list = Venue.objects.filter(user_id=request.user).order_by('-created_at')
@@ -97,18 +107,18 @@ def venue(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
 @login_required
 def venue_list(request):
-    venues = Venue.objects.all().order_by('-id')  
+    if request.user.role == 'owner':
+        venues = Venue.objects.all().order_by('-id')
+    else:
+        venues = Venue.objects.filter(user=request.user).order_by('-id')
+    
     return render(request, 'VenueList.html', {
         'venues': venues
     })
-# def VisitRequest(request):
-#     return render(request, 'VisitRequest.html')
 
-
-# def table_booking(request):
-#     return render(request, 'TableBooking.html')
 @login_required
 def venue_detail(request, venue_id):
     venue = get_object_or_404(Venue, id=venue_id)
@@ -120,8 +130,7 @@ def venue_detail(request, venue_id):
         'venue_id': venue_id
     }
     return render(request, 'single-venue-detail.html', context)
-# def booking(request):
-#     return render(request, 'Booking.html')
+
 def booking(request, venue_id):
     venue = get_object_or_404(Venue, id=venue_id)  # optional but useful
     return render(request, 'Booking.html', {
@@ -129,17 +138,15 @@ def booking(request, venue_id):
         'venue_id': venue_id
     })
 
-
 def contact(request):
     return render(request, 'contact.html')
-
 
 def user_register(request):
     if request.method == "POST":
         name = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        role = request.POST.get("role")
+        role = request.POST.get("role", "user")  # Default to user if not specified
 
         if User.objects.filter(name=name).exists():
             messages.error(request, "Username already taken.")
@@ -176,24 +183,6 @@ def user_login(request):
             messages.error(request, "Invalid credentials")
 
     return render(request, 'login.html')
-
-    if request.method == "POST":
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already taken.")
-        elif User.objects.filter(email=email).exists():
-            messages.error(request, "Email already registered.")
-        else:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.save()
-            messages.success(request, "Account created successfully!")
-            return redirect('user-login')  # Redirect to login page after registration
-
-    return render(request, 'register.html')
-
 
 ###########################Booking################################################
 @login_required
@@ -292,30 +281,11 @@ def booking(request, venue_id):
         'bookings': bookings,
         'bookings_json': bookings_json  # Pass JSON data to template
     })
-# class VisitRequestView(View):
-#     def get(self, request):
-#         form = VisitRequestForm()
-#         return render(request, 'visit_request.html', {'form': form})
-    
-#     def post(self, request):
-#         form = VisitRequestForm(request.POST)
-#         print("form------------------",form)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, "Your visit request has been submitted successfully!")
-#             return redirect('visit_request')
-#         else:
-#             print("Form errors:", form.errors)  # ✅ debug
-#         return render(request, 'visit_request.html', {'form': form})
-
-
 
 ###########################Visite Request ################################################
 @login_required
 def visit_request_view(request):
     if request.method == 'POST':
-        # print(request.user, "herere")
-        
         add_visit = VisitRequest.objects.create(
             name=request.POST.get('name'),
             email=request.POST.get('email'),
@@ -323,28 +293,23 @@ def visit_request_view(request):
             visit_date=request.POST.get('visit_date'),
             venue_id=request.POST.get('venue_id'),
             time_slot=request.POST.get('time_slot'),
+            user=request.user,  # Associate the visit request with the current user
         )
         add_visit.save()
         messages.success(request, 'Thank you! Your visit request has been submitted.')
 
-    visit_requests = VisitRequest.objects.all().order_by('-created_at')  # fetch all requests
+    # Filter visit requests based on user role
+    if request.user.role in ['owner', 'admin']:
+        visit_requests = VisitRequest.objects.all().order_by('-created_at')  # Owners/admins see all requests
+    else:
+        visit_requests = VisitRequest.objects.filter(user=request.user).order_by('-created_at')  # Users see only their requests
+    
     return render(request, 'VisitRequest.html', {'visit_requests': visit_requests})
-
-
-        # return redirect('visit_request')
-
-# class VenueDetailView(DetailView):
-    model = Venue
-    template_name = 'venue_detail.html'
-
-    def get(self, request, *args, **kwargs):
-        pk = self.kwargs.get('pk')
-        print(f"ID from path: {pk}")
-        return super().get(request, *args, **kwargs)
-
 
 ###########################Update visite status################################################
 @csrf_exempt
+@login_required
+@owner_required  # Only owners can update visit status
 def update_visit_status(request, visit_id):
     if request.method == 'POST':
         try:
@@ -363,10 +328,10 @@ def update_visit_status(request, visit_id):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
-
 ###########################Update venue status################################################
-
 @csrf_exempt
+@login_required
+@owner_required  # Only owners can update venue status
 def update_venue_status(request, venue_id):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -380,17 +345,20 @@ def update_venue_status(request, venue_id):
             return JsonResponse({'error': 'Venue not found'}, status=404)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-
 ###########################Tabel booking list################################################
 @login_required
 def table_booking(request):
-    bookings = Booking.objects.all()
+    if request.user.role == 'owner':
+        bookings = Booking.objects.all()  # Owners see all bookings
+    else:
+        bookings = Booking.objects.filter(user=request.user)  # Users see only their bookings
+    
     return render(request, 'TableBooking.html', {'bookings': bookings})
-
-
 
 ###########################Updatebooking status################################################
 @csrf_exempt
+@login_required
+@owner_required  # Only owners can update booking status
 def update_booking_status(request):
     if request.method == "POST":
         data = json.loads(request.body)

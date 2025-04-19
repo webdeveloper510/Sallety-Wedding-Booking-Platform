@@ -3,16 +3,19 @@
         <ul>
             <li>
                 {% comment %} <h1>{{request.resolver_match.url_name}}</h1> {% endcomment %}
-                <a href="{% url 'addVenue' %}" class="nav-link {% if request.resolver_match.url_name == 'addVenue' %}active{% endif %}">
-                    <i class="fas fa-map-marker-alt"></i> Add Venue
-                </a>
+                {% if user.role == 'owner' or user.role == 'admin' %}
+<a href="{% url 'addVenue' %}" class="nav-link {% if request.resolver_match.url_name == 'addVenue' %}active{% endif %}">
+    <i class="fas fa-map-marker-alt"></i> Add Venue
+</a>
+{% endif %}
             </li>
             <li>
+                {% if user.role == 'owner' or user.role == 'admin' %}
                 <a href="{% url 'venue-list' %}" class="nav-link {% if request.resolver_match.url_name == 'venue-list' %}active{% endif %}">
 
                     <i class="fas fa-list-ul"></i> Venues
                 </a>
-                
+                {% endif %}
             </li>
             <li>
                 <a href="{% url 'visit_request_view' %}" class="nav-link {% if request.resolver_match.url_name == 'visit_request_view' %}active{% endif %}">

@@ -49,7 +49,9 @@
                                         <th> Contact Info (Phone)</th>
                                         <th>Preferred Visit Date</th>
                                         <th>Preferred Time Slot</th>
+                                        {% if user.role == 'owner' or user.role == 'admin' %}
                                         <th>Status</th>
+                                        {% endif %}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,13 +62,17 @@
                                         <td>{{ visit.phone }}</td>
                                         <td>{{ visit.visit_date }}</td>
                                         <td>{{ visit.time_slot }}</td>
+                                        {% if user.role == 'owner' %}
                                         <td>
+                                          
                                             <select class="status-dropdown" data-id="{{ visit.id }}">
                                               <option value="pending" {% if visit.status == "pending" %}selected{% endif %}>Pending</option>
                                               <option value="confirmed" {% if visit.status == "confirmed" %}selected{% endif %}>Confirmed</option>
                                               <option value="cancelled" {% if visit.status == "cancelled" %}selected{% endif %}>Cancelled</option>
                                             </select>
+                                           
                                           </td>
+                                          {% endif %}
                                     </tr>
                                     {% empty %}
                                     <tr>
