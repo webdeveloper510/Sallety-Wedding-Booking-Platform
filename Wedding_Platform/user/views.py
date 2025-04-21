@@ -38,11 +38,37 @@ def owner_required(view_func):
 def index(request):
     # Get active venues from the database
     venues = Venue.objects.filter(status='active')
+    
+    # Check if category filter is provided
+    category = request.GET.get('category')
+    if category:
+        # Map category name to model field
+        category_mapping = {
+    'beach': 'is_beach',
+    'city': 'is_city',
+    'hotel': 'is_hotel',
+    'countryside': 'is_countryside',
+    'mountain': 'is_mountain',
+    'resort': 'is_resort',
+    'forest': 'is_forest',
+    'rooftop': 'is_rooftop',
+    'garden': 'is_garden',
+    'desert': 'is_desert',
+    'lake': 'is_lake',
+    'island': 'is_island',
+    'cave': 'is_cave',
+    'vineyard': 'is_vineyard',
+}
+
+        if category.lower() in category_mapping:
+            filter_kwargs = {category_mapping[category.lower()]: True}
+            venues = venues.filter(**filter_kwargs)
+    
     context = {
-        'venues': venues
+        'venues': venues,
+        'active_category': category
     }
     return render(request, 'new-index.html', context)
-
 @login_required
 def logout_user(request):
     logout(request)
@@ -53,11 +79,11 @@ def logout_user(request):
 def add_venue(request):
     if request.method == 'POST':
         form = VenueForm(request.POST, request.FILES)
-       
+        
         if form.is_valid():
             venue = form.save(commit=False)
-           
-            # ✅ Assign user correctly
+            
+            # Assign user correctly
             venue.user = request.user
             venue.status = 'Active'
             venue.save()
@@ -70,24 +96,27 @@ def add_venue(request):
             venue.has_wifi = 'wifi' in request.POST.getlist('amenities', [])
             venue.has_swimming_pool = 'swimming_pool' in request.POST.getlist('amenities', [])
             venue.save()
-           
+            
             # Save gallery images
             if 'gallery_images' in request.FILES:
                 gallery_images = request.FILES.getlist('gallery_images')
-                for image in gallery_images:
+                # Limit to 4 images
+                for image in gallery_images[:4]:
                     VenueImage.objects.create(venue=venue, image=image)
-                   
+                    
             messages.success(request, 'Venue added successfully! It will be reviewed by an administrator.')
             return redirect('venue-list')
         else:
-            messages.error(request, 'Please correct the errors below.')
+            # Enhanced error handling
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.replace('_', ' ').title()}: {error}")
     else:
         form = VenueForm()
-   
+    
     return render(request, 'addVenue.html', {
         'form': form,
     })
-
 @login_required
 def VenueList(request):
     if request.user.role == 'owner':

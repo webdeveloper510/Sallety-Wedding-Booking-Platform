@@ -93,6 +93,12 @@ class Venue(models.Model):
     is_forest = models.BooleanField(default=False)
     is_rooftop = models.BooleanField(default=False)
     is_garden = models.BooleanField(default=False)
+    is_desert = models.BooleanField(default=False)
+    is_lake = models.BooleanField(default=False)
+    is_island = models.BooleanField(default=False)
+    is_cave = models.BooleanField(default=False)
+    is_vineyard = models.BooleanField(default=False)
+
 
 
     # Gallery

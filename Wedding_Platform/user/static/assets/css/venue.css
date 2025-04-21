@@ -1243,7 +1243,7 @@ width: 97% !important;
     justify-content: space-between;
     background-color: #fff;
     width: 100%;
-    margin-top: 143px;
+    margin-top: 155px;
 }
 
 /* Ensure the category wrapper takes the correct space */
@@ -1286,4 +1286,12 @@ width: 97% !important;
 .top-bar.inner_head .logo {
     margin-bottom: 10px;
 }
+.mobile_view {
+    display: block !important;
 }
+.location {
+    width: 100%;
+    margin-top: 0px;
+}
+}
+

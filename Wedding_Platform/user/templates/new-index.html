@@ -116,110 +116,58 @@
     
      <div class="container-fluid mt-3 top_space">
         <div class="category-container">
+    
             <!-- Left Arrow -->
             <button class="arrow-btn left-arrow" id="scrollLeft">
                 <i class="fas fa-chevron-left"></i>
             </button>
     
-            <div class="category-wrapper">
-                <div class="category-nav" id="categoryNav">
-                    <a href="#" class="category-item active">
-        <i class="fas fa-umbrella-beach"></i>
-        Beach
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-city"></i>
-        City
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-hotel"></i>
-        Hotel
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-tree"></i>
-        Countryside
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-mountain"></i>
-        Mountain
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-spa"></i>
-        Resort
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-leaf"></i>
-        Forest
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-city"></i>
-        Rooftop
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-seedling"></i>
-        Garden
-    </a>
-    <a href="#" class="category-item ">
-        <i class="fas fa-umbrella-beach"></i>
-        Beach
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-city"></i>
-        City
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-hotel"></i>
-        Hotel
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-tree"></i>
-        Countryside
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-mountain"></i>
-        Mountain
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-spa"></i>
-        Resort
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-leaf"></i>
-        Forest
-    </a>
-    <a href="#" class="category-item">
-        <i class="fas fa-city"></i>
-        Rooftop
-    </a>
-                    {% comment %} <a href="#" class="category-item">
-                        <i class="fas fa-chess-rook"></i>
-                        Castles
-                    </a>
-                    <a href="#" class="category-item">
-                        <i class="fas fa-bed"></i>
-                        Rooms
-                    </a>
-                     <a href="#" class="category-item">
-                        <i class="fas fa-campground"></i>
-                        Camping
-                    </a>
-                    <a href="#" class="category-item">
-                        <i class="fas fa-mountain"></i>
-                        Amazing views
-                    </a>
-                    <a href="#" class="category-item">
-                        <i class="fas fa-home"></i>
-                        Cabins
-                    </a>
-                    <a href="#" class="category-item">
-                        <i class="fas fa-chess-rook"></i>
-                        Castles
-                    </a>
-                    <a href="#" class="category-item">
-                        <i class="fas fa-bed"></i>
-                        Rooms
-                    </a> {% endcomment %}
-                </div>
+            <!-- Category Navigation -->
+            <div class="category-nav" id="categoryNav">
+                <a href="{% url 'index' %}?category=beach" class="category-item {% if active_category == 'beach' %}active{% endif %}">
+                    <i class="fas fa-umbrella-beach"></i> Beach
+                </a>
+                <a href="{% url 'index' %}?category=city" class="category-item {% if active_category == 'city' %}active{% endif %}">
+                    <i class="fas fa-city"></i> City
+                </a>
+                <a href="{% url 'index' %}?category=hotel" class="category-item {% if active_category == 'hotel' %}active{% endif %}">
+                    <i class="fas fa-hotel"></i> Hotel
+                </a>
+                <!-- Continue for other categories -->
+                <a href="{% url 'index' %}?category=countryside" class="category-item {% if active_category == 'countryside' %}active{% endif %}">
+                    <i class="fas fa-tree"></i> Countryside
+                </a>
+                <a href="{% url 'index' %}?category=mountain" class="category-item {% if active_category == 'mountain' %}active{% endif %}">
+                    <i class="fas fa-mountain"></i> Mountain
+                </a>
+                <a href="{% url 'index' %}?category=resort" class="category-item {% if active_category == 'resort' %}active{% endif %}">
+                    <i class="fas fa-spa"></i> Resort
+                </a>
+                <a href="{% url 'index' %}?category=forest" class="category-item {% if active_category == 'forest' %}active{% endif %}">
+                    <i class="fas fa-leaf"></i> Forest
+                </a>
+                <a href="{% url 'index' %}?category=rooftop" class="category-item {% if active_category == 'rooftop' %}active{% endif %}">
+                    <i class="fas fa-city"></i> Rooftop
+                </a>
+                <a href="{% url 'index' %}?category=garden" class="category-item {% if active_category == 'garden' %}active{% endif %}">
+                    <i class="fas fa-seedling"></i> Garden
+                </a>
+              
+                <a href="{% url 'index' %}?category=desert" class="category-item {% if active_category == 'desert' %}active{% endif %}">
+                    <i class="fas fa-sun"></i> Desert
+                </a>
+                <a href="{% url 'index' %}?category=lake" class="category-item {% if active_category == 'lake' %}active{% endif %}">
+                    <i class="fas fa-water"></i> Lake
+                </a>
+                <a href="{% url 'index' %}?category=island" class="category-item {% if active_category == 'island' %}active{% endif %}">
+                    <i class="fas fa-ship"></i> Island
+                </a>
+                <a href="{% url 'index' %}?category=cave" class="category-item {% if active_category == 'cave' %}active{% endif %}">
+                    <i class="fas fa-mountain"></i> Cave
+                </a>
+                <a href="{% url 'index' %}?category=vineyard" class="category-item {% if active_category == 'vineyard' %}active{% endif %}">
+                    <i class="fas fa-wine-bottle"></i> Vineyard
+                </a>
             </div>
     
             <!-- Right Arrow -->
@@ -232,29 +180,30 @@
                 <button class="filters-btn">
                     <i class="fas fa-sliders-h"></i> Filters
                 </button>
-    
                 <div class="toggle-switch">
                     <label>Display total before taxes</label>
                     <input type="checkbox">
                 </div>
             </div>
+    
         </div>
     </div>
+    
     <section class="Rated_venues" style="background: #fff;margin:15px">
         <div class="container">
           
-<div class="row g-4 mt-4">
+           <div class="row g-4 mt-4">
    
     
-    {% for venue in venues %}
-    <div class="col-md-3">
-        <div class="card wedding-card">
-            <div class="card-img-top position-relative">
-                {% if venue.thumbnail %}
-                    <a href="{% url 'venue-detail' venue.id %}">
-                        <img src="{{ venue.thumbnail.url }}" class="img-fluid rounded-top" alt="{{ venue.name }}" width="100%" height="50%">
-                    </a>
-                {% else %}
+                 {% for venue in venues %}
+                 <div class="col-md-3">
+                   <div class="card wedding-card">
+                     <div class="card-img-top position-relative">
+                        {% if venue.thumbnail %}
+                          <a href="{% url 'venue-detail' venue.id %}">
+                            <img src="{{ venue.thumbnail.url }}" class="img-fluid rounded-top" alt="{{ venue.name }}" width="100%" height="50%">
+                         </a>
+                        {% else %}
                     <a href="{% url 'venue-detail' venue.id %}">
                         <img src="{% static 'images/placeholder.jpg' %}" class="img-fluid rounded-top" alt="No image" width="100%" height="50%"> 
                     </a>
@@ -637,6 +586,67 @@
         window.addEventListener('scroll', updateLayout);
     });
     </script>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all category items
+            const categoryItems = document.querySelectorAll('.category-item');
+            
+            // Add click event listeners to each category item
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // If JavaScript is enabled, prevent default to handle with AJAX (optional)
+                    // e.preventDefault();
+                    
+                    // Remove 'active' class from all items
+                    categoryItems.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Add 'active' class to clicked item
+                    this.classList.add('active');
+                    
+                    // OPTIONAL: If you want to load venues with AJAX instead of page reload
+                    // const category = this.getAttribute('href').split('=')[1];
+                    // fetchVenuesByCategory(category);
+                });
+            });
+            
+            // Arrow button functionality
+            const scrollLeftBtn = document.getElementById('scrollLeft');
+            const scrollRightBtn = document.getElementById('scrollRight');
+            const categoryNav = document.getElementById('categoryNav');
+            
+            scrollLeftBtn.addEventListener('click', function() {
+                categoryNav.scrollBy({ left: -200, behavior: 'smooth' });
+            });
+            
+            scrollRightBtn.addEventListener('click', function() {
+                categoryNav.scrollBy({ left: 200, behavior: 'smooth' });
+            });
+        });
+        
+        // OPTIONAL: AJAX Function to fetch venues by category
+        /*
+        function fetchVenuesByCategory(category) {
+            fetch(`/api/venues/?category=${category}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update the venue listings with the filtered results
+                    updateVenueList(data);
+                })
+                .catch(error => console.error('Error fetching venues:', error));
+        }
+        
+        function updateVenueList(venues) {
+            // Update your venue list with the filtered results
+            const venueContainer = document.querySelector('.venue-listings');
+            // Clear existing venues
+            venueContainer.innerHTML = '';
+            
+            // Add new venues
+            venues.forEach(venue => {
+                // Create venue HTML and append to container
+            });
+        }
+        */
+    </script>
 </body>
 </html>
