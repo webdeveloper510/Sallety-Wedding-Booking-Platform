@@ -649,7 +649,7 @@ margin-top: 30px ;
 .out_alltable {
     border: 0px solid rgb(221, 221, 221);
     border-radius: 12px;
-    padding: 20px;
+    /* padding: 20px; */
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 12px;
 }
 
@@ -1274,6 +1274,45 @@ width: 97% !important;
     border: 1px solid #ddd;
     width: 94%;
 }
+
+.out_alltable {
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Make table headers sticky */
+.out_alltable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; /* Bootstrap light */
+    z-index: 2;
+}
+
+/* Optional: scrollbar styling */
+.out_alltable::-webkit-scrollbar {
+    width: 2%;
+    height: 2px;
+}
+
+.out_alltable::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+.out_alltable::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 10px;
+}
+
+.out_alltable::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+
+
+
 
 @media (max-width: 767px) {
 .feature-grid {

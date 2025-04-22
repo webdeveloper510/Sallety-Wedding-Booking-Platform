@@ -1,92 +1,112 @@
 {% load static %}
 
-
-<div class="header_part">
-    <div class="top-bar inner_head" style="padding: 10px 100px;" >
-        <!-- Logo -->
-        <div class="logo">
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <img src="{% static 'assets/images/logo1.png' %}" alt="Weddlist Logo">
-            </a>
-        </div>
-
-        <!-- Search Bar in top-bar -->
-        <div class="search-bar top-search d-none">
-            <div class="active">
-                <label for="topDestination">Where</label>
-                <input type="text" id="topDestination" style="color:black" placeholder="Search destinations">
-            </div>
-            <div>
-                <label for="topDate">Select date</label>
-                <input type="date" style="color:black" id="topDate">
-            </div>
-            <div>
-                <label for="topGuests">Capacity</label>
-                <input type="number" id="topGuests" style="color:black" placeholder="Add no of guests" min="1">
-            </div>
-            <button class="search-button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-
-        <!-- Buttons & User Dropdown -->
-        <div class="btn-group new_group">
-            {% if user.role == 'owner' or user.role == 'admin' %}
-            <a 
-            href="{% if request.user.is_authenticated %}{% url 'addVenue' %}{% else %}{% url 'user-login' %}?next={% url 'addVenue' %}{% endif %}" 
-            class="btn btn-primary Venue_btn"
-          >
-            Add Venue
-          </a>{% endif %}
-          <a 
-  href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
-  class="fw-bold" 
-  style="color:black;font-size:15px"
->
-  Account
-</a>
-            <div class="dropdown">
-                <a class="nav-link user-icon" id="userDropdown" role="button">
-                    <i class="fas fa-user"></i>
-                </a>
-                <ul class="dropdown-menu" id="dropdownMenu">
-                    <li> <a class="dropdown-item"
-                        href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
-                        class="fw-bold" 
-                        style="color:black;font-size:15px"
-                      >
-                      My  Account
-                      </a></li>
-                    
-                      {% if not request.user.is_authenticated %}
-                      <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
-                      <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
-                  {% endif %} 
-                    <li><a href="{% url 'logout' %}" class="dropdown-item"> {% if request.user.is_authenticated %}
-                        Logout
-                    {% endif %}</a></li>  
-                </ul>
-            </div>
-        </div>
+<div class="">
+  <div class="top-bar inner_head" style="padding: 10px 100px">
+    <!-- Logo -->
+    <div class="logo">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'assets/images/logo1.png' %}" alt="Weddlist Logo" />
+      </a>
     </div>
+
+    <!-- Search Bar in top-bar -->
+    <div class="search-bar top-search d-none">
+      <div class="active">
+        <label for="topDestination">Where</label>
+        <input
+          type="text"
+          id="topDestination"
+          style="color: black"
+          placeholder="Search destinations"
+        />
+      </div>
+      <div>
+        <label for="topDate">Select date</label>
+        <input type="date" style="color: black" id="topDate" />
+      </div>
+      <div>
+        <label for="topGuests">Capacity</label>
+        <input
+          type="number"
+          id="topGuests"
+          style="color: black"
+          placeholder="Add no of guests"
+          min="1"
+        />
+      </div>
+      <button class="search-button">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+
+    <!-- Buttons & User Dropdown -->
+    <div class="btn-group new_group">
+      {% if user.role == 'owner' or user.role == 'admin' %}
+      <a
+        href="{% if request.user.is_authenticated %}{% url 'addVenue' %}{% else %}{% url 'user-login' %}?next={% url 'addVenue' %}{% endif %}"
+        class="btn btn-primary Venue_btn"
+      >
+        Add Venue </a
+      >{% endif %}
+      <a
+        href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}"
+        class="fw-bold"
+        style="color: black; font-size: 15px"
+      >
+        Account
+      </a>
+      <div class="dropdown">
+        <a class="nav-link user-icon" id="userDropdown" role="button">
+          <i class="fas fa-user"></i>
+        </a>
+        <ul class="dropdown-menu" id="dropdownMenu">
+          <li>
+            <a
+              class="dropdown-item"
+              href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}"
+              class="fw-bold"
+              style="color: black; font-size: 15px"
+            >
+              My Account
+            </a>
+          </li>
+
+          {% if not request.user.is_authenticated %}
+          <li>
+            <a class="dropdown-item" href="{% url 'user-login' %}">Login</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'user-register' %}"
+              >Register</a
+            >
+          </li>
+          {% endif %}
+          <li>
+            <a href="{% url 'logout' %}" class="dropdown-item">
+              {% if request.user.is_authenticated %} Logout {% endif %}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-<hr>
-
-
-
+<hr />
 
 <script>
-    // Toggle dropdown menu on user icon click
-        document.getElementById("userDropdown").addEventListener("click", function () {
-            document.getElementById("dropdownMenu").classList.toggle("show");
-        });
+  // Toggle dropdown menu on user icon click
+  document
+    .getElementById("userDropdown")
+    .addEventListener("click", function () {
+      document.getElementById("dropdownMenu").classList.toggle("show");
+    });
 
-        // Close dropdown if clicked outside
-        document.addEventListener("click", function (event) {
-            let dropdown = document.getElementById("dropdownMenu");
-            let userIcon = document.getElementById("userDropdown");
-            if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.remove("show");
-            }
-        });
+  // Close dropdown if clicked outside
+  document.addEventListener("click", function (event) {
+    let dropdown = document.getElementById("dropdownMenu");
+    let userIcon = document.getElementById("userDropdown");
+    if (!userIcon.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove("show");
+    }
+  });
 </script>
