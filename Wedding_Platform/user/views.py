@@ -171,7 +171,18 @@ def VenueList(request):
     return render(request, 'VenuList.html', {'venues': venues})
 
 def venue(request):
-    return render(request, 'single-venue.html')
+    venue_id = request.GET.get('id')
+    if venue_id:
+        try:
+            venue = Venue.objects.get(id=venue_id, status='active')
+            context = {'venue': venue}
+            return render(request, 'single-venue.html', context)
+        except Venue.DoesNotExist:
+            messages.error(request, "Venue not found or not active.")
+            return redirect('index')
+    else:
+        # Handle case where no ID is provided
+        return redirect('index')
 
 def contact(request):
     return render(request, 'contact.html')
@@ -442,3 +453,221 @@ def update_booking_status(request):
             return JsonResponse({"success": False, "error": "Booking not found"})
 
     return JsonResponse({"success": False, "error": "Invalid request method"})
+
+
+
+###########################Search result################################################
+def search_results(request):
+    # Get active venues from the database
+    venues = Venue.objects.filter(status='active')
+    
+    # Get search parameters
+    region = request.GET.get('destination')
+    date = request.GET.get('date')
+    capacity = request.GET.get('guests')
+    
+    # Apply region filter
+    if region:
+        venues = venues.filter(region__icontains=region)
+    
+    # Apply capacity filter
+    if capacity:
+        try:
+            capacity = int(capacity)
+            venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
+        except ValueError:
+            pass  # Invalid capacity input
+    
+    # Apply date filter - check if venues are available on that date
+    if date:
+        try:
+            from datetime import datetime
+            search_date = datetime.strptime(date, '%Y-%m-%d').date()
+            
+            # Filter out venues with confirmed bookings on this date
+            booked_venue_ids = Booking.objects.filter(
+                booking_date=search_date,
+                status='confirmed'
+            ).values_list('venue_id', flat=True).distinct()
+            
+            venues = venues.exclude(id__in=booked_venue_ids)
+        except ValueError:
+            pass  # Invalid date format
+    
+    # Check if category filter is provided
+    category = request.GET.get('category')
+    if category:
+        # Map category name to model field
+        category_mapping = {
+            'beach': 'is_beach',
+            'city': 'is_city',
+            'hotel': 'is_hotel',
+            'countryside': 'is_countryside',
+            'mountain': 'is_mountain',
+            'resort': 'is_resort',
+            'forest': 'is_forest',
+            'rooftop': 'is_rooftop',
+            'garden': 'is_garden',
+            'desert': 'is_desert',
+            'lake': 'is_lake',
+            'island': 'is_island',
+            'cave': 'is_cave',
+            'vineyard': 'is_vineyard',
+        }
+
+        if category.lower() in category_mapping:
+            filter_kwargs = {category_mapping[category.lower()]: True}
+            venues = venues.filter(**filter_kwargs)
+    
+    context = {
+        'venues': venues,
+        'active_category': category,
+        'search_region': region,
+        'search_date': date,
+        'search_capacity': capacity,
+        'total_results': venues.count()
+    }
+    
+    # Render using your existing single-venue.html template
+    return render(request, 'single-venue.html', context)
+    # Get active venues from the database
+    venues = Venue.objects.filter(status='active')
+    
+    # Get search parameters
+    region = request.GET.get('destination')
+    date = request.GET.get('date')
+    capacity = request.GET.get('guests')
+    
+    # Apply region filter
+    if region:
+        venues = venues.filter(region__icontains=region)
+    
+    # Apply capacity filter
+    if capacity:
+        try:
+            capacity = int(capacity)
+            venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
+        except ValueError:
+            pass  # Invalid capacity input
+    
+    # Apply date filter - check if venues are available on that date
+    if date:
+        try:
+            from datetime import datetime
+            search_date = datetime.strptime(date, '%Y-%m-%d').date()
+            
+            # Filter out venues with confirmed bookings on this date
+            booked_venue_ids = Booking.objects.filter(
+                booking_date=search_date,
+                status='confirmed'
+            ).values_list('venue_id', flat=True).distinct()
+            
+            venues = venues.exclude(id__in=booked_venue_ids)
+        except ValueError:
+            pass  # Invalid date format
+    
+    # Check if category filter is provided
+    category = request.GET.get('category')
+    if category:
+        # Map category name to model field
+        category_mapping = {
+            'beach': 'is_beach',
+            'city': 'is_city',
+            'hotel': 'is_hotel',
+            'countryside': 'is_countryside',
+            'mountain': 'is_mountain',
+            'resort': 'is_resort',
+            'forest': 'is_forest',
+            'rooftop': 'is_rooftop',
+            'garden': 'is_garden',
+            'desert': 'is_desert',
+            'lake': 'is_lake',
+            'island': 'is_island',
+            'cave': 'is_cave',
+            'vineyard': 'is_vineyard',
+        }
+
+        if category.lower() in category_mapping:
+            filter_kwargs = {category_mapping[category.lower()]: True}
+            venues = venues.filter(**filter_kwargs)
+    
+    context = {
+        'venues': venues,
+        'active_category': category,
+        'search_region': region,
+        'search_date': date,
+        'search_capacity': capacity,
+        'total_results': venues.count()
+    }
+    
+    # Use an existing template temporarily
+    return render(request, 'new-index.html', context)
+    # Get active venues from the database
+    venues = Venue.objects.filter(status='active')
+    
+    # Get search parameters
+    region = request.GET.get('destination')
+    date = request.GET.get('date')
+    capacity = request.GET.get('guests')
+    
+    # Apply region filter
+    if region:
+        venues = venues.filter(region__icontains=region)
+    
+    # Apply capacity filter
+    if capacity:
+        try:
+            capacity = int(capacity)
+            venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
+        except ValueError:
+            pass  # Invalid capacity input
+    
+    # Apply date filter - check if venues are available on that date
+    if date:
+        try:
+            search_date = datetime.strptime(date, '%Y-%m-%d').date()
+            
+            # Filter out venues with confirmed bookings on this date
+            booked_venue_ids = Booking.objects.filter(
+                booking_date=search_date,
+                status='confirmed'
+            ).values_list('venue_id', flat=True).distinct()
+            
+            venues = venues.exclude(id__in=booked_venue_ids)
+        except ValueError:
+            pass  # Invalid date format
+    
+    # Check if category filter is provided
+    category = request.GET.get('category')
+    if category:
+        # Map category name to model field
+        category_mapping = {
+            'beach': 'is_beach',
+            'city': 'is_city',
+            'hotel': 'is_hotel',
+            'countryside': 'is_countryside',
+            'mountain': 'is_mountain',
+            'resort': 'is_resort',
+            'forest': 'is_forest',
+            'rooftop': 'is_rooftop',
+            'garden': 'is_garden',
+            'desert': 'is_desert',
+            'lake': 'is_lake',
+            'island': 'is_island',
+            'cave': 'is_cave',
+            'vineyard': 'is_vineyard',
+        }
+
+        if category.lower() in category_mapping:
+            filter_kwargs = {category_mapping[category.lower()]: True}
+            venues = venues.filter(**filter_kwargs)
+    
+    context = {
+        'venues': venues,
+        'active_category': category,
+        'search_region': region,
+        'search_date': date,
+        'search_capacity': capacity,
+        'total_results': venues.count()
+    }
+    return render(request, 'venue-search-results.html', context)

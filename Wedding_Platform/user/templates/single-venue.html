@@ -131,11 +131,15 @@
   <body>
     {% include 'header.html' %}
     <div class="container-fluid">
+      <!-- Search Summary -->
       <div class="row main-container">
         <!-- Left Column: Card Listings -->
         <div class="col-md-8 left-column">
           <div class="d-flex justify-content-between mb-3">
-            <p>Over 1,000 places within map are</p>
+            <p>
+              {{ total_results }} place{{ total_results|pluralize }} within map
+              area
+            </p>
             <p>
               <i class="bi bi-tag-fill text-danger me-2"></i>Prices include all
               fees
@@ -143,85 +147,54 @@
           </div>
 
           <div class="row">
-            <!-- Card 1 -->
+            {% if venues %} {% for venue in venues %}
+            <!-- Venue Card -->
             <div class="col-md-4 mb-4">
               <div class="card h-100">
                 <div style="position: relative">
-                  <img
-                    src="{% static 'assets/images/gallery-1.jpg' %}"
-                    class="card-img-top"
-                    alt="Room"
-                  />
-                  <span class="tag">Guest favourite</span>
+                  <a href="{% url 'venue-detail' venue.id %}">
+                    <img
+                      src="{{ venue.thumbnail.url }}"
+                      class="card-img-top"
+                      alt="{{ venue.name }}"
+                    />
+                    {% if venue.chambermarie == 'yes' %}
+                    <span class="tag">Premium</span>
+                    {% endif %}
+                  </a>
                 </div>
                 <div class="card-body">
-                  <h6 class="card-title">Room in Chandigarh</h6>
+                  <a
+                    href="{% url 'venue-detail' venue.id %}"
+                    class="text-decoration-none"
+                  >
+                    <h6 class="card-title">{{ venue.name }}</h6>
+                  </a>
                   <p class="card-desc">
-                    Stay with Rahul · Startup investment · Sunny Terrace Retreat
+                    {{ venue.region }} · Capacity: {{ venue.capacity }} guests
                   </p>
                   <p class="text-muted mb-1">
-                    <i class="bi bi-star-fill text-warning"></i> 4.97 (32)
+                    <!-- If you have ratings, include them here -->
                   </p>
-                  <p class="price text-dark">
-                    <del>₹6,339</del> ₹5,911 for 2 nights
-                  </p>
+                  <p class="price text-dark">₹{{ venue.price }} per night</p>
                 </div>
               </div>
             </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-4 mb-4">
-              <div class="card h-100">
-                <div style="position: relative">
-                  <img
-                    src="{% static 'assets/images/gallery-1.jpg' %}"
-                    class="card-img-top"
-                    alt="Flat"
-                  />
-                  <span class="tag">Guest favourite</span>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title">Flat in Chandigarh</h6>
-                  <p class="card-desc">
-                    Beautiful classy and spacious studio · 1 bed
-                  </p>
-                  <p class="text-muted mb-1">
-                    <i class="bi bi-star-fill text-warning"></i> 4.97 (151)
-                  </p>
-                  <p class="price text-dark">₹7,703 for 2 nights</p>
-                </div>
+            {% endfor %} {% else %}
+            <div class="col-12">
+              <div class="alert alert-info">
+                No venues match your search criteria. Try adjusting your
+                filters.
               </div>
             </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-4 mb-4">
-              <div class="card h-100">
-                <div style="position: relative">
-                  <img
-                    src="{% static 'assets/images/gallery-1.jpg' %}"
-                    class="card-img-top"
-                    alt="Apartment"
-                  />
-                  <span class="tag">Guest favourite</span>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title">Apartment in Zirakpur</h6>
-                  <p class="card-desc">
-                    Skyline Perch - Independent Studio · 1 king bed
-                  </p>
-                  <p class="text-muted mb-1">
-                    <i class="bi bi-star-fill text-warning"></i> 5.0 (41)
-                  </p>
-                  <p class="price text-dark">₹4,553 for 2 nights</p>
-                </div>
-              </div>
-            </div>
+            {% endif %}
           </div>
         </div>
 
         <!-- Right Column: Map -->
         <div class="col-md-4 right-column">
           <div class="h-100 sticky-top" style="top: 80px">
+            <!-- If you have location data for venues, you can center the map appropriately -->
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.6637652139864!2d76.7794173!3d30.7333141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed67f19fc52b%3A0x77b64fc1d27e9d86!2sChandigarh!5e0!3m2!1sen!2sin!4v1713781170735!5m2!1sen!2sin"
               width="100%"

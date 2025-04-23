@@ -22,5 +22,6 @@ urlpatterns = [
     path('update-venue-status/<int:venue_id>/', views.update_venue_status, name='update_venue_status'),
     path('update-booking-status/', views.update_booking_status, name='update-booking-status'),  
     path('logout/', views.logout_user, name='logout'),
+    path('venues/search/', views.search_results, name='venue-search-results'),
 
 ]

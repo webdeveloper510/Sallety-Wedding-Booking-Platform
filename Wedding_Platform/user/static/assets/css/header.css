@@ -36,15 +36,15 @@ hr {
 }
 
 .Venue_btn {
-	background: #ff385c !important;
-	border-color: #ff385c !important;
+	background: #fe3f72 !important;
+	border-color: #fe3f72 !important;
 	border-radius: 10px !important;
 	padding: 10px 25px !important;
 }
 
 .Venue_btn:hover {
 	background: #fff !important;
-	color: #ff385c !important;
+	color: #fe3f72 !important;
 }
 
 /* Header container */
@@ -109,7 +109,7 @@ hr {
 
 /* Search Button */
 .search-button {
-	background: #ff385c;
+	background: #fe3f72;
 	border: none;
 	color: white;
 	border-radius: 50%;

@@ -93,7 +93,7 @@
 
         </div>
         <!-- Search Bar -->
-        <form method="GET" action="">
+        <form method="GET" action="{% url 'venue-search-results' %}">
             <div class="search-bar">
                 <div class="active">
                     <label for="destination">Where</label>
@@ -101,7 +101,9 @@
                 </div>
                 <div>
                     <label for="date">Select date</label>
-                    <input type="date" id="date" name="date" value="{{ search_date|default:'' }}">
+                    <!-- REMOVE this if it exists -->
+                     <input type="date" id="date" name="date" value="{{ search_date|default:'' }}" >
+
                 </div>
                 <div>
                     <label for="guests">Capacity</label>
@@ -196,10 +198,7 @@
     
     <section class="Rated_venues" style="background: #fff;margin:15px">
         <div class="container">
-          
            <div class="row g-4 mt-4">
-   
-    
                  {% for venue in venues %}
                  <div class="col-md-3">
                    <div class="card wedding-card">
@@ -654,5 +653,24 @@
         }
         */
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("date");
+
+        // Disable past dates
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+
+        // Prevent manual typing
+        dateInput.addEventListener("keydown", function (e) {
+            e.preventDefault();
+        });
+
+        // Optional: Prevent paste
+        dateInput.addEventListener("paste", function (e) {
+            e.preventDefault();
+        });
+    });
+</script>
 </body>
 </html>
