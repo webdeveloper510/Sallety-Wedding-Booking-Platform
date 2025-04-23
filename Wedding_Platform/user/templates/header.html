@@ -48,19 +48,21 @@
       >
         Add Venue </a
       >{% endif %}
+      {% if request.user.is_authenticated %}
       <a
         href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}"
         class="fw-bold"
         style="color: black; font-size: 15px"
       >
         Account
-      </a>
+      </a>{% endif %}
       <div class="dropdown">
         <a class="nav-link user-icon" id="userDropdown" role="button">
           <i class="fas fa-user"></i>
         </a>
         <ul class="dropdown-menu" id="dropdownMenu">
           <li>
+            {% if request.user.is_authenticated %}
             <a
               class="dropdown-item"
               href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}"
@@ -68,7 +70,7 @@
               style="color: black; font-size: 15px"
             >
               My Account
-            </a>
+            </a>{% endif %}
           </li>
 
           {% if not request.user.is_authenticated %}

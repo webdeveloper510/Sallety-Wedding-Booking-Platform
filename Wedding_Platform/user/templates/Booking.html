@@ -139,11 +139,22 @@
       border: 2px solid #007bff;
       border-radius: 0px;
     }
+    .venue-name {
+      color: #fe3f72;
+    }
   </style>
   <body>
     {% include 'header.html' %}
     <div class="container mt-5 mb-4">
       <div class="row">
+        <div class="col-12 mb-4">
+          <!-- Temporary check -->
+          <h2 class="venue-name">{{ venue }}</h2>
+          {% comment %}
+          <hr />
+          {% endcomment %}
+        </div>
+
         {% if messages %}
         <div class="col-12 mb-3">
           {% for message in messages %}

@@ -30,7 +30,7 @@ class VenueForm(forms.ModelForm):
             'full_address': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Full Address', 'required': True}),
             'longitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Longitude', 'required': True}),
             'latitude': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Latitude', 'required': True}),
-            
+            'region': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Enter Region', 'required': True}),
             # Checkboxes with Bootstrap class
             'is_beach': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_city': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -174,12 +174,12 @@ class BookingForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control booking-form-input', 'placeholder': 'Enter Your Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control booking-form-input', 'placeholder': 'Enter Your Email'}),
             'phone': forms.TextInput(attrs={'class': 'form-control booking-form-input', 'placeholder': 'Enter Your Phone'}),
-            'guests': forms.Select(attrs={'class': 'form-select Booking-select', 'style': 'height:39px'}, 
-                                 choices=[(1, '1'), (2, '2'),(3,'3'),(4,'4'),(5,'5')])
-        }
-
-
-        
+             'guests': forms.NumberInput(attrs={
+                'class': 'form-control booking-form-input', 
+                'placeholder': 'Number of Guests',
+                'min': 1,  # optional
+                # 'max': 10  # optional
+            }),}        
 class VisitRequestForm(forms.ModelForm):
     class Meta:
         model = VisitRequest

@@ -57,19 +57,21 @@
               >
                 Add Venue
               </a>{% endif %}
+              {% if request.user.is_authenticated %}
               <a 
               href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
               class="fw-bold" 
               style="color:black;font-size:15px"
             >
               Account
-            </a>
+            </a>{% endif %}
                 <!-- User Dropdown -->
                 <div class="dropdown">
                     <a class="nav-link user-icon" id="userDropdown" role="button">
                         <i class="fas fa-user"></i>
                     </a>
                     <ul class="dropdown-menu" id="dropdownMenu">
+                        {% if  request.user.is_authenticated %}
                         <li>
                             <a class="dropdown-item" 
                                href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
@@ -78,7 +80,7 @@
                               My  Account
                             </a>
                         </li>
-                
+                        {% endif %}
                         {% if not request.user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'user-login' %}">Login</a></li>
                             <li><a class="dropdown-item" href="{% url 'user-register' %}">Register</a></li>
@@ -121,7 +123,7 @@
     <hr>
      <!-- Header End here -->
     
-     <div class="container-fluid mt-3 top_space">
+     <div class="container mt-3 top_space">
         <div class="category-container">
     
             <!-- Left Arrow -->
@@ -183,7 +185,7 @@
             </button>
     
             <!-- Filters & Toggle -->
-            <div class="right-section">
+            {% comment %} <div class="right-section">
                 <button class="filters-btn">
                     <i class="fas fa-sliders-h"></i> Filters
                 </button>
@@ -191,7 +193,7 @@
                     <label>Display total before taxes</label>
                     <input type="checkbox">
                 </div>
-            </div>
+            </div> {% endcomment %}
     
         </div>
     </div>

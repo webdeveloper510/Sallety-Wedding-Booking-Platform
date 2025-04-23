@@ -941,7 +941,7 @@ width: 97% !important;
 .category-nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 21px;
     white-space: nowrap;
     overflow-x: auto;
     scroll-behavior: smooth;
@@ -1007,7 +1007,7 @@ width: 97% !important;
 }
 
 .right-arrow {
-    right: 360px;
+    right: 29px;
 }
 
 .filters-btn {

@@ -21,7 +21,6 @@ import json
 from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
 from functools import wraps
 from datetime import datetime
 
@@ -36,6 +35,7 @@ def owner_required(view_func):
             return redirect('index')
     return wrapper
 
+#####################index#####################
 def index(request):
     # Get active venues from the database
     venues = Venue.objects.filter(status='active')
@@ -112,6 +112,7 @@ def logout_user(request):
     logout(request)
     return redirect('index')
 
+#####################add venue#############################
 @login_required
 @owner_required  # Only owners can add venues
 def add_venue(request):
@@ -155,7 +156,7 @@ def add_venue(request):
     return render(request, 'addVenue.html', {
         'form': form,
     })
-
+#venue list
 @login_required
 def VenueList(request):
     if request.user.role == 'owner':
@@ -198,6 +199,7 @@ def venue_list(request):
         'venues': venues
     })
 
+######################venue detail###################################
 @login_required
 def venue_detail(request, venue_id):
     venue = get_object_or_404(Venue, id=venue_id)
@@ -210,16 +212,23 @@ def venue_detail(request, venue_id):
     }
     return render(request, 'single-venue-detail.html', context)
 
+#######################bookign##############################
 def booking(request, venue_id):
+    print("Venue name:")
     venue = get_object_or_404(Venue, id=venue_id)  # optional but useful
+   
+   
     return render(request, 'Booking.html', {
         'venue': venue,
         'venue_id': venue_id
     })
 
+#####################contact#############
 def contact(request):
     return render(request, 'contact.html')
 
+
+#########################register########################
 def user_register(request):
     if request.method == "POST":
         name = request.POST.get("username")
@@ -238,6 +247,7 @@ def user_register(request):
 
     return render(request, 'register.html')
 
+#######################3login#############################
 def user_login(request):
     if request.method == "POST":
         username_or_email = request.POST.get('username_or_email')
@@ -266,6 +276,7 @@ def user_login(request):
 ###########################Booking################################################
 @login_required
 def booking(request, venue_id):
+    venue = get_object_or_404(Venue, id=venue_id)
     booking_types = BookingType.objects.all()
 
     if not booking_types.exists():
@@ -357,6 +368,7 @@ def booking(request, venue_id):
         'form': form,
         'booking_types': booking_types,
         'venue_id': venue_id,
+        'venue': venue, 
         'bookings': bookings,
         'bookings_json': bookings_json  # Pass JSON data to template
     })
@@ -365,26 +377,55 @@ def booking(request, venue_id):
 @login_required
 def visit_request_view(request):
     if request.method == 'POST':
-        add_visit = VisitRequest.objects.create(
-            name=request.POST.get('name'),
-            email=request.POST.get('email'),
-            phone=request.POST.get('phone'),
-            visit_date=request.POST.get('visit_date'),
-            venue_id=request.POST.get('venue_id'),
-            time_slot=request.POST.get('time_slot'),
-            user=request.user,  # Associate the visit request with the current user
-        )
-        add_visit.save()
-        messages.success(request, 'Thank you! Your visit request has been submitted.')
+        try:
+            # Create the visit request
+            add_visit = VisitRequest.objects.create(
+                name=request.POST.get('name'),
+                email=request.POST.get('email'),
+                phone=request.POST.get('phone'),
+                visit_date=request.POST.get('visit_date'),
+                venue_id=request.POST.get('venue_id'),
+                time_slot=request.POST.get('time_slot'),
+                user=request.user,  # Associate the visit request with the current user
+            )
+            add_visit.save()
+            
+            # Check if AJAX request
+            is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+            
+            if is_ajax:
+                # Return JSON response for AJAX requests
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Thank you! Your visit request has been submitted.'
+                })
+            else:
+                # For regular form submissions, add a message and continue to render
+                messages.success(request, 'Thank you! Your visit request has been submitted.')
+        
+        except Exception as e:
+            # Handle errors
+            print(f"Error saving visit request: {str(e)}")
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': f'Error: {str(e)}'
+                })
+            else:
+                messages.error(request, f'Error: {str(e)}')
 
-    # Filter visit requests based on user role
+    # Get visit requests data for the template
     if request.user.role in ['owner', 'admin']:
-        visit_requests = VisitRequest.objects.all().order_by('-created_at')  # Owners/admins see all requests
+        visit_requests = VisitRequest.objects.all().order_by('-created_at')
     else:
-        visit_requests = VisitRequest.objects.filter(user=request.user).order_by('-created_at')  # Users see only their requests
+        visit_requests = VisitRequest.objects.filter(user=request.user).order_by('-created_at')
     
-    return render(request, 'VisitRequest.html', {'visit_requests': visit_requests})
-
+    # Only return the template for GET requests or non-AJAX POST requests
+    if request.method == 'GET' or request.headers.get('X-Requested-With') != 'XMLHttpRequest':
+        return render(request, 'VisitRequest.html', {'visit_requests': visit_requests})
+    
+    # This line should not be reached for AJAX requests since we return above
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
 ###########################Update visite status################################################
 @csrf_exempt
 @login_required

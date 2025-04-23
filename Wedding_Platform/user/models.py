@@ -58,14 +58,6 @@ class Venue(models.Model):
         ('no', 'No'),
     )
 
-    REGION_CHOICES = (
-       
-        ('Connecticut1', 'Connecticut1'),
-        ('New York', 'New York'),
-        ('Los Angeles', 'Los Angeles'),
-        ('California', 'California'),
-    )
-
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('active', 'Active'),
@@ -99,15 +91,13 @@ class Venue(models.Model):
     is_island = models.BooleanField(default=False)
     is_cave = models.BooleanField(default=False)
     is_vineyard = models.BooleanField(default=False)
-
-
-
+    
     # Gallery
     thumbnail = models.ImageField(upload_to='venues/thumbnails/')
 
     # Location
     full_address = models.CharField(max_length=255,null=True, blank=True)
-    region = models.CharField(max_length=100, choices=REGION_CHOICES,null=True, blank=True)
+    region = models.CharField(max_length=100, null=True, blank=True)
     longitude = models.CharField(max_length=50,null=True, blank=True)
     latitude = models.CharField(max_length=50,null=True, blank=True)
 
