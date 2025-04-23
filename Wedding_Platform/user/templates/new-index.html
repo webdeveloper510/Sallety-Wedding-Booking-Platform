@@ -93,23 +93,28 @@
 
         </div>
         <!-- Search Bar -->
-        <div class="search-bar">
-            <div class="active">
-                <label for="destination">Where</label>
-                <input type="text" id="destination" placeholder="Search destinations">
+        <form method="GET" action="">
+            <div class="search-bar">
+                <div class="active">
+                    <label for="destination">Where</label>
+                    <input type="text" id="destination" name="destination" placeholder="Search destinations" value="{{ search_region|default:'' }}">
+                </div>
+                <div>
+                    <label for="date">Select date</label>
+                    <input type="date" id="date" name="date" value="{{ search_date|default:'' }}">
+                </div>
+                <div>
+                    <label for="guests">Capacity</label>
+                    <input type="number" id="guests" name="guests" placeholder="Add no of guests" min="1" value="{{ search_capacity|default:'' }}">
+                </div>
+                <button type="submit" class="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
             </div>
-            <div>
-                <label for="date">Select date</label>
-                <input type="date" id="date">
-            </div>
-            <div>
-                <label for="guests">Capacity</label>
-                <input type="number" id="guests" placeholder="Add no of guests" min="1">
-            </div>
-            <button class="search-button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
+            {% if active_category %}
+            <input type="hidden" name="category" value="{{ active_category }}">
+            {% endif %}
+        </form>
     </div>
     <hr>
      <!-- Header End here -->
