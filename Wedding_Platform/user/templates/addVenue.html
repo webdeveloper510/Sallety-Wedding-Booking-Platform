@@ -141,6 +141,11 @@
               .form-section.active {
                 display: block;
               }
+              .error {
+                color: red;
+                font-size: 14px;
+                margin-top: 5px;
+              }
         </style>
    
 </head>
@@ -330,6 +335,7 @@
                                     {% if form.thumbnail.errors %}
                                     <div class="error">{{ form.thumbnail.errors }}</div>
                                     {% endif %}
+                                    <small>* Thumbnail image is required</small>
 
                                     <div class="dropzone" style="float: left; margin-top: 10px;">
                                         <input type="file" name="gallery_images" multiple accept="image/*" id="galleryInput">
@@ -371,8 +377,8 @@
                                             <label for="region" class="required-field">Region</label>
                                             {{ form.region }}
                                             {% if form.region.errors %}
-                                            <div class="error">{{ form.region.errors }}</div>
-                                            {% endif %}
+                    <div class="error">{{ form.region.errors }}</div>
+                    {% endif %}
                                         </div>
                                         <div class="form-row" style="display: flex; gap: 15px;">
                                             <div class="form-group" style="flex: 1;">
@@ -386,8 +392,8 @@
                                                 <label for="latitude" class="required-field">Latitude</label>
                                                 {{ form.latitude }}
                                                 {% if form.latitude.errors %}
-                                                <div class="error">{{ form.latitude.errors }}</div>
-                                                {% endif %}
+                        <div class="error">{{ form.latitude.errors }}</div>
+                        {% endif %}
                                             </div>
                                     </div>
                                    
@@ -920,4 +926,419 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup multi-step navigation
+            const sections = document.querySelectorAll('.form-section');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            
+            // Initialize progress indicator
+            updateProgressIndicator(0);
+            
+            // Next button functionality
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSection = this.closest('.form-section');
+                    const currentIndex = Array.from(sections).indexOf(currentSection);
+                    
+                    // Validate current section before proceeding
+                    if (validateSection(currentIndex)) {
+                        currentSection.classList.remove('active');
+                        sections[currentIndex + 1].classList.add('active');
+                        updateProgressIndicator(currentIndex + 1);
+                        
+                        // Scroll to top of new section
+                        window.scrollTo({
+                            top: sections[currentIndex + 1].offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Previous button functionality
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSection = this.closest('.form-section');
+                    const currentIndex = Array.from(sections).indexOf(currentSection);
+                    
+                    currentSection.classList.remove('active');
+                    sections[currentIndex - 1].classList.add('active');
+                    updateProgressIndicator(currentIndex - 1);
+                    
+                    // Scroll to top of new section
+                    window.scrollTo({
+                        top: sections[currentIndex - 1].offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Function to update progress indicator
+            function updateProgressIndicator(activeIndex) {
+                const stepNumbers = document.querySelectorAll('.step-number');
+                if (stepNumbers.length > 0) {
+                    stepNumbers.forEach((step, index) => {
+                        if (index < activeIndex) {
+                            step.classList.add('completed');
+                            step.classList.remove('active');
+                        } else if (index === activeIndex) {
+                            step.classList.add('active');
+                            step.classList.remove('completed');
+                        } else {
+                            step.classList.remove('active', 'completed');
+                        }
+                    });
+                }
+            }
+            
+            // Function to validate each form section
+            function validateSection(sectionIndex) {
+                clearAllErrors();
+                let isValid = true;
+                
+                // Validate based on section
+                switch(sectionIndex) {
+                    case 0: // Basic Information
+                        isValid = validateBasicInfo();
+                        break;
+                    case 1: // Gallery
+                        isValid = validateGallery();
+                        break;
+                    case 2: // Location
+                        isValid = validateLocation();
+                        break;
+                    // No validation for amenities (section 3) when moving next
+                }
+                
+                return isValid;
+            }
+            
+            // Validate basic information section
+            function validateBasicInfo() {
+                let valid = true;
+                
+                const venueName = document.querySelector('input[name="name"]');
+                if (!venueName.value.trim()) {
+                    showError(venueName, 'Venue name is required');
+                    valid = false;
+                } else if (venueName.value.trim().length < 3) {
+                    showError(venueName, 'Venue name must be at least 3 characters');
+                    valid = false;
+                }
+                
+                const description = document.querySelector('textarea[name="description"]');
+                if (!description.value.trim()) {
+                    showError(description, 'Venue description is required');
+                    valid = false;
+                } else if (description.value.trim().length < 20) {
+                    showError(description, 'Description must be at least 20 characters');
+                    valid = false;
+                }
+                
+                const price = document.querySelector('input[name="price"]');
+                if (!price.value) {
+                    showError(price, 'Price is required');
+                    valid = false;
+                } else if (isNaN(price.value) || parseFloat(price.value) <= 0) {
+                    showError(price, 'Please enter a valid price greater than 0');
+                    valid = false;
+                }
+                
+                const contact = document.querySelector('input[name="contact"]');
+                if (!contact.value.trim()) {
+                    showError(contact, 'Contact information is required');
+                    valid = false;
+                } else if (!validatePhone(contact.value)) {
+                    showError(contact, 'Please enter a valid phone number');
+                    valid = false;
+                }
+                
+                const capacity = document.querySelector('input[name="capacity"]');
+                if (!capacity.value) {
+                    showError(capacity, 'Capacity is required');
+                    valid = false;
+                } else if (isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
+                    showError(capacity, 'Capacity must be a positive number');
+                    valid = false;
+                }
+                
+                const categoriesSelected = validateCategories();
+                if (!categoriesSelected) {
+                    const categoriesSection = document.querySelector('.outer_check');
+                    const categoryError = document.createElement('div');
+                    categoryError.className = 'form-error';
+                    categoryError.textContent = 'Please select at least one venue category';
+                    categoryError.style.color = '#d9534f';
+                    categoryError.style.marginTop = '5px';
+                    categoriesSection.appendChild(categoryError);
+                    valid = false;
+                }
+                
+                return valid;
+            }
+            
+            // Validate gallery section
+            function validateGallery() {
+                let valid = true;
+                
+                const thumbnail = document.querySelector('input[name="thumbnail"]');
+                if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
+                    showError(thumbnail, 'Please upload a thumbnail image');
+                    valid = false;
+                } else if (thumbnail.files.length > 0) {
+                    const file = thumbnail.files[0];
+                    if (!validateImageFile(file)) {
+                        showError(thumbnail, 'Please upload a valid image file (JPG, PNG, or GIF)');
+                        valid = false;
+                    }
+                }
+                
+                return valid;
+            }
+            
+            // Validate location section
+            function validateLocation() {
+                let valid = true;
+                
+                const fullAddress = document.querySelector('input[name="full_address"]');
+                if (!fullAddress.value.trim()) {
+                    showError(fullAddress, 'Full address is required');
+                    valid = false;
+                }
+                
+                const region = document.querySelector('select[name="region"]');
+                if (!region.value) {
+                    showError(region, 'Please select a region');
+                    valid = false;
+                }
+                
+                const longitude = document.querySelector('input[name="longitude"]');
+                const latitude = document.querySelector('input[name="latitude"]');
+                
+                if (!longitude.value.trim()) {
+                    showError(longitude, 'Longitude is required');
+                    valid = false;
+                } else if (!validateCoordinate(longitude.value, 'longitude')) {
+                    showError(longitude, 'Please enter a valid longitude (-180 to 180)');
+                    valid = false;
+                }
+                
+                if (!latitude.value.trim()) {
+                    showError(latitude, 'Latitude is required');
+                    valid = false;
+                } else if (!validateCoordinate(latitude.value, 'latitude')) {
+                    showError(latitude, 'Please enter a valid latitude (-90 to 90)');
+                    valid = false;
+                }
+                
+                return valid;
+            }
+        });
+    </script>
+    
+    <!-- Main Validation Script -->
+    <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        const venueForm = document.querySelector('.main-form form');
+    
+        if (venueForm) {
+            venueForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                clearAllErrors();
+                const isValid = validateForm();
+                if (isValid) {
+                    this.submit();
+                }
+            });
+        }
+    
+        function clearAllErrors() {
+            const errorElements = document.querySelectorAll('.form-error');
+            errorElements.forEach(element => element.remove());
+        }
+    
+        function showError(element, message) {
+            const existingError = element.parentNode.querySelector('.form-error');
+            if (existingError) {
+                existingError.remove();
+            }
+    
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'form-error';
+            errorDiv.textContent = message;
+            errorDiv.style.color = '#d9534f';
+            errorDiv.style.fontSize = '14px';
+            errorDiv.style.marginTop = '5px';
+    
+            element.parentNode.insertBefore(errorDiv, element.nextSibling);
+            element.style.borderColor = '#d9534f';
+        }
+    
+        function setupInputListeners() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    this.style.borderColor = '';
+                    const errorMsg = this.parentNode.querySelector('.form-error');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                });
+            });
+        }
+    
+        function validateForm() {
+            let isValid = true;
+    
+            // Step 1: Basic Information validation
+            const venueName = document.querySelector('input[name="name"]');
+            if (!venueName.value.trim()) {
+                showError(venueName, 'Venue name is required');
+                isValid = false;
+            } else if (venueName.value.trim().length < 3) {
+                showError(venueName, 'Venue name must be at least 3 characters');
+                isValid = false;
+            }
+    
+            const description = document.querySelector('textarea[name="description"]');
+            if (!description.value.trim()) {
+                showError(description, 'Venue description is required');
+                isValid = false;
+            } else if (description.value.trim().length < 20) {
+                showError(description, 'Description must be at least 20 characters');
+                isValid = false;
+            }
+    
+            const price = document.querySelector('input[name="price"]');
+            if (!price.value) {
+                showError(price, 'Price is required');
+                isValid = false;
+            } else if (isNaN(price.value) || parseFloat(price.value) <= 0) {
+                showError(price, 'Please enter a valid price greater than 0');
+                isValid = false;
+            }
+    
+            const contact = document.querySelector('input[name="contact"]');
+            if (!contact.value.trim()) {
+                showError(contact, 'Contact information is required');
+                isValid = false;
+            } else if (!validatePhone(contact.value)) {
+                showError(contact, 'Please enter a valid phone number');
+                isValid = false;
+            }
+    
+            const capacity = document.querySelector('input[name="capacity"]');
+            if (!capacity.value) {
+                showError(capacity, 'Capacity is required');
+                isValid = false;
+            } else if (isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
+                showError(capacity, 'Capacity must be a positive number');
+                isValid = false;
+            }
+    
+            // Validate all categories
+            const categoriesSelected = validateCategories();
+            if (!categoriesSelected) {
+                const categoriesSection = document.querySelector('.outer_check');
+                const categoryError = document.createElement('div');
+                categoryError.className = 'form-error';
+                categoryError.textContent = 'Please select at least one venue category';
+                categoryError.style.color = '#d9534f';
+                categoryError.style.marginTop = '5px';
+                categoriesSection.appendChild(categoryError);
+                isValid = false;
+            }
+    
+            // Step 2: Gallery validation
+            const thumbnail = document.querySelector('input[name="thumbnail"]');
+            if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
+                showError(thumbnail, 'Please upload a thumbnail image');
+                isValid = false;
+            } else if (thumbnail.files.length > 0) {
+                const file = thumbnail.files[0];
+                if (!validateImageFile(file)) {
+                    showError(thumbnail, 'Please upload a valid image file (JPG, PNG, or GIF)');
+                    isValid = false;
+                }
+            }
+    
+            // Validate gallery images
+            const galleryInput = document.getElementById('galleryInput');
+            if (galleryInput && galleryInput.files.length > 0) {
+                const files = galleryInput.files;
+                
+                if (files.length > 4) {
+                    showError(galleryInput, 'You can upload a maximum of 4 gallery images');
+                    isValid = false;
+                }
+                
+                for (let i = 0; i < files.length; i++) {
+                    if (!validateImageFile(files[i])) {
+                        showError(galleryInput, 'Please upload valid image files (JPG, PNG, or GIF)');
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+    
+            // Step 3: Location validation
+            const fullAddress = document.querySelector('input[name="full_address"]');
+            if (!fullAddress.value.trim()) {
+                showError(fullAddress, 'Full address is required');
+                isValid = false;
+            }
+    
+            const region = document.querySelector('select[name="region"]');
+            if (!region.value) {
+                showError(region, 'Please select a region');
+                isValid = false;
+            }
+    
+            const longitude = document.querySelector('input[name="longitude"]');
+            const latitude = document.querySelector('input[name="latitude"]');
+    
+            if (!longitude.value.trim()) {
+                showError(longitude, 'Longitude is required');
+                isValid = false;
+            } else if (!validateCoordinate(longitude.value, 'longitude')) {
+                showError(longitude, 'Please enter a valid longitude (-180 to 180)');
+                isValid = false;
+            }
+    
+            if (!latitude.value.trim()) {
+                showError(latitude, 'Latitude is required');
+                isValid = false;
+            } else if (!validateCoordinate(latitude.value, 'latitude')) {
+                showError(latitude, 'Please enter a valid latitude (-90 to 90)');
+                isValid = false;
+            }
+    
+            return isValid;
+        }
+    
+        function validateCategories() {
+            // Include all category checkboxes
+            const categoryCheckboxes = [
+                'is_beach', 'is_city', 'is_hotel', 'is_countryside',
+                'is_mountain', 'is_resort', 'is_forest', 'is_rooftop', 'is_garden',
+                'is_desert', 'is_lake', 'is_island', 'is_cave', 'is_vineyard'
+            ];
+    
+            for (const category of categoryCheckboxes) {
+                const checkbox = document.querySelector(`input[name="${category}"]`);
+                if (checkbox && checkbox.checked) {
+                    return true;
+                }
+            }
+    
+            return false;
+        }
+    
+        function thumbnailAlreadyExists() {
+            const thumbnailContainer = document.querySelector
+    </script>
+    
 </html>
