@@ -156,6 +156,7 @@ def add_venue(request):
     return render(request, 'addVenue.html', {
         'form': form,
     })
+
 #venue list
 @login_required
 def VenueList(request):
@@ -494,8 +495,6 @@ def update_booking_status(request):
             return JsonResponse({"success": False, "error": "Booking not found"})
 
     return JsonResponse({"success": False, "error": "Invalid request method"})
-
-
 
 ###########################Search result################################################
 def search_results(request):

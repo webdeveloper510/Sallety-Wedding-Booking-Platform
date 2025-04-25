@@ -195,11 +195,14 @@
                 <!-- Sidebar -->
                 <div class="col-md-4">
                     <div class="d-flex align-items-center p-3 border rounded mb-4 bg-light">
-                        <img src="			https://metropolitanhost.com/themes/templatemoster/react/whyknot/assets/img/agents/3.jpg" alt="Profile Picture" class="rounded-circle me-3" width="50" height="50">
+                        <img  src="{% static 'assets/images/user.png' %}" alt="Profile Picture" class="rounded-circle me-3" width="50" height="50">
                         <div class="flex-grow-1">
-                            <h6 class="fw-bold mb-0">Gina Mconihon</h6>
-                            <small class="text-muted">Expert at Company</small>
+                            <h6 class="fw-bold mb-0"> {{ venue.user }}</h6>
+                            
+
+                            <small class="text-muted">Owner of the venue </small>
                         </div>
+                        
                         <button class="btn btn-light border-0" type="button">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
@@ -231,13 +234,14 @@
                     Thank you! Your visit request has been submitted.
                 </div>
                 
-                <form id="add-visit" method="post" action="{% url 'visit_request_view' %}">
+                <form id="add-visit" method="post" action="{% url 'visit_request_view' %}" novalidate>
                     {% csrf_token %}
                     <input type="hidden" name="venue_id" value="{{ venue_id }}">
                     <!-- Visitor Name -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Your Name:</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name" required>
+                        <div class="invalid-feedback">Please enter your name.</div>
                         {% if form.name.errors %}
                             <div class="text-danger">{{ form.name.errors }}</div>
                         {% endif %}
@@ -246,7 +250,8 @@
                     <!-- Email -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Your Email:</label>
-                        <input type="email" name="email" class="form-control" id="{{ form.email.id_for_label }}" placeholder="Enter your email" required>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
                         {% if form.email.errors %}
                             <div class="text-danger">{{ form.email.errors }}</div>
                         {% endif %}
@@ -255,7 +260,8 @@
                     <!-- Phone -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Your Phone:</label>
-                        <input type="text" name="phone" class="form-control" id="{{ form.phone.id_for_label }}" placeholder="Enter your phone" {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %} required>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter your phone" {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %} required>
+                        <div class="invalid-feedback">Please enter a valid phone number.</div>
                         {% if form.phone.errors %}
                             <div class="text-danger">{{ form.phone.errors }}</div>
                         {% endif %}
@@ -268,23 +274,28 @@
                           type="date" 
                           name="visit_date" 
                           class="form-control" 
-                          id="{{ form.visit_date.id_for_label }}" 
+                          id="visit_date" 
                           min="{{ today }}"
                           required
                         >
+                        <div class="invalid-feedback">Please select a valid future date.</div>
                         {% if form.visit_date.errors %}
                           <div class="text-danger">{{ form.visit_date.errors }}</div>
                         {% endif %}
                     </div>
                     
                     <!-- Time Slot -->
-                    <label class="fw-bold">Preferred Time Slot:</label>
-                    <select class="form-select mb-3" name="time_slot" required>
-                        <option selected disabled>Select a time</option>
-                        <option>Morning (9 AM - 12 PM)</option>
-                        <option>Afternoon (12 PM - 3 PM)</option>
-                        <option>Evening (3 PM - 6 PM)</option>
-                    </select>
+                    <div class="mb-3">
+                        <label class="fw-bold">Preferred Time Slot:</label>
+                        <select class="form-select" name="time_slot" id="time_slot" required>
+                            <option value="" selected disabled>Select a time</option>
+                            <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
+                            <option value="Afternoon (12 PM - 3 PM)">Afternoon (12 PM - 3 PM)</option>
+                            <option value="Evening (3 PM - 6 PM)">Evening (3 PM - 6 PM)</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a time slot.</div>
+                    </div>
+                    
                     <!-- Submit -->
                     <button type="submit" name="submit" class="btn btn-search btn-pink w-100 mt-3">Request a Visit</button>
                 </form>
@@ -316,7 +327,7 @@
                         <h5>About Weddlist</h5>
                         <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
                         <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-                        <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                      
                     </div>
                     <!-- Pages -->
                     <div class="col-md-3 links">
@@ -336,13 +347,7 @@
                     </div>
                     <!-- Newsletter -->
                     <div class="col-md-3">
-                        <h5>Newsletter</h5>
-                        <div class="d-flex">
-                            <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
-                            <button class="newsletter-btn">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
+                        
                         <div class="social-icons mt-3">
                             <a href="#">
                                 <i class="fab fa-facebook-f"></i>
@@ -489,5 +494,135 @@
             });
         });
         </script>
+        <script>
+            // Set the minimum date to today
+            document.addEventListener('DOMContentLoaded', function() {
+                // Set minimum date for the date picker
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('visit_date').setAttribute('min', today);
+                
+                // Get the form element
+                const form = document.getElementById('add-visit');
+                
+                // Phone validation function
+                function isValidPhone(phone) {
+                    // Allow for different phone formats
+                    // This regex allows formats like: (123) 456-7890, 123-456-7890, 123.456.7890, 1234567890
+                    const phoneRegex = /^(\+\d{1,3}[- ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                    return phoneRegex.test(phone);
+                }
+                
+                // Email validation function
+                function isValidEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
+                
+                // Form validation
+                form.addEventListener('submit', function(event) {
+                    let isValid = true;
+                    
+                    // Validate name
+                    const nameInput = document.getElementById('name');
+                    if (!nameInput.value.trim()) {
+                        nameInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        nameInput.classList.remove('is-invalid');
+                    }
+                    
+                    // Validate email
+                    const emailInput = document.getElementById('email');
+                    if (!isValidEmail(emailInput.value)) {
+                        emailInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        emailInput.classList.remove('is-invalid');
+                    }
+                    
+                    // Validate phone
+                    const phoneInput = document.getElementById('phone');
+                    if (!isValidPhone(phoneInput.value)) {
+                        phoneInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        phoneInput.classList.remove('is-invalid');
+                    }
+                    
+                    // Validate date
+                    const dateInput = document.getElementById('visit_date');
+                    const selectedDate = new Date(dateInput.value);
+                    const currentDate = new Date();
+                    currentDate.setHours(0, 0, 0, 0); // Reset time part for proper comparison
+                    
+                    if (!dateInput.value || selectedDate < currentDate) {
+                        dateInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        dateInput.classList.remove('is-invalid');
+                    }
+                    
+                    // Validate time slot
+                    const timeSlotInput = document.getElementById('time_slot');
+                    if (timeSlotInput.value === "" || timeSlotInput.selectedIndex === 0) {
+                        timeSlotInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        timeSlotInput.classList.remove('is-invalid');
+                    }
+                    
+                    if (!isValid) {
+                        event.preventDefault();
+                        return false;
+                    }
+                    
+                    // If AJAX submission is preferred, uncomment the following:
+                    /*
+                    event.preventDefault();
+                    
+                    // AJAX form submission
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('success-message').style.display = 'block';
+                            form.reset();
+                        } else {
+                            // Handle server-side validation errors
+                            // Display the errors returned from the server
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                    */
+                });
+                
+                // Real-time validation for better UX
+                // Email validation on blur
+                document.getElementById('email').addEventListener('blur', function() {
+                    if (!isValidEmail(this.value) && this.value.trim() !== '') {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+                
+                // Phone validation on blur
+                document.getElementById('phone').addEventListener('blur', function() {
+                    if (!isValidPhone(this.value) && this.value.trim() !== '') {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+            });
+            </script>
 
 </html>

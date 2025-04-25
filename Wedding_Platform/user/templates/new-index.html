@@ -95,7 +95,7 @@
 
         </div>
         <!-- Search Bar -->
-        <form method="GET" action="{% url 'venue-search-results' %}">
+        <form method="GET" action="{% url 'venue-search-results' %}" onsubmit="return validateSearchForm();">
             <div class="search-bar">
                 <div class="active">
                     <label for="destination">Where</label>
@@ -103,22 +103,22 @@
                 </div>
                 <div>
                     <label for="date">Select date</label>
-                    <!-- REMOVE this if it exists -->
-                     <input type="date" id="date" name="date" value="{{ search_date|default:'' }}" >
-
+                    <input type="date" id="date" name="date" value="{{ search_date|default:'' }}">
                 </div>
                 <div>
                     <label for="guests">Capacity</label>
                     <input type="number" id="guests" name="guests" placeholder="Add no of guests" min="1" value="{{ search_capacity|default:'' }}">
                 </div>
-                <button type="submit" class="search-button">
+                <button type="submit" class="search-button" id="searchBtn">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
+        
             {% if active_category %}
             <input type="hidden" name="category" value="{{ active_category }}">
             {% endif %}
         </form>
+        
     </div>
     <hr>
      <!-- Header End here -->
@@ -258,7 +258,7 @@
                     <h5>About Weddlist</h5>
                     <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
                     <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                   
                 </div>
                 <!-- Pages -->
                 <div class="col-md-3 links">
@@ -278,13 +278,7 @@
                 </div>
                 <!-- Newsletter -->
                 <div class="col-md-3">
-                    <h5>Newsletter</h5>
-                    <div class="d-flex">
-                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
-                        <button class="newsletter-btn">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
+                   
                     <div class="social-icons mt-3">
                         <a href="#">
                             <i class="fab fa-facebook-f"></i>
@@ -674,5 +668,31 @@
         });
     });
 </script>
+<script>
+    function validateSearchForm() {
+        const destination = document.getElementById("destination").value.trim();
+        const date = document.getElementById("date").value.trim();
+        const guests = document.getElementById("guests").value.trim();
+    
+        // If all fields are empty, disable the button and stop submission
+        if (!destination && !date && !guests) {
+            document.getElementById("searchBtn").disabled = true;
+            return false;
+        }
+    
+        return true;
+    }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fields = ["destination", "date", "guests"];
+            fields.forEach(id => {
+                document.getElementById(id).addEventListener("input", function () {
+                    document.getElementById("searchBtn").disabled = false;
+                });
+            });
+        });
+        </script>
+    
 </body>
 </html>

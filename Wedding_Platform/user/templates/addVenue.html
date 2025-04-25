@@ -511,7 +511,7 @@
                     <h5>About Weddlist</h5>
                     <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
                     <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-                    <a class="btn-pink w-auto" href="#">FIND A VENDOR</a>
+                   
                 </div>
                 <!-- Pages -->
                 <div class="col-md-3 links">
@@ -533,13 +533,7 @@
                 </div>
                 <!-- Newsletter -->
                 <div class="col-md-3">
-                    <h5>Newsletter</h5>
-                    <div class="d-flex">
-                        <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
-                        <button class="newsletter-btn">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
+                   
                     <div class="social-icons mt-3">
                         <a href="#">
                             <i class="fab fa-facebook-f"></i>
@@ -651,34 +645,29 @@
     </script>
     {% comment %} //validation {% endcomment %}
    
-    <script>
-        // Function to navigate between form steps
-document.addEventListener('DOMContentLoaded', function() {
+   <script>
+  // Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+    // Elements
     const formSections = document.querySelectorAll('.form-section');
-    const stepNumbers = document.querySelectorAll('.step-number');
+    const stepButtons = document.querySelectorAll('.step');
     const nextButtons = document.querySelectorAll('.next-btn');
     const prevButtons = document.querySelectorAll('.prev-btn');
+    const venueForm = document.querySelector('.main-form form') || document.getElementById('venueForm');
+    const submitButton = document.querySelector('.submitbtn');
     
-    // Set up step numbers
-    if (stepNumbers.length > 0) {
-        stepNumbers.forEach((step, index) => {
-            step.addEventListener('click', function() {
-                // Validate current step before moving to another
-                if (validateCurrentStep()) {
-                    showStep(index);
-                }
-            });
-        });
-    }
+    // Initialize the first step as active
+    initializeForm();
     
-    // Set up next buttons
+    // Set up next buttons with validation
     if (nextButtons.length > 0) {
         nextButtons.forEach((button, index) => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                if (validateCurrentStep()) {
-                    showStep(index + 1);
+                // Validate current step before proceeding
+                if (validateCurrentStep(index)) {
+                    navigateToStep(index + 1);
                 }
             });
         });
@@ -689,656 +678,403 @@ document.addEventListener('DOMContentLoaded', function() {
         prevButtons.forEach((button, index) => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                showStep(index - 1);
+                const currentSection = button.closest('.form-section');
+                const currentIndex = Array.from(formSections).indexOf(currentSection);
+                navigateToStep(currentIndex - 1);
             });
         });
     }
     
-    function showStep(stepIndex) {
-        formSections.forEach((section, index) => {
-            section.classList.remove('active');
-            if (stepNumbers.length > 0) {
-                stepNumbers[index].classList.remove('active');
+    // Form submission handler
+    if (venueForm) {
+        venueForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            clearAllErrors();
+            
+            // Validate all steps before submission
+            let allStepsValid = true;
+            for (let i = 0; i < formSections.length; i++) {
+                if (!validateCurrentStep(i)) {
+                    allStepsValid = false;
+                    // Show the step with errors
+                    navigateToStep(i);
+                    break;
+                }
             }
-        });
-        
-        formSections[stepIndex].classList.add('active');
-        if (stepNumbers.length > 0) {
-            stepNumbers[stepIndex].classList.add('active');
-        }
-        
-        // Scroll to top of the step
-        window.scrollTo({
-            top: formSections[stepIndex].offsetTop - 100,
-            behavior: 'smooth'
+            
+            if (allStepsValid) {
+                if (submitButton) {
+                    submitButton.innerHTML = '<span class="spinner"></span> Adding Venue...';
+                    submitButton.disabled = true;
+                }
+                this.submit();
+            }
         });
     }
     
-    function validateCurrentStep() {
-        // Get current active step
-        const activeStep = document.querySelector('.form-section.active');
-        const stepIndex = Array.from(formSections).indexOf(activeStep);
+    // Set up input event listeners to clear errors when user corrects them
+    setupInputListeners();
+    
+    // Initialize the form and override the global showStep function
+    function initializeForm() {
+        // Make the first step active
+        if (formSections.length > 0) {
+            formSections[0].classList.add('active');
+        }
+        if (stepButtons.length > 0) {
+            stepButtons[0].classList.add('active');
+        }
         
+        // Override the global showStep function to include validation
+        window.showStep = function(stepNumber) {
+            // Convert from 1-based (HTML) to 0-based (JS array)
+            const stepIndex = stepNumber - 1;
+            
+            // Get current step
+            const currentActiveSection = document.querySelector('.form-section.active');
+            const currentIndex = Array.from(formSections).indexOf(currentActiveSection);
+            
+            // If moving forward, validate each step in between
+            if (stepIndex > currentIndex) {
+                // Validate all steps from current to target
+                for (let i = currentIndex; i < stepIndex; i++) {
+                    if (!validateCurrentStep(i)) {
+                        // Stop at the first invalid step
+                        navigateToStep(i);
+                        return false;
+                    }
+                }
+                navigateToStep(stepIndex);
+            } else {
+                // Moving backward doesn't require validation
+                navigateToStep(stepIndex);
+            }
+        };
+    }
+    
+    // Function to navigate to a specific step without validation
+    function navigateToStep(stepIndex) {
+        // Hide all form sections and remove active class from step buttons
+        formSections.forEach((section, idx) => {
+            section.classList.remove('active');
+        });
+        
+        stepButtons.forEach((button, idx) => {
+            button.classList.remove('active');
+        });
+        
+        // Show the current step and make its step button active
+        if (stepIndex >= 0 && stepIndex < formSections.length) {
+            formSections[stepIndex].classList.add('active');
+            
+            // Step buttons are 1-indexed in data-step
+            const targetButton = document.querySelector(`.step[data-step="${stepIndex + 1}"]`);
+            if (targetButton) {
+                targetButton.classList.add('active');
+            }
+            
+            // Update progress indicator
+            updateProgressIndicator(stepIndex);
+            
+            // Scroll to top of the step
+            window.scrollTo({
+                top: formSections[stepIndex].offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+    // Function to update progress indicator
+    function updateProgressIndicator(activeIndex) {
+        stepButtons.forEach((step, index) => {
+            if (index < activeIndex) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+            } else if (index === activeIndex) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active', 'completed');
+            }
+        });
+    }
+    
+    // Function to validate the current step
+    function validateCurrentStep(stepIndex) {
         // Clear previous error messages
         clearAllErrors();
         
-        // Step-specific validations
+        // Determine which step to validate based on index
         if (stepIndex === 0) {
             // Basic Information validations
-            let isValid = true;
-            
-            const venueName = document.querySelector('input[name="name"]');
-            if (!venueName.value.trim()) {
-                showError(venueName, 'Venue name is required');
-                isValid = false;
-            }
-            
-            const description = document.querySelector('textarea[name="description"]');
-            if (!description.value.trim()) {
-                showError(description, 'Venue description is required');
-                isValid = false;
-            }
-            
-            const price = document.querySelector('input[name="price"]');
-            if (!price.value || isNaN(price.value) || parseFloat(price.value) <= 0) {
-                showError(price, 'Please enter a valid price');
-                isValid = false;
-            }
-            
-            const contact = document.querySelector('input[name="contact"]');
-            if (!contact.value.trim()) {
-                showError(contact, 'Contact information is required');
-                isValid = false;
-            }
-            
-            const capacity = document.querySelector('input[name="capacity"]');
-            if (!capacity.value || isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
-                showError(capacity, 'Please enter a valid capacity');
-                isValid = false;
-            }
-            
-            // Check if at least one category is selected
-            const categoriesSelected = validateCategories();
-            if (!categoriesSelected) {
-                const categoriesSection = document.querySelector('.outer_check');
-                const categoryError = document.createElement('div');
-                categoryError.className = 'form-error';
-                categoryError.textContent = 'Please select at least one venue category';
-                categoryError.style.color = '#d9534f';
-                categoryError.style.marginTop = '5px';
-                categoriesSection.appendChild(categoryError);
-                isValid = false;
-            }
-            
-            return isValid;
+            return validateBasicInfo();
         } 
         else if (stepIndex === 1) {
             // Gallery validations
-            let isValid = true;
-            
-            const thumbnail = document.querySelector('input[name="thumbnail"]');
-            if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
-                showError(thumbnail, 'Please upload a thumbnail image');
-                isValid = false;
-            }
-            
-            return isValid;
+            return validateGallery();
         }
         else if (stepIndex === 2) {
             // Location validations
-            let isValid = true;
-            
-            const fullAddress = document.querySelector('input[name="full_address"]');
-            if (!fullAddress.value.trim()) {
-                showError(fullAddress, 'Full address is required');
-                isValid = false;
-            }
-            
-            const region = document.querySelector('select[name="region"]');
-            if (!region.value) {
-                showError(region, 'Please select a region');
-                isValid = false;
-            }
-            
-            const longitude = document.querySelector('input[name="longitude"]');
-            const latitude = document.querySelector('input[name="latitude"]');
-            
-            if (!longitude.value.trim() || !validateCoordinate(longitude.value, 'longitude')) {
-                showError(longitude, 'Please enter a valid longitude');
-                isValid = false;
-            }
-            
-            if (!latitude.value.trim() || !validateCoordinate(latitude.value, 'latitude')) {
-                showError(latitude, 'Please enter a valid latitude');
-                isValid = false;
-            }
-            
-            return isValid;
+            return validateLocation();
         }
         
-        return true; // Default valid
+        return true; // Default valid for steps without validation
+    }
+    
+    // Validate basic information section
+    function validateBasicInfo() {
+        let valid = true;
+        
+        const venueName = document.querySelector('input[name="name"]');
+        if (!venueName.value.trim()) {
+            showError(venueName, 'Venue name is required');
+            valid = false;
+        } else if (venueName.value.trim().length < 3) {
+            showError(venueName, 'Venue name must be at least 3 characters');
+            valid = false;
+        }
+        
+        const description = document.querySelector('textarea[name="description"]');
+        if (!description.value.trim()) {
+            showError(description, 'Venue description is required');
+            valid = false;
+        } else if (description.value.trim().length < 20) {
+            showError(description, 'Description must be at least 20 characters');
+            valid = false;
+        }
+        
+        const price = document.querySelector('input[name="price"]');
+        if (!price.value) {
+            showError(price, 'Price is required');
+            valid = false;
+        } else if (isNaN(price.value) || parseFloat(price.value) <= 0) {
+            showError(price, 'Please enter a valid price greater than 0');
+            valid = false;
+        }
+        
+        const contact = document.querySelector('input[name="contact"]');
+        if (!contact.value.trim()) {
+            showError(contact, 'Contact information is required');
+            valid = false;
+        } else if (!validatePhone(contact.value)) {
+            showError(contact, 'Please enter a valid phone number');
+            valid = false;
+        }
+        
+        const capacity = document.querySelector('input[name="capacity"]');
+        if (!capacity.value) {
+            showError(capacity, 'Capacity is required');
+            valid = false;
+        } else if (isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
+            showError(capacity, 'Capacity must be a positive number');
+            valid = false;
+        }
+        
+        // Check if at least one category is selected
+        const categoriesSelected = validateCategories();
+        if (!categoriesSelected) {
+            const categoriesSection = document.querySelector('.outer_check');
+            const categoryError = document.createElement('div');
+            categoryError.className = 'form-error';
+            categoryError.textContent = 'Please select at least one venue category';
+            categoryError.style.color = '#d9534f';
+            categoryError.style.marginTop = '5px';
+            categoriesSection.appendChild(categoryError);
+            valid = false;
+        }
+        
+        return valid;
+    }
+    
+    // Validate gallery section
+    function validateGallery() {
+        let valid = true;
+        
+        const thumbnail = document.querySelector('input[name="thumbnail"]');
+        if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
+            showError(thumbnail, 'Please upload a thumbnail image');
+            valid = false;
+        } else if (thumbnail.files.length > 0) {
+            const file = thumbnail.files[0];
+            if (!validateImageFile(file)) {
+                showError(thumbnail, 'Please upload a valid image file (JPG, PNG, or GIF)');
+                valid = false;
+            }
+        }
+        
+        // Validate gallery images
+        const galleryInput = document.getElementById('galleryInput');
+        if (galleryInput && galleryInput.files.length > 0) {
+            const files = galleryInput.files;
+            
+            if (files.length > 4) {
+                showError(galleryInput, 'You can upload a maximum of 4 gallery images');
+                valid = false;
+            }
+            
+            for (let i = 0; i < files.length; i++) {
+                if (!validateImageFile(files[i])) {
+                    showError(galleryInput, 'Please upload valid image files (JPG, PNG, or GIF)');
+                    valid = false;
+                    break;
+                }
+            }
+        }
+        
+        return valid;
+    }
+    
+    // Validate location section
+    function validateLocation() {
+        let valid = true;
+        
+        const fullAddress = document.querySelector('input[name="full_address"]');
+        if (!fullAddress.value.trim()) {
+            showError(fullAddress, 'Full address is required');
+            valid = false;
+        }
+        
+        const region = document.querySelector('select[name="region"]');
+        if (!region.value) {
+            showError(region, 'Please select a region');
+            valid = false;
+        }
+        
+        const longitude = document.querySelector('input[name="longitude"]');
+        const latitude = document.querySelector('input[name="latitude"]');
+        
+        if (!longitude.value.trim()) {
+            showError(longitude, 'Longitude is required');
+            valid = false;
+        } else if (!validateCoordinate(longitude.value, 'longitude')) {
+            showError(longitude, 'Please enter a valid longitude (-180 to 180)');
+            valid = false;
+        }
+        
+        if (!latitude.value.trim()) {
+            showError(latitude, 'Latitude is required');
+            valid = false;
+        } else if (!validateCoordinate(latitude.value, 'latitude')) {
+            showError(latitude, 'Please enter a valid latitude (-90 to 90)');
+            valid = false;
+        }
+        
+        return valid;
     }
     
     // Function to show error under an input field
     function showError(element, message) {
-        // Implementation same as in the main validation script
+        // Clear any existing error for this element
+        const existingError = element.parentNode.querySelector('.form-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
         const errorDiv = document.createElement('div');
         errorDiv.className = 'form-error';
         errorDiv.textContent = message;
         errorDiv.style.color = '#d9534f';
         errorDiv.style.fontSize = '14px';
         errorDiv.style.marginTop = '5px';
-            
+        
         element.parentNode.insertBefore(errorDiv, element.nextSibling);
         element.style.borderColor = '#d9534f';
     }
     
     // Function to clear all error messages
     function clearAllErrors() {
-        // Implementation same as in the main validation script
         const errorElements = document.querySelectorAll('.form-error');
         errorElements.forEach(element => element.remove());
+        
+        // Reset input border colors
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.style.borderColor = '';
+        });
     }
     
-    // Other helper functions like validateCategories, validateCoordinate, etc.
-    // should be copied from the main validation script
-});
-    </script>
-    <script>
-        // Add this to your validation script
-        const venueForm = document.getElementById('venueForm'); 
-const submitButton = document.querySelector('.submitbtn');
-if (submitButton) {
-    // Show loading state when form is submitted
-    venueForm.addEventListener('submit', function(event) {
-        if (validateForm()) {
-            submitButton.innerHTML = '<span class="spinner"></span> Adding Venue...';
-            submitButton.disabled = true;
-        }
-    });
-}
-    </script>
-    <script>
-        // Add this script at the end of your HTML file
-let currentStep = 1;
-const totalSteps = 4;
-
-// Function to show a specific step
-function showStep(step) {
-  // Validate step number
-  if (step < 1 || step > totalSteps) return;
-  
-  // Hide all form sections
-  document.querySelectorAll('.form-section').forEach(section => {
-    section.classList.remove('active');
-  });
-  
-  // Show the current step
-  document.getElementById('step' + step).classList.add('active');
-  
-  // Update step indicators
-  document.querySelectorAll('.step').forEach((el, index) => {
-    if (index + 1 === step) {
-      el.classList.add('active');
-    } else {
-      el.classList.remove('active');
-    }
-  });
-  
-  // Update current step
-  currentStep = step;
-}
-
-// Function to move to next step
-function nextStep() {
-  // If we're not at the last step
-  if (currentStep < totalSteps) {
-    showStep(currentStep + 1);
-  }
-}
-
-// Function to move to previous step
-function prevStep() {
-  // If we're not at the first step
-  if (currentStep > 1) {
-    showStep(currentStep - 1);
-  }
-}
-
-// Initialize the form when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-  // Make sure first step is active
-  showStep(1);
-  
-  // Add event listeners to buttons (as a backup to inline onclick)
-  document.querySelectorAll('.next-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      nextStep();
-    });
-  });
-  
-  document.querySelectorAll('.prev-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      prevStep();
-    });
-  });
-});
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Setup multi-step navigation
-            const sections = document.querySelectorAll('.form-section');
-            const nextButtons = document.querySelectorAll('.next-btn');
-            const prevButtons = document.querySelectorAll('.prev-btn');
-            
-            // Initialize progress indicator
-            updateProgressIndicator(0);
-            
-            // Next button functionality
-            nextButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const currentSection = this.closest('.form-section');
-                    const currentIndex = Array.from(sections).indexOf(currentSection);
-                    
-                    // Validate current section before proceeding
-                    if (validateSection(currentIndex)) {
-                        currentSection.classList.remove('active');
-                        sections[currentIndex + 1].classList.add('active');
-                        updateProgressIndicator(currentIndex + 1);
-                        
-                        // Scroll to top of new section
-                        window.scrollTo({
-                            top: sections[currentIndex + 1].offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+    // Function to set up input event listeners
+    function setupInputListeners() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = '';
+                const errorMsg = this.parentNode.querySelector('.form-error');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
             });
             
-            // Previous button functionality
-            prevButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const currentSection = this.closest('.form-section');
-                    const currentIndex = Array.from(sections).indexOf(currentSection);
-                    
-                    currentSection.classList.remove('active');
-                    sections[currentIndex - 1].classList.add('active');
-                    updateProgressIndicator(currentIndex - 1);
-                    
-                    // Scroll to top of new section
-                    window.scrollTo({
-                        top: sections[currentIndex - 1].offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Function to update progress indicator
-            function updateProgressIndicator(activeIndex) {
-                const stepNumbers = document.querySelectorAll('.step-number');
-                if (stepNumbers.length > 0) {
-                    stepNumbers.forEach((step, index) => {
-                        if (index < activeIndex) {
-                            step.classList.add('completed');
-                            step.classList.remove('active');
-                        } else if (index === activeIndex) {
-                            step.classList.add('active');
-                            step.classList.remove('completed');
-                        } else {
-                            step.classList.remove('active', 'completed');
+            // For checkboxes
+            if (input.type === 'checkbox') {
+                input.addEventListener('change', function() {
+                    // If any category checkbox is checked, remove the error message
+                    if (this.name.startsWith('is_') && this.checked) {
+                        const categoriesSection = document.querySelector('.outer_check');
+                        const errorMsg = categoriesSection.querySelector('.form-error');
+                        if (errorMsg) {
+                            errorMsg.remove();
                         }
-                    });
-                }
-            }
-            
-            // Function to validate each form section
-            function validateSection(sectionIndex) {
-                clearAllErrors();
-                let isValid = true;
-                
-                // Validate based on section
-                switch(sectionIndex) {
-                    case 0: // Basic Information
-                        isValid = validateBasicInfo();
-                        break;
-                    case 1: // Gallery
-                        isValid = validateGallery();
-                        break;
-                    case 2: // Location
-                        isValid = validateLocation();
-                        break;
-                    // No validation for amenities (section 3) when moving next
-                }
-                
-                return isValid;
-            }
-            
-            // Validate basic information section
-            function validateBasicInfo() {
-                let valid = true;
-                
-                const venueName = document.querySelector('input[name="name"]');
-                if (!venueName.value.trim()) {
-                    showError(venueName, 'Venue name is required');
-                    valid = false;
-                } else if (venueName.value.trim().length < 3) {
-                    showError(venueName, 'Venue name must be at least 3 characters');
-                    valid = false;
-                }
-                
-                const description = document.querySelector('textarea[name="description"]');
-                if (!description.value.trim()) {
-                    showError(description, 'Venue description is required');
-                    valid = false;
-                } else if (description.value.trim().length < 20) {
-                    showError(description, 'Description must be at least 20 characters');
-                    valid = false;
-                }
-                
-                const price = document.querySelector('input[name="price"]');
-                if (!price.value) {
-                    showError(price, 'Price is required');
-                    valid = false;
-                } else if (isNaN(price.value) || parseFloat(price.value) <= 0) {
-                    showError(price, 'Please enter a valid price greater than 0');
-                    valid = false;
-                }
-                
-                const contact = document.querySelector('input[name="contact"]');
-                if (!contact.value.trim()) {
-                    showError(contact, 'Contact information is required');
-                    valid = false;
-                } else if (!validatePhone(contact.value)) {
-                    showError(contact, 'Please enter a valid phone number');
-                    valid = false;
-                }
-                
-                const capacity = document.querySelector('input[name="capacity"]');
-                if (!capacity.value) {
-                    showError(capacity, 'Capacity is required');
-                    valid = false;
-                } else if (isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
-                    showError(capacity, 'Capacity must be a positive number');
-                    valid = false;
-                }
-                
-                const categoriesSelected = validateCategories();
-                if (!categoriesSelected) {
-                    const categoriesSection = document.querySelector('.outer_check');
-                    const categoryError = document.createElement('div');
-                    categoryError.className = 'form-error';
-                    categoryError.textContent = 'Please select at least one venue category';
-                    categoryError.style.color = '#d9534f';
-                    categoryError.style.marginTop = '5px';
-                    categoriesSection.appendChild(categoryError);
-                    valid = false;
-                }
-                
-                return valid;
-            }
-            
-            // Validate gallery section
-            function validateGallery() {
-                let valid = true;
-                
-                const thumbnail = document.querySelector('input[name="thumbnail"]');
-                if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
-                    showError(thumbnail, 'Please upload a thumbnail image');
-                    valid = false;
-                } else if (thumbnail.files.length > 0) {
-                    const file = thumbnail.files[0];
-                    if (!validateImageFile(file)) {
-                        showError(thumbnail, 'Please upload a valid image file (JPG, PNG, or GIF)');
-                        valid = false;
                     }
-                }
-                
-                return valid;
-            }
-            
-            // Validate location section
-            function validateLocation() {
-                let valid = true;
-                
-                const fullAddress = document.querySelector('input[name="full_address"]');
-                if (!fullAddress.value.trim()) {
-                    showError(fullAddress, 'Full address is required');
-                    valid = false;
-                }
-                
-                const region = document.querySelector('select[name="region"]');
-                if (!region.value) {
-                    showError(region, 'Please select a region');
-                    valid = false;
-                }
-                
-                const longitude = document.querySelector('input[name="longitude"]');
-                const latitude = document.querySelector('input[name="latitude"]');
-                
-                if (!longitude.value.trim()) {
-                    showError(longitude, 'Longitude is required');
-                    valid = false;
-                } else if (!validateCoordinate(longitude.value, 'longitude')) {
-                    showError(longitude, 'Please enter a valid longitude (-180 to 180)');
-                    valid = false;
-                }
-                
-                if (!latitude.value.trim()) {
-                    showError(latitude, 'Latitude is required');
-                    valid = false;
-                } else if (!validateCoordinate(latitude.value, 'latitude')) {
-                    showError(latitude, 'Please enter a valid latitude (-90 to 90)');
-                    valid = false;
-                }
-                
-                return valid;
+                });
             }
         });
-    </script>
+    }
     
-    <!-- Main Validation Script -->
-    <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        const venueForm = document.querySelector('.main-form form');
-    
-        if (venueForm) {
-            venueForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                clearAllErrors();
-                const isValid = validateForm();
-                if (isValid) {
-                    this.submit();
-                }
-            });
+    // Function to validate categories
+    function validateCategories() {
+        // Include all category checkboxes
+        const categoryCheckboxes = [
+            'is_beach', 'is_city', 'is_hotel', 'is_countryside',
+            'is_mountain', 'is_resort', 'is_forest', 'is_rooftop', 'is_garden',
+            'is_desert', 'is_lake', 'is_island', 'is_cave', 'is_vineyard'
+        ];
+
+        for (const category of categoryCheckboxes) {
+            const checkbox = document.querySelector(`input[name="${category}"]`);
+            if (checkbox && checkbox.checked) {
+                return true;
+            }
         }
+
+        return false;
+    }
     
-        function clearAllErrors() {
-            const errorElements = document.querySelectorAll('.form-error');
-            errorElements.forEach(element => element.remove());
+    // Function to check if thumbnail already exists
+    function thumbnailAlreadyExists() {
+        // Look for an element that indicates an existing thumbnail
+        const existingThumbnail = document.querySelector('.existing-thumbnail-indicator');
+        return existingThumbnail !== null;
+    }
+    
+    // Function to validate image file
+    function validateImageFile(file) {
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+        return validTypes.includes(file.type);
+    }
+    
+    // Function to validate coordinates
+    function validateCoordinate(value, type) {
+        const num = parseFloat(value);
+        if (isNaN(num)) return false;
+        
+        if (type === 'latitude') {
+            return num >= -90 && num <= 90;
+        } else if (type === 'longitude') {
+            return num >= -180 && num <= 180;
         }
+        
+        return false;
+    }
     
-        function showError(element, message) {
-            const existingError = element.parentNode.querySelector('.form-error');
-            if (existingError) {
-                existingError.remove();
-            }
-    
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'form-error';
-            errorDiv.textContent = message;
-            errorDiv.style.color = '#d9534f';
-            errorDiv.style.fontSize = '14px';
-            errorDiv.style.marginTop = '5px';
-    
-            element.parentNode.insertBefore(errorDiv, element.nextSibling);
-            element.style.borderColor = '#d9534f';
-        }
-    
-        function setupInputListeners() {
-            const inputs = document.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.addEventListener('input', function () {
-                    this.style.borderColor = '';
-                    const errorMsg = this.parentNode.querySelector('.form-error');
-                    if (errorMsg) {
-                        errorMsg.remove();
-                    }
-                });
-            });
-        }
-    
-        function validateForm() {
-            let isValid = true;
-    
-            // Step 1: Basic Information validation
-            const venueName = document.querySelector('input[name="name"]');
-            if (!venueName.value.trim()) {
-                showError(venueName, 'Venue name is required');
-                isValid = false;
-            } else if (venueName.value.trim().length < 3) {
-                showError(venueName, 'Venue name must be at least 3 characters');
-                isValid = false;
-            }
-    
-            const description = document.querySelector('textarea[name="description"]');
-            if (!description.value.trim()) {
-                showError(description, 'Venue description is required');
-                isValid = false;
-            } else if (description.value.trim().length < 20) {
-                showError(description, 'Description must be at least 20 characters');
-                isValid = false;
-            }
-    
-            const price = document.querySelector('input[name="price"]');
-            if (!price.value) {
-                showError(price, 'Price is required');
-                isValid = false;
-            } else if (isNaN(price.value) || parseFloat(price.value) <= 0) {
-                showError(price, 'Please enter a valid price greater than 0');
-                isValid = false;
-            }
-    
-            const contact = document.querySelector('input[name="contact"]');
-            if (!contact.value.trim()) {
-                showError(contact, 'Contact information is required');
-                isValid = false;
-            } else if (!validatePhone(contact.value)) {
-                showError(contact, 'Please enter a valid phone number');
-                isValid = false;
-            }
-    
-            const capacity = document.querySelector('input[name="capacity"]');
-            if (!capacity.value) {
-                showError(capacity, 'Capacity is required');
-                isValid = false;
-            } else if (isNaN(capacity.value) || parseInt(capacity.value) <= 0) {
-                showError(capacity, 'Capacity must be a positive number');
-                isValid = false;
-            }
-    
-            // Validate all categories
-            const categoriesSelected = validateCategories();
-            if (!categoriesSelected) {
-                const categoriesSection = document.querySelector('.outer_check');
-                const categoryError = document.createElement('div');
-                categoryError.className = 'form-error';
-                categoryError.textContent = 'Please select at least one venue category';
-                categoryError.style.color = '#d9534f';
-                categoryError.style.marginTop = '5px';
-                categoriesSection.appendChild(categoryError);
-                isValid = false;
-            }
-    
-            // Step 2: Gallery validation
-            const thumbnail = document.querySelector('input[name="thumbnail"]');
-            if (thumbnail.files.length === 0 && !thumbnailAlreadyExists()) {
-                showError(thumbnail, 'Please upload a thumbnail image');
-                isValid = false;
-            } else if (thumbnail.files.length > 0) {
-                const file = thumbnail.files[0];
-                if (!validateImageFile(file)) {
-                    showError(thumbnail, 'Please upload a valid image file (JPG, PNG, or GIF)');
-                    isValid = false;
-                }
-            }
-    
-            // Validate gallery images
-            const galleryInput = document.getElementById('galleryInput');
-            if (galleryInput && galleryInput.files.length > 0) {
-                const files = galleryInput.files;
-                
-                if (files.length > 4) {
-                    showError(galleryInput, 'You can upload a maximum of 4 gallery images');
-                    isValid = false;
-                }
-                
-                for (let i = 0; i < files.length; i++) {
-                    if (!validateImageFile(files[i])) {
-                        showError(galleryInput, 'Please upload valid image files (JPG, PNG, or GIF)');
-                        isValid = false;
-                        break;
-                    }
-                }
-            }
-    
-            // Step 3: Location validation
-            const fullAddress = document.querySelector('input[name="full_address"]');
-            if (!fullAddress.value.trim()) {
-                showError(fullAddress, 'Full address is required');
-                isValid = false;
-            }
-    
-            const region = document.querySelector('select[name="region"]');
-            if (!region.value) {
-                showError(region, 'Please select a region');
-                isValid = false;
-            }
-    
-            const longitude = document.querySelector('input[name="longitude"]');
-            const latitude = document.querySelector('input[name="latitude"]');
-    
-            if (!longitude.value.trim()) {
-                showError(longitude, 'Longitude is required');
-                isValid = false;
-            } else if (!validateCoordinate(longitude.value, 'longitude')) {
-                showError(longitude, 'Please enter a valid longitude (-180 to 180)');
-                isValid = false;
-            }
-    
-            if (!latitude.value.trim()) {
-                showError(latitude, 'Latitude is required');
-                isValid = false;
-            } else if (!validateCoordinate(latitude.value, 'latitude')) {
-                showError(latitude, 'Please enter a valid latitude (-90 to 90)');
-                isValid = false;
-            }
-    
-            return isValid;
-        }
-    
-        function validateCategories() {
-            // Include all category checkboxes
-            const categoryCheckboxes = [
-                'is_beach', 'is_city', 'is_hotel', 'is_countryside',
-                'is_mountain', 'is_resort', 'is_forest', 'is_rooftop', 'is_garden',
-                'is_desert', 'is_lake', 'is_island', 'is_cave', 'is_vineyard'
-            ];
-    
-            for (const category of categoryCheckboxes) {
-                const checkbox = document.querySelector(`input[name="${category}"]`);
-                if (checkbox && checkbox.checked) {
-                    return true;
-                }
-            }
-    
-            return false;
-        }
-    
-        function thumbnailAlreadyExists() {
-            const thumbnailContainer = document.querySelector
-    </script>
+    // Function to validate phone number
+    function validatePhone(phone) {
+        // Basic phone validation - can be customized based on your requirements
+        // This pattern accepts formats like: +1234567890, 123-456-7890, (123)456-7890
+        const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        return phonePattern.test(phone);
+    }
+});
+   </script>
     
 </html>
