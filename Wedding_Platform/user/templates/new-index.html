@@ -348,351 +348,488 @@
     updateArrows();
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Elements
-        const topSearchBar = document.querySelector('.top-search');
-        const mainSearchBar = document.querySelector('.main-search');
-        const header = document.querySelector('.header_part');
-        const categoryContainer = document.querySelector('.category-container');
+    // Main initialization function that runs when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Cache DOM elements to improve performance
+    const elements = {
+        topSearchBar: document.querySelector('.top-search'),
+        mainSearchBar: document.querySelector('.main-search'),
+        header: document.querySelector('.header_part'),
+        categoryContainer: document.querySelector('.category-container'),
+        categoryNav: document.getElementById('categoryNav'),
+        scrollLeft: document.getElementById('scrollLeft'),
+        scrollRight: document.getElementById('scrollRight'),
+        topSpace: document.querySelector('.top_space'),
+        searchBar: document.querySelector('.search-bar'),
+        // Search form inputs
+        topDestination: document.getElementById('topDestination'),
+        mainDestination: document.getElementById('mainDestination'),
+        topDate: document.getElementById('topDate'),
+        mainDate: document.getElementById('mainDate'),
+        topGuests: document.getElementById('topGuests'),
+        mainGuests: document.getElementById('mainGuests'),
+        searchBtn: document.getElementById('searchBtn'),
+        dateInput: document.getElementById('date')
+    };
+
+    // Initialize features only if necessary elements exist
+    if (elements.topSearchBar && elements.mainSearchBar) {
+        initializeSearchBars(elements);
+    }
+
+    if (elements.header) {
+        initializeHeaderBehavior(elements);
+    }
+
+    if (elements.categoryNav) {
+        initializeCategoryNavigation(elements);
+    }
+
+    if (elements.dateInput) {
+        initializeDatePicker(elements.dateInput);
+    }
+
+    if (elements.searchBtn) {
+        initializeSearchValidation(elements);
+    }
+
+    // Add window event listeners
+    initializeScrollHandlers(elements);
+});
+
+// Initialize search bars
+function initializeSearchBars(elements) {
+    // Initial setup - show only main search bar
+    elements.topSearchBar.style.display = 'none';
+    elements.mainSearchBar.style.display = 'flex';
+    
+    // Synchronize search inputs between main and top bars
+    syncSearchInputs(elements);
+}
+
+// Make header sticky with proper placeholders
+function initializeHeaderBehavior(elements) {
+    if (!elements.header) return;
+    
+    // Create placeholders with proper sizing
+    const headerHeight = elements.header.offsetHeight;
+    const headerPlaceholder = createPlaceholder(headerHeight, 'header-placeholder');
+    elements.header.parentNode.insertBefore(headerPlaceholder, elements.header.nextSibling);
+    
+    if (elements.categoryContainer) {
+        const categoryHeight = elements.categoryContainer.offsetHeight;
+        const categoryPlaceholder = createPlaceholder(categoryHeight, 'category-placeholder');
+        elements.categoryContainer.parentNode.insertBefore(categoryPlaceholder, elements.categoryContainer.nextSibling);
+    }
+    
+    // Add class on load for top space
+    if (elements.topSpace) {
+        elements.topSpace.classList.add('need_top_space');
+    }
+}
+
+// Helper function to create placeholder elements
+function createPlaceholder(height, className) {
+    const placeholder = document.createElement('div');
+    placeholder.style.height = height + 'px';
+    placeholder.style.display = 'none';
+    placeholder.classList.add(className);
+    return placeholder;
+}
+
+// Initialize category navigation with smooth scrolling and arrow controls
+function initializeCategoryNavigation(elements) {
+    const { categoryNav, scrollLeft, scrollRight } = elements;
+    
+    // Setup category items click behavior
+    const categoryItems = document.querySelectorAll('.category-item');
+    categoryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            categoryItems.forEach(cat => cat.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Smooth scroll to center the selected category
+            const itemRect = this.getBoundingClientRect();
+            const navRect = categoryNav.getBoundingClientRect();
+            const centerOffset = (navRect.width / 2) - (itemRect.width / 2);
+            const targetScrollPosition = this.offsetLeft - centerOffset;
+            
+            categoryNav.scrollTo({
+                left: targetScrollPosition,
+                behavior: 'smooth'
+            });
+        });
+    });
+    
+    // Arrow button functionality with variable scroll distance based on container width
+    if (scrollLeft && scrollRight && categoryNav) {
+        scrollLeft.addEventListener('click', function() {
+            const scrollDistance = Math.max(categoryNav.offsetWidth * 0.5, 200);
+            categoryNav.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
+        });
         
-        // Initial setup - show only main search bar
+        scrollRight.addEventListener('click', function() {
+            const scrollDistance = Math.max(categoryNav.offsetWidth * 0.5, 200);
+            categoryNav.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+        });
+        
+        // Add scroll event listener to category nav
+        categoryNav.addEventListener('scroll', debounce(function() {
+            updateArrows(elements);
+        }, 100));
+        
+        // Initial arrow state
+        updateArrows(elements);
+    }
+}
+
+// Date picker initialization with proper constraints
+function initializeDatePicker(dateInput) {
+    // Set minimum date to today
+    const today = new Date();
+    const todayString = today.toISOString().split("T")[0];
+    dateInput.setAttribute("min", todayString);
+    
+    // Create a maximum date (e.g., 1 year from now)
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    dateInput.setAttribute("max", maxDate.toISOString().split("T")[0]);
+    
+    // Prevent manual editing
+    dateInput.addEventListener("keydown", function(e) {
+        // Allow tab navigation
+        if (e.key === "Tab") return;
+        e.preventDefault();
+    });
+    
+    dateInput.addEventListener("paste", function(e) {
+        e.preventDefault();
+    });
+    
+    // Improve mobile experience
+    dateInput.addEventListener("touchstart", function(e) {
+        // Make sure date picker opens on mobile
+        this.blur();
+        setTimeout(() => this.focus(), 10);
+    });
+}
+
+// Search form validation
+function initializeSearchValidation(elements) {
+    const formInputs = ["mainDestination", "mainDate", "mainGuests"];
+    
+    // Dynamic validation
+    formInputs.forEach(id => {
+        if (elements[id]) {
+            elements[id].addEventListener("input", function() {
+                validateSearchForm(elements);
+            });
+        }
+    });
+    
+    // Initial validation
+    validateSearchForm(elements);
+}
+
+// Set up scroll event handlers
+function initializeScrollHandlers(elements) {
+    // Throttle scroll events for better performance
+    const throttledScroll = throttle(function() {
+        handleScroll(elements);
+        
+        // Update other scroll-dependent components
+        if (elements.searchBar) {
+            updateSearchBarState(elements.searchBar);
+        }
+        
+        if (elements.topSpace && elements.header) {
+            updateTopSpaceLayout(elements);
+        }
+    }, 10);
+    
+    window.addEventListener('scroll', throttledScroll);
+    window.addEventListener('resize', debounce(function() {
+        // Update placeholders on resize
+        const headerPlaceholder = document.querySelector('.header-placeholder');
+        const categoryPlaceholder = document.querySelector('.category-placeholder');
+        
+        if (headerPlaceholder && elements.header) {
+            headerPlaceholder.style.height = elements.header.offsetHeight + 'px';
+        }
+        
+        if (categoryPlaceholder && elements.categoryContainer) {
+            categoryPlaceholder.style.height = elements.categoryContainer.offsetHeight + 'px';
+        }
+        
+        updateArrows(elements);
+    }, 250));
+}
+
+// Main scroll handler
+function handleScroll(elements) {
+    const scrollPosition = window.scrollY;
+    const scrollThreshold = 100;
+    
+    const { header, topSearchBar, mainSearchBar, categoryContainer } = elements;
+    const headerPlaceholder = document.querySelector('.header-placeholder');
+    const categoryPlaceholder = document.querySelector('.category-placeholder');
+    
+    if (scrollPosition > scrollThreshold) {
+        // Apply sticky header
+        if (header) {
+            applySticky(header, headerPlaceholder);
+        }
+        
+        // Apply sticky category container
+        if (categoryContainer && header) {
+            applyStickyCategory(categoryContainer, categoryPlaceholder, header);
+        }
+        
+        // Show top search bar, hide main search bar
+        if (topSearchBar && mainSearchBar) {
+            topSearchBar.style.display = 'flex';
+            mainSearchBar.style.display = 'none';
+        }
+    } else {
+        // Remove sticky styles
+        if (header) {
+            removeSticky(header, headerPlaceholder);
+        }
+        
+        if (categoryContainer) {
+            removeStickyCategory(categoryContainer, categoryPlaceholder);
+        }
+        
+        // Show main search bar, hide top search bar
         if (topSearchBar && mainSearchBar) {
             topSearchBar.style.display = 'none';
             mainSearchBar.style.display = 'flex';
-            
-            // Make header sticky when scrolling
-            makeHeaderSticky();
-        }
-        
-        // Add scroll event listener
-        window.addEventListener('scroll', handleScroll);
-        
-        // Initialize arrows
-        updateArrows();
-        
-        // Sync search inputs
-        syncSearchInputs();
-    });
-    
-    function makeHeaderSticky() {
-        const header = document.querySelector('.header_part');
-        const headerHeight = header.offsetHeight;
-        
-        // Create a placeholder to prevent page jump when header becomes fixed
-        const placeholder = document.createElement('div');
-        placeholder.style.height = headerHeight + 'px';
-        placeholder.style.display = 'none';
-        placeholder.classList.add('header-placeholder');
-        
-        // Insert placeholder right after header
-        header.parentNode.insertBefore(placeholder, header.nextSibling);
-        
-        // Create a placeholder for category container
-        const categoryContainer = document.querySelector('.category-container');
-        if (categoryContainer) {
-            const categoryPlaceholder = document.createElement('div');
-            categoryPlaceholder.style.height = categoryContainer.offsetHeight + 'px';
-            categoryPlaceholder.style.display = 'none';
-            categoryPlaceholder.classList.add('category-placeholder');
-            
-            // Insert placeholder after category container
-            categoryContainer.parentNode.insertBefore(categoryPlaceholder, categoryContainer.nextSibling);
         }
     }
-    
-    function handleScroll() {
-        const scrollPosition = window.scrollY;
-        const topSearchBar = document.querySelector('.top-search');
-        const mainSearchBar = document.querySelector('.main-search');
-        const header = document.querySelector('.header_part');
-        const placeholder = document.querySelector('.header-placeholder');
-        const categoryContainer = document.querySelector('.category-container');
-        const categoryPlaceholder = document.querySelector('.category-placeholder');
-        
-        // Define scroll threshold
-        const scrollThreshold = 100;
-        
-        if (scrollPosition > scrollThreshold) {
-            // Make header sticky
-            header.style.position = 'fixed';
-            header.style.top = '0';
-            header.style.left = '0';
-            header.style.zIndex = '1000';
-            header.style.width = '100%';
-            header.style.backgroundColor = '#fff';
-            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            
-            // Show placeholder to prevent content jump
-            if (placeholder) {
-                placeholder.style.display = 'block';
-            }
-            
-            // Make category container sticky too
-            if (categoryContainer) {
-                categoryContainer.style.position = 'fixed';
-                categoryContainer.style.top = header.offsetHeight + 'px';
-                categoryContainer.style.left = '0';
-                categoryContainer.style.zIndex = '999';
-                categoryContainer.style.width = '100%';
-                categoryContainer.style.backgroundColor = '#fff';
-                categoryContainer.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-                categoryContainer.style.marginTop = '0px';
-                categoryContainer.style.transition = 'all 0.3s ease';
+}
 
-                
-                // Show category placeholder
-                if (categoryPlaceholder) {
-                    categoryPlaceholder.style.display = 'block';
-                }
-            }
-            
-            // Show top search bar, hide main search bar
-            if (topSearchBar && mainSearchBar) {
-                topSearchBar.style.display = 'flex';
-                mainSearchBar.style.display = 'none';
-            }
-        } else {
-            // Remove sticky header
-            header.style.position = 'relative';
-            header.style.boxShadow = 'none';
-            header.style.width = '';
-            
-            // Hide placeholder
-            if (placeholder) {
-                placeholder.style.display = 'none';
-            }
-            
-            // Remove sticky category container
-            if (categoryContainer) {
-                categoryContainer.style.position = 'relative';
-                categoryContainer.style.top = '';
-                categoryContainer.style.boxShadow = 'none';
-                categoryContainer.style.width = '';
-                
-                // Hide category placeholder
-                if (categoryPlaceholder) {
-                    categoryPlaceholder.style.display = 'none';
-                }
-            }
-            
-            // Show main search bar, hide top search bar
-            if (topSearchBar && mainSearchBar) {
-                topSearchBar.style.display = 'none';
-                mainSearchBar.style.display = 'flex';
-            }
-        }
-        
-        // Update arrows when scrolling (in case category width changes)
-        updateArrows();
+// Helper function to apply sticky styles to header
+function applySticky(header, placeholder) {
+    header.style.position = 'fixed';
+    header.style.top = '0';
+    header.style.left = '0';
+    header.style.zIndex = '1000';
+    header.style.width = '100%';
+    header.style.backgroundColor = '#fff';
+    header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    header.style.transition = 'all 0.3s ease';
+    
+    if (placeholder) {
+        placeholder.style.display = 'block';
     }
+}
+
+// Helper function to remove sticky styles from header
+function removeSticky(header, placeholder) {
+    header.style.position = 'relative';
+    header.style.boxShadow = 'none';
+    header.style.width = '';
+    header.style.top = '';
+    header.style.left = '';
+    header.style.transition = '';
     
-    function updateArrows() {
-        const categoryNav = document.getElementById("categoryNav");
-        const scrollLeft = document.getElementById("scrollLeft");
-        const scrollRight = document.getElementById("scrollRight");
-        
-        if (!categoryNav || !scrollLeft || !scrollRight) return;
-        
-        if (categoryNav.scrollLeft > 0) {
-            scrollLeft.style.display = "flex"; // Show left arrow
-        } else {
-            scrollLeft.style.display = "none"; // Hide left arrow
-        }
-    
-        if (categoryNav.scrollLeft + categoryNav.clientWidth < categoryNav.scrollWidth) {
-            scrollRight.style.display = "flex"; // Show right arrow
-        } else {
-            scrollRight.style.display = "none"; // Hide right arrow
-        }
+    if (placeholder) {
+        placeholder.style.display = 'none';
     }
+}
+
+// Helper function to apply sticky styles to category container
+function applyStickyCategory(categoryContainer, placeholder, header) {
+    categoryContainer.style.position = 'fixed';
+    categoryContainer.style.top = header.offsetHeight + 'px';
+    categoryContainer.style.left = '0';
+    categoryContainer.style.zIndex = '999';
+    categoryContainer.style.width = '100%';
+    categoryContainer.style.backgroundColor = '#fff';
+    categoryContainer.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+    categoryContainer.style.marginTop = '0';
+    categoryContainer.style.transition = 'all 0.3s ease';
+    categoryContainer.style.justifyContent = 'center';
+
     
-    function syncSearchInputs() {
-        // Get input elements
-        const topDestination = document.getElementById('topDestination');
-        const mainDestination = document.getElementById('mainDestination');
-        const topDate = document.getElementById('topDate');
-        const mainDate = document.getElementById('mainDate');
-        const topGuests = document.getElementById('topGuests');
-        const mainGuests = document.getElementById('mainGuests');
-        
-        if (!topDestination || !mainDestination) return;
+    if (placeholder) {
+        placeholder.style.display = 'block';
+    }
+}
+
+// Helper function to remove sticky styles from category container
+function removeStickyCategory(categoryContainer, placeholder) {
+    categoryContainer.style.position = 'relative';
+    categoryContainer.style.top = '';
+    categoryContainer.style.left = '';
+    categoryContainer.style.boxShadow = 'none';
+    categoryContainer.style.width = '';
+    categoryContainer.style.transition = '';
+    
+    if (placeholder) {
+        placeholder.style.display = 'none';
+    }
+}
+
+// Update search bar sticky state
+function updateSearchBarState(searchBar) {
+    if (!searchBar) return;
+    
+    const triggerHeight = 150;
+    
+    if (window.scrollY > triggerHeight) {
+        searchBar.classList.add('sticky');
+    } else {
+        searchBar.classList.remove('sticky');
+    }
+}
+
+// Update top space layout
+function updateTopSpaceLayout(elements) {
+    if (!elements.header || !elements.topSpace) return;
+    
+    const isScrolled = window.scrollY > 0;
+    
+    if (isScrolled) {
+        elements.header.classList.add('shrink-header');
+        elements.topSpace.classList.remove('need_top_space');
+    } else {
+        elements.header.classList.remove('shrink-header');
+        elements.topSpace.classList.add('need_top_space');
+    }
+}
+
+// Update category navigation arrows
+function updateArrows(elements) {
+    const { categoryNav, scrollLeft, scrollRight } = elements;
+    
+    if (!categoryNav || !scrollLeft || !scrollRight) return;
+    
+    // Show/hide left arrow based on scroll position
+    scrollLeft.style.display = categoryNav.scrollLeft > 10 ? "flex" : "none";
+    
+    // Calculate if we're at the end (with small buffer for rounding errors)
+    const isAtEnd = categoryNav.scrollLeft + categoryNav.clientWidth >= categoryNav.scrollWidth - 5;
+    scrollRight.style.display = isAtEnd ? "none" : "flex";
+    
+    // Add visual indication for overflow
+    if (categoryNav.scrollWidth > categoryNav.clientWidth) {
+        categoryNav.classList.add('has-overflow');
+    } else {
+        categoryNav.classList.remove('has-overflow');
+    }
+}
+
+// Synchronize search inputs between top and main search bars
+function syncSearchInputs(elements) {
+    const inputPairs = [
+        { main: elements.mainDestination, top: elements.topDestination },
+        { main: elements.mainDate, top: elements.topDate },
+        { main: elements.mainGuests, top: elements.topGuests }
+    ];
+    
+    inputPairs.forEach(pair => {
+        if (!pair.main || !pair.top) return;
         
         // Sync from main to top
-        mainDestination.addEventListener('input', function() {
-            topDestination.value = this.value;
+        pair.main.addEventListener('input', function() {
+            pair.top.value = this.value;
+            validateSearchForm(elements);
         });
         
-        mainDate.addEventListener('change', function() {
-            topDate.value = this.value;
-        });
-        
-        mainGuests.addEventListener('input', function() {
-            topGuests.value = this.value;
-        });
+        // For date inputs, use change event
+        if (pair.main.type === 'date') {
+            pair.main.addEventListener('change', function() {
+                pair.top.value = this.value;
+                validateSearchForm(elements);
+            });
+        }
         
         // Sync from top to main
-        topDestination.addEventListener('input', function() {
-            mainDestination.value = this.value;
+        pair.top.addEventListener('input', function() {
+            pair.main.value = this.value;
+            validateSearchForm(elements);
         });
         
-        topDate.addEventListener('change', function() {
-            mainDate.value = this.value;
-        });
+        // For date inputs, use change event
+        if (pair.top.type === 'date') {
+            pair.top.addEventListener('change', function() {
+                pair.main.value = this.value;
+                validateSearchForm(elements);
+            });
+        }
+    });
+}
+
+// Search form validation
+function validateSearchForm(elements) {
+    if (!elements.searchBtn) return;
+    
+    const destination = elements.mainDestination ? elements.mainDestination.value.trim() : '';
+    const date = elements.mainDate ? elements.mainDate.value.trim() : '';
+    const guests = elements.mainGuests ? elements.mainGuests.value.trim() : '';
+    
+    // Enable button if any field has a value
+    elements.searchBtn.disabled = !(destination || date || guests);
+    
+    return !elements.searchBtn.disabled;
+}
+
+// Performance utility: Throttle function to limit execution frequency
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Performance utility: Debounce function to delay execution
+function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// Window load event for final adjustments
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        // Force recalculation of all position-dependent elements
+        const elements = {
+            header: document.querySelector('.header_part'),
+            topSpace: document.querySelector('.top_space'),
+            categoryNav: document.getElementById('categoryNav'),
+            scrollLeft: document.getElementById('scrollLeft'),
+            scrollRight: document.getElementById('scrollRight')
+        };
         
-        topGuests.addEventListener('input', function() {
-            mainGuests.value = this.value;
+        if (elements.header && elements.topSpace) {
+            updateTopSpaceLayout(elements);
+        }
+        
+        if (elements.categoryNav) {
+            updateArrows(elements);
+        }
+        
+        // Trigger initial scroll handler to set proper states
+        handleScroll({
+            header: document.querySelector('.header_part'),
+            topSearchBar: document.querySelector('.top-search'),
+            mainSearchBar: document.querySelector('.main-search'),
+            categoryContainer: document.querySelector('.category-container')
         });
-    }
+    }, 100);
+});
 </script>
-<script>
-    window.addEventListener('scroll', function () {
-      const searchBar = document.querySelector('.search-bar');
-      const triggerHeight = 150; // when to trigger the sticky effect
-  
-      if (window.scrollY > triggerHeight) {
-        searchBar.classList.add('sticky');
-      } else {
-        searchBar.classList.remove('sticky');
-      }
-    });
-  </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const header = document.querySelector('.header_part');
-        const topSpace = document.querySelector('.top_space');
-    
-        // Add class on load
-        topSpace.classList.add('need_top_space');
-    
-        function updateLayout() {
-            const isScrolled = window.scrollY > 0;
-    
-            // Toggle class for header
-            if (isScrolled) {
-                header.classList.add('shrink-header');
-                topSpace.classList.remove('need_top_space'); // remove on scroll
-            } else {
-                header.classList.remove('shrink-header');
-                topSpace.classList.add('need_top_space'); // add back when back to top
-            }
-    
-        }
-    
-        // Delay layout update after full load
-        window.addEventListener('load', function () {
-            setTimeout(updateLayout, 100);
-        });
-    
-        window.addEventListener('scroll', updateLayout);
-    });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all category items
-            const categoryItems = document.querySelectorAll('.category-item');
-            
-            // Add click event listeners to each category item
-            categoryItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    // If JavaScript is enabled, prevent default to handle with AJAX (optional)
-                    // e.preventDefault();
-                    
-                    // Remove 'active' class from all items
-                    categoryItems.forEach(cat => cat.classList.remove('active'));
-                    
-                    // Add 'active' class to clicked item
-                    this.classList.add('active');
-                    
-                    // OPTIONAL: If you want to load venues with AJAX instead of page reload
-                    // const category = this.getAttribute('href').split('=')[1];
-                    // fetchVenuesByCategory(category);
-                });
-            });
-            
-            // Arrow button functionality
-            const scrollLeftBtn = document.getElementById('scrollLeft');
-            const scrollRightBtn = document.getElementById('scrollRight');
-            const categoryNav = document.getElementById('categoryNav');
-            
-            scrollLeftBtn.addEventListener('click', function() {
-                categoryNav.scrollBy({ left: -200, behavior: 'smooth' });
-            });
-            
-            scrollRightBtn.addEventListener('click', function() {
-                categoryNav.scrollBy({ left: 200, behavior: 'smooth' });
-            });
-        });
-        
-        // OPTIONAL: AJAX Function to fetch venues by category
-        /*
-        function fetchVenuesByCategory(category) {
-            fetch(`/api/venues/?category=${category}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update the venue listings with the filtered results
-                    updateVenueList(data);
-                })
-                .catch(error => console.error('Error fetching venues:', error));
-        }
-        
-        function updateVenueList(venues) {
-            // Update your venue list with the filtered results
-            const venueContainer = document.querySelector('.venue-listings');
-            // Clear existing venues
-            venueContainer.innerHTML = '';
-            
-            // Add new venues
-            venues.forEach(venue => {
-                // Create venue HTML and append to container
-            });
-        }
-        */
-    </script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const dateInput = document.getElementById("date");
-
-        // Disable past dates
-        const today = new Date().toISOString().split("T")[0];
-        dateInput.setAttribute("min", today);
-
-        // Prevent manual typing
-        dateInput.addEventListener("keydown", function (e) {
-            e.preventDefault();
-        });
-
-        // Optional: Prevent paste
-        dateInput.addEventListener("paste", function (e) {
-            e.preventDefault();
-        });
-    });
-</script>
-<script>
-    function validateSearchForm() {
-        const destination = document.getElementById("destination").value.trim();
-        const date = document.getElementById("date").value.trim();
-        const guests = document.getElementById("guests").value.trim();
-    
-        // If all fields are empty, disable the button and stop submission
-        if (!destination && !date && !guests) {
-            document.getElementById("searchBtn").disabled = true;
-            return false;
-        }
-    
-        return true;
-    }
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const fields = ["destination", "date", "guests"];
-            fields.forEach(id => {
-                document.getElementById(id).addEventListener("input", function () {
-                    document.getElementById("searchBtn").disabled = false;
-                });
-            });
-        });
-        </script>
     
 </body>
 </html>
