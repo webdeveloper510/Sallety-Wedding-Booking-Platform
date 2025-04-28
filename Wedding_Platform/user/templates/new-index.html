@@ -244,7 +244,7 @@
         <p>No venues available at the moment.</p>
     </div>
     {% endfor %}
-</div>
+    </div>
         </div>
     </section>
 
@@ -349,7 +349,7 @@
 </script>
 <script>
     // Main initialization function that runs when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements to improve performance
     const elements = {
         topSearchBar: document.querySelector('.top-search'),
@@ -397,18 +397,18 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollHandlers(elements);
 });
 
-// Initialize search bars
-function initializeSearchBars(elements) {
+  // Initialize search bars
+  function initializeSearchBars(elements) {
     // Initial setup - show only main search bar
     elements.topSearchBar.style.display = 'none';
     elements.mainSearchBar.style.display = 'flex';
     
     // Synchronize search inputs between main and top bars
     syncSearchInputs(elements);
-}
+  }
 
-// Make header sticky with proper placeholders
-function initializeHeaderBehavior(elements) {
+  // Make header sticky with proper placeholders
+  function initializeHeaderBehavior(elements) {
     if (!elements.header) return;
     
     // Create placeholders with proper sizing
@@ -426,17 +426,17 @@ function initializeHeaderBehavior(elements) {
     if (elements.topSpace) {
         elements.topSpace.classList.add('need_top_space');
     }
-}
+  }
 
-// Helper function to create placeholder elements
-function createPlaceholder(height, className) {
+  // Helper function to create placeholder elements
+  function createPlaceholder(height, className) {
     const placeholder = document.createElement('div');
     placeholder.style.height = height + 'px';
     placeholder.style.display = 'none';
     placeholder.classList.add(className);
     return placeholder;
-}
-
+  } 
+  
 // Initialize category navigation with smooth scrolling and arrow controls
 function initializeCategoryNavigation(elements) {
     const { categoryNav, scrollLeft, scrollRight } = elements;
@@ -830,6 +830,100 @@ window.addEventListener('load', function() {
     }, 100);
 });
 </script>
+
+
+{% comment %} search bar {% endcomment %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("date");
+
+        // Disable past dates
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+
+        // Prevent manual typing
+        dateInput.addEventListener("keydown", function (e) {
+            e.preventDefault();
+        });
+
+        // Optional: Prevent paste
+        dateInput.addEventListener("paste", function (e) {
+            e.preventDefault();
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fields = ["destination", "date", "guests"];
+        fields.forEach(id => {
+            document.getElementById(id).addEventListener("input", function () {
+                document.getElementById("searchBtn").disabled = false;
+            });
+        });
+    });
+    </script>
     
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all category items
+        const categoryItems = document.querySelectorAll('.category-item');
+       
+        // Add click event listeners to each category item
+        categoryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // If JavaScript is enabled, prevent default to handle with AJAX (optional)
+                // e.preventDefault();
+               
+                // Remove 'active' class from all items
+                categoryItems.forEach(cat => cat.classList.remove('active'));
+               
+                // Add 'active' class to clicked item
+                this.classList.add('active');
+               
+                // OPTIONAL: If you want to load venues with AJAX instead of page reload
+                // const category = this.getAttribute('href').split('=')[1];
+                // fetchVenuesByCategory(category);
+            });
+        });
+       
+        // Arrow button functionality
+        const scrollLeftBtn = document.getElementById('scrollLeft');
+        const scrollRightBtn = document.getElementById('scrollRight');
+        const categoryNav = document.getElementById('categoryNav');
+       
+        scrollLeftBtn.addEventListener('click', function() {
+            categoryNav.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+       
+        scrollRightBtn.addEventListener('click', function() {
+            categoryNav.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+    });
+   
+    // OPTIONAL: AJAX Function to fetch venues by category
+    /*
+    function fetchVenuesByCategory(category) {
+        fetch(`/api/venues/?category=${category}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the venue listings with the filtered results
+                updateVenueList(data);
+            })
+            .catch(error => console.error('Error fetching venues:', error));
+    }
+   
+    function updateVenueList(venues) {
+        // Update your venue list with the filtered results
+        const venueContainer = document.querySelector('.venue-listings');
+        // Clear existing venues
+        venueContainer.innerHTML = '';
+       
+        // Add new venues
+        venues.forEach(venue => {
+            // Create venue HTML and append to container
+        });
+    }
+    */
+</script>
 </body>
 </html>
