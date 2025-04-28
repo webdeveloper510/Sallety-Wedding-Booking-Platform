@@ -1,29 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Wedding Vendor Directory</title>
     <!-- Bootstrap 5.3.3 CSS -->
-    <link rel="stylesheet" href="{% static  'assets/css/bootstrap.min.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static  'assets/css/bootstrap.min.css' %}"
+    />
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}">
-    <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/all.min.css' %}" />
+    <script
+      src="https://kit.fontawesome.com/your-fa-kit.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/testimonial-3.css">
+    <link rel="stylesheet" href="assets/css/testimonial-3.css" />
     <!-- Bootstrap Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link
-  rel="stylesheet"
-  href="{% static  'assets/css/homenew.style.css' %}"
-/>
-   
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-   
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static  'assets/css/homenew.style.css' %}"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     {% include 'header.html' %}
@@ -38,7 +49,9 @@
               <li class="breadcrumb-item">
                 <a href="index.html">Home</a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Register</li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Register
+              </li>
             </ol>
           </div>
         </div>
@@ -48,48 +61,68 @@
       <div class="container text-center">
         <div class="col-md-6 couple-login">
           <div class="register-block">
-            <h3 class="mb-4">SIGN UP</h3>
+            <h3 class="mb-4">REGISTER</h3>
             <form method="POST" action="{% url 'user-register' %}">
               {% csrf_token %}
               <div class="mb-3">
                 <select name="role" class="form-control" required>
-                  <option value=""  selected>Select Role</option>
+                  <option value="" selected>Select Role</option>
                   <option value="owner">Owner</option>
                   <option value="customer">Customer</option>
                 </select>
               </div>
               <div class="mb-3">
-                <input type="text" name="username" class="form-control" placeholder="Username" required>
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  placeholder="Username"
+                  required
+                />
               </div>
               <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                />
               </div>
               <div class="mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Password"
+                  required
+                />
               </div>
-             
+
               <div class="mt-3 mb-4 text-start">
-                <button type="submit" class="btn submit-btn">SIGN UP</button>
+                <button type="submit" class="btn submit-btn">REGISTER</button>
               </div>
-            
-              {% if messages %}
-                {% for message in messages %}
-                  <p style="color: red;">{{ message }}</p>
-                {% endfor %}
-              {% endif %}
+
+              {% if messages %} {% for message in messages %}
+              <p
+                style="color: {% if message.tags == 'error' %}red{% elif message.tags == 'success' %}green{% else %}black{% endif %};"
+              >
+                {{ message }}
+              </p>
+              {% endfor %} {% endif %}
             </form>
-            
+
             <div class="row w-100 m-0">
               <div class="col-sm-7 p-0 text-start">
-                <p class="sign-in"> Don't have an account? <a class="signupclick">Sign Up</a>
+                <p class="sign-in">
+                  Have an account?
+                  <a class="signupclick" href="{% url 'user-login' %}">LOGIN</a>
                 </p>
                 <!--  <p class="sign-in">
                     Are you Vendor?  <a class="vendorsignupclick">Register Now</a></p> -->
               </div>
               <div class="col-sm-5 p-0 text-end">
-                <p class="sign-in text-right">
-                  <a class="forgotpasswordclick">Forgot Password</a>
-                </p>
+                <p class="sign-in text-right"></p>
               </div>
             </div>
           </div>
@@ -104,8 +137,10 @@
           <div class="col-md-3">
             <h5>About Weddlist</h5>
             <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-            
+            <p>
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
+              poris suscipit labo riosam.
+            </p>
           </div>
           <!-- Pages -->
           <div class="col-md-3 links">
@@ -125,7 +160,6 @@
           </div>
           <!-- Newsletter -->
           <div class="col-md-3">
-            
             <div class="social-icons mt-3">
               <a href="#">
                 <i class="fab fa-facebook-f"></i>
@@ -140,7 +174,7 @@
           </div>
         </div>
       </div>
-      <div class="copyright"> © 2025 All rights reserved. </div>
+      <div class="copyright">© 2025 All rights reserved.</div>
     </footer>
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->

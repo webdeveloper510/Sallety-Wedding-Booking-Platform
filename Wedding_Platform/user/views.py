@@ -304,7 +304,7 @@ def booking(request, venue_id):
             # Check if any of the selected booking types are already booked for this date
             booking_date = form.cleaned_data['booking_date']
             existing_bookings = Booking.objects.filter(
-                venue_id=venue_id,
+                venue=venue,
                 booking_date=booking_date,
                 status__in=['confirmed', 'pending']
             )
@@ -329,7 +329,8 @@ def booking(request, venue_id):
                 total_price += booking_type.price
 
             booking.total_price = total_price
-            booking.venue_id = venue_id
+            booking.venue = venue 
+            print(booking.venue_id,"kuch vi")
 
             if request.user.is_authenticated:
                 booking.user = request.user
@@ -348,7 +349,7 @@ def booking(request, venue_id):
     
     # Fetch all bookings for this venue
     bookings = Booking.objects.filter(
-        venue_id=venue_id,
+        venue=venue,
         status__in=['confirmed', 'pending']
     )
     
@@ -379,13 +380,15 @@ def booking(request, venue_id):
 def visit_request_view(request):
     if request.method == 'POST':
         try:
+            venue_id = request.POST.get('venue_id')
+            venue = Venue.objects.get(id=venue_id)
             # Create the visit request
             add_visit = VisitRequest.objects.create(
                 name=request.POST.get('name'),
                 email=request.POST.get('email'),
                 phone=request.POST.get('phone'),
                 visit_date=request.POST.get('visit_date'),
-                venue_id=request.POST.get('venue_id'),
+                venue=venue,
                 time_slot=request.POST.get('time_slot'),
                 user=request.user,  # Associate the visit request with the current user
             )
@@ -427,6 +430,7 @@ def visit_request_view(request):
     
     # This line should not be reached for AJAX requests since we return above
     return JsonResponse({'success': False, 'message': 'Invalid request'})
+
 ###########################Update visite status################################################
 @csrf_exempt
 @login_required
@@ -470,11 +474,14 @@ def update_venue_status(request, venue_id):
 @login_required
 def table_booking(request):
     if request.user.role == 'owner':
-        bookings = Booking.objects.all()  # Owners see all bookings
+        # Owners see all bookings - latest first
+        bookings = Booking.objects.select_related('venue').all().order_by('-created_at')
     else:
-        bookings = Booking.objects.filter(user=request.user)  # Users see only their bookings
+        # Users see only their bookings - latest first
+        bookings = Booking.objects.select_related('venue').filter(user=request.user).order_by('-created_at')
     
     return render(request, 'TableBooking.html', {'bookings': bookings})
+
 
 ###########################Updatebooking status################################################
 @csrf_exempt

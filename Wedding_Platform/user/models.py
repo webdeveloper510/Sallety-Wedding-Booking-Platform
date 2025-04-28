@@ -150,7 +150,7 @@ class Booking(models.Model):
     phone = models.CharField(max_length=20)
     booking_date = models.DateField()
     guests = models.IntegerField()
-    venue_id = models.IntegerField(default=1)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE,null=True, blank=True)
     types = models.ManyToManyField(BookingType)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -176,7 +176,7 @@ class VisitRequest(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     visit_date = models.DateField()
-    venue_id = models.IntegerField(default=1)
+    venue = models.ForeignKey('Venue', on_delete=models.CASCADE,  null=True, blank=True)
     time_slot = models.CharField(
         max_length=50,
         choices=[

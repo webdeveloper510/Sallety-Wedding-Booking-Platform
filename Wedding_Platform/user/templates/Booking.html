@@ -156,13 +156,13 @@
           {% endcomment %}
         </div>
 
-        {% comment %} {% if messages %}
+        {% if messages %}
         <div class="col-12 mb-3">
           {% for message in messages %}
           <div class="alert alert-{{ message.tags }}">{{ message }}</div>
           {% endfor %}
         </div>
-        {% endif %} {% endcomment %}
+        {% endif %}
 
         <!-- Calendar Section -->
         <div class="col-md-4">
@@ -257,7 +257,6 @@
               Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
               poris suscipit labo riosam.
             </p>
-           
           </div>
           <!-- Pages -->
           <div class="col-md-3 links">
@@ -279,7 +278,6 @@
           </div>
           <!-- Newsletter -->
           <div class="col-md-3">
-            
             <div class="social-icons mt-3">
               <a href="#">
                 <i class="fab fa-facebook-f"></i>
@@ -413,7 +411,7 @@
 
                   // Update available booking types based on selected date
                   updateAvailableBookingTypes(clickedDate);
-                  
+
                   // Clear calendar error if exists
                   clearErrorMessage('calendar');
                   highlightElement(document.getElementById('calendar'), false);
@@ -505,122 +503,149 @@
     </script>
     {% comment %} validation {% endcomment %}
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const bookingForm = document.getElementById('bookingForm');
-        
+      document.addEventListener("DOMContentLoaded", function () {
+        const bookingForm = document.getElementById("bookingForm");
+
         // Form validation function
         function validateForm() {
           let isValid = true;
           let errorMessages = [];
-          
+
           // Clear all previous error messages
           clearAllErrorMessages();
-          
+
           // Validate date selection
-          const chosenDate = document.getElementById('chosenDate').value;
+          const chosenDate = document.getElementById("chosenDate").value;
           if (!chosenDate) {
             isValid = false;
-            errorMessages.push('Please select a date for your booking.');
-            highlightElement(document.getElementById('calendar'), true);
-            showErrorMessage('calendar', 'Please select a date for your booking.');
+            errorMessages.push("Please select a date for your booking.");
+            highlightElement(document.getElementById("calendar"), true);
+            showErrorMessage(
+              "calendar",
+              "Please select a date for your booking."
+            );
           } else {
-            highlightElement(document.getElementById('calendar'), false);
+            highlightElement(document.getElementById("calendar"), false);
           }
-          
+
           // Validate at least one booking type is selected
-          const bookingTypes = document.querySelectorAll('input[name="booking_types"]:checked');
+          const bookingTypes = document.querySelectorAll(
+            'input[name="booking_types"]:checked'
+          );
           if (bookingTypes.length === 0) {
             isValid = false;
-            errorMessages.push('Please select at least one booking type.');
-            highlightElement(document.getElementById('bookingTypesContainer'), true);
-            showErrorMessage('bookingTypesContainer', 'Please select at least one booking type.');
+            errorMessages.push("Please select at least one booking type.");
+            highlightElement(
+              document.getElementById("bookingTypesContainer"),
+              true
+            );
+            showErrorMessage(
+              "bookingTypesContainer",
+              "Please select at least one booking type."
+            );
           } else {
-            highlightElement(document.getElementById('bookingTypesContainer'), false);
+            highlightElement(
+              document.getElementById("bookingTypesContainer"),
+              false
+            );
           }
-          
+
           // Validate guests
-          const guestsField = document.getElementById('id_guests');
-          if (!guestsField.value || isNaN(guestsField.value) || parseInt(guestsField.value) <= 0) {
+          const guestsField = document.getElementById("id_guests");
+          if (
+            !guestsField.value ||
+            isNaN(guestsField.value) ||
+            parseInt(guestsField.value) <= 0
+          ) {
             isValid = false;
-            errorMessages.push('Please enter a valid number of guests.');
+            errorMessages.push("Please enter a valid number of guests.");
             highlightElement(guestsField, true);
-            showErrorMessage('id_guests', 'Please enter a valid number of guests.');
+            showErrorMessage(
+              "id_guests",
+              "Please enter a valid number of guests."
+            );
           } else {
             highlightElement(guestsField, false);
           }
-          
+
           // Validate name
-          const nameField = document.getElementById('id_name');
+          const nameField = document.getElementById("id_name");
           if (!nameField.value || nameField.value.trim().length < 2) {
             isValid = false;
-            errorMessages.push('Please enter your full name.');
+            errorMessages.push("Please enter your full name.");
             highlightElement(nameField, true);
-            showErrorMessage('id_name', 'Please enter your full name.');
+            showErrorMessage("id_name", "Please enter your full name.");
           } else {
             highlightElement(nameField, false);
           }
-          
+
           // Validate phone
-          const phoneField = document.getElementById('id_phone');
-          const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+          const phoneField = document.getElementById("id_phone");
+          const phoneRegex =
+            /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
           if (!phoneField.value || !phoneRegex.test(phoneField.value)) {
             isValid = false;
-            errorMessages.push('Please enter a valid phone number.');
+            errorMessages.push("Please enter a valid phone number.");
             highlightElement(phoneField, true);
-            showErrorMessage('id_phone', 'Please enter a valid phone number.');
+            showErrorMessage("id_phone", "Please enter a valid phone number.");
           } else {
             highlightElement(phoneField, false);
           }
-          
+
           // Validate email
-          const emailField = document.getElementById('id_email');
+          const emailField = document.getElementById("id_email");
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailField.value || !emailRegex.test(emailField.value)) {
             isValid = false;
-            errorMessages.push('Please enter a valid email address.');
+            errorMessages.push("Please enter a valid email address.");
             highlightElement(emailField, true);
-            showErrorMessage('id_email', 'Please enter a valid email address.');
+            showErrorMessage("id_email", "Please enter a valid email address.");
           } else {
             highlightElement(emailField, false);
           }
-          
+
           // Display summary validation errors if any
           if (!isValid) {
             showValidationSummary(errorMessages);
           }
-          
+
           return isValid;
         }
-        
+
         // Highlight invalid fields
         function highlightElement(element, isInvalid) {
           if (isInvalid) {
-            element.classList.add('is-invalid');
-            element.classList.add('border-danger');
+            element.classList.add("is-invalid");
+            element.classList.add("border-danger");
           } else {
-            element.classList.remove('is-invalid');
-            element.classList.remove('border-danger');
+            element.classList.remove("is-invalid");
+            element.classList.remove("border-danger");
           }
         }
-        
+
         // Show error message for a specific field
         function showErrorMessage(elementId, message) {
           const element = document.getElementById(elementId);
-          let errorMessageElement = document.getElementById(`${elementId}-error`);
-          
+          let errorMessageElement = document.getElementById(
+            `${elementId}-error`
+          );
+
           if (!errorMessageElement) {
-            errorMessageElement = document.createElement('div');
+            errorMessageElement = document.createElement("div");
             errorMessageElement.id = `${elementId}-error`;
-            errorMessageElement.className = 'text-danger mt-1';
-            
+            errorMessageElement.className = "text-danger mt-1";
+
             // Find the parent wrapper to append the error message
-            if (elementId === 'calendar') {
-              document.getElementById('selectedDateText').after(errorMessageElement);
-            } else if (elementId === 'bookingTypesContainer') {
+            if (elementId === "calendar") {
+              document
+                .getElementById("selectedDateText")
+                .after(errorMessageElement);
+            } else if (elementId === "bookingTypesContainer") {
               element.parentNode.appendChild(errorMessageElement);
             } else {
               // For form inputs, find the closest parent .mb-3 div
-              const parentContainer = element.closest('.mb-3') || element.closest('.col-md-6');
+              const parentContainer =
+                element.closest(".mb-3") || element.closest(".col-md-6");
               if (parentContainer) {
                 parentContainer.appendChild(errorMessageElement);
               } else {
@@ -628,138 +653,159 @@
               }
             }
           }
-          
+
           errorMessageElement.textContent = message;
         }
-        
+
         // Clear all error messages
         function clearAllErrorMessages() {
           const errorMessages = document.querySelectorAll('[id$="-error"]');
-          errorMessages.forEach(element => element.remove());
-          
+          errorMessages.forEach((element) => element.remove());
+
           // Also remove validation summary if exists
-          const existingErrorContainer = document.getElementById('validation-summary');
+          const existingErrorContainer =
+            document.getElementById("validation-summary");
           if (existingErrorContainer) {
             existingErrorContainer.remove();
           }
         }
-        
+
         // Clear error message for a specific field
         function clearErrorMessage(elementId) {
-          const errorMessageElement = document.getElementById(`${elementId}-error`);
+          const errorMessageElement = document.getElementById(
+            `${elementId}-error`
+          );
           if (errorMessageElement) {
             errorMessageElement.remove();
           }
         }
-        
+
         // Display validation summary
         function showValidationSummary(errors) {
           // Remove any existing error message container
-          const existingErrorContainer = document.getElementById('validation-summary');
+          const existingErrorContainer =
+            document.getElementById("validation-summary");
           if (existingErrorContainer) {
             existingErrorContainer.remove();
           }
-          
+
           // Create a new error message container
-          const errorContainer = document.createElement('div');
-          errorContainer.id = 'validation-summary';
-          errorContainer.className = 'alert alert-danger mb-3';
-          
-       
+          const errorContainer = document.createElement("div");
+          errorContainer.id = "validation-summary";
+          errorContainer.className = "alert alert-danger mb-3";
+
           errorContainer.appendChild(errorHeading);
-          
-          const errorList = document.createElement('ul');
-          errorList.className = 'm-0';
-          errors.forEach(error => {
-            const errorItem = document.createElement('li');
+
+          const errorList = document.createElement("ul");
+          errorList.className = "m-0";
+          errors.forEach((error) => {
+            const errorItem = document.createElement("li");
             errorItem.textContent = error;
             errorList.appendChild(errorItem);
           });
-          
+
           errorContainer.appendChild(errorList);
           bookingForm.prepend(errorContainer);
-          
+
           // Scroll to the error container
-          errorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          errorContainer.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-        
+
         // Real-time validation for individual fields
-        const formInputs = bookingForm.querySelectorAll('input, select');
-        formInputs.forEach(input => {
-          input.addEventListener('blur', function() {
+        const formInputs = bookingForm.querySelectorAll("input, select");
+        formInputs.forEach((input) => {
+          input.addEventListener("blur", function () {
             // Individual field validation
-            if (this.id === 'id_guests') {
-              const isValid = this.value && !isNaN(this.value) && parseInt(this.value) > 0;
+            if (this.id === "id_guests") {
+              const isValid =
+                this.value && !isNaN(this.value) && parseInt(this.value) > 0;
               highlightElement(this, !isValid);
               if (!isValid) {
-                showErrorMessage(this.id, 'Please enter a valid number of guests.');
+                showErrorMessage(
+                  this.id,
+                  "Please enter a valid number of guests."
+                );
               } else {
                 clearErrorMessage(this.id);
               }
-            } else if (this.id === 'id_name') {
+            } else if (this.id === "id_name") {
               const isValid = this.value && this.value.trim().length >= 2;
               highlightElement(this, !isValid);
               if (!isValid) {
-                showErrorMessage(this.id, 'Please enter your full name.');
+                showErrorMessage(this.id, "Please enter your full name.");
               } else {
                 clearErrorMessage(this.id);
               }
-            } else if (this.id === 'id_phone') {
-              const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+            } else if (this.id === "id_phone") {
+              const phoneRegex =
+                /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
               const isValid = this.value && phoneRegex.test(this.value);
               highlightElement(this, !isValid);
               if (!isValid) {
-                showErrorMessage(this.id, 'Please enter a valid phone number.');
+                showErrorMessage(this.id, "Please enter a valid phone number.");
               } else {
                 clearErrorMessage(this.id);
               }
-            } else if (this.id === 'id_email') {
+            } else if (this.id === "id_email") {
               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
               const isValid = this.value && emailRegex.test(this.value);
               highlightElement(this, !isValid);
               if (!isValid) {
-                showErrorMessage(this.id, 'Please enter a valid email address.');
+                showErrorMessage(
+                  this.id,
+                  "Please enter a valid email address."
+                );
               } else {
                 clearErrorMessage(this.id);
               }
             }
           });
-          
+
           // Clear error message on input
-          input.addEventListener('input', function() {
-            if (this.classList.contains('is-invalid')) {
+          input.addEventListener("input", function () {
+            if (this.classList.contains("is-invalid")) {
               highlightElement(this, false);
               clearErrorMessage(this.id);
             }
           });
         });
-        
+
         // Form submission handler
-        bookingForm.addEventListener('submit', function(event) {
+        bookingForm.addEventListener("submit", function (event) {
           // Always prevent the default form submission
           event.preventDefault();
-          
+
           // Validate the form
           if (validateForm()) {
             // If validation passes, submit the form
             this.submit();
           }
         });
-        
+
         // Initialize booking type selection validation feedback
-        const bookingTypeInputs = document.querySelectorAll('input[name="booking_types"]');
-        bookingTypeInputs.forEach(input => {
-          input.addEventListener('change', function() {
-            const anyChecked = Array.from(bookingTypeInputs).some(input => input.checked);
-            highlightElement(document.getElementById('bookingTypesContainer'), !anyChecked);
+        const bookingTypeInputs = document.querySelectorAll(
+          'input[name="booking_types"]'
+        );
+        bookingTypeInputs.forEach((input) => {
+          input.addEventListener("change", function () {
+            const anyChecked = Array.from(bookingTypeInputs).some(
+              (input) => input.checked
+            );
+            highlightElement(
+              document.getElementById("bookingTypesContainer"),
+              !anyChecked
+            );
             if (anyChecked) {
-              clearErrorMessage('bookingTypesContainer');
+              clearErrorMessage("bookingTypesContainer");
             } else {
-              showErrorMessage('bookingTypesContainer', 'Please select at least one booking type.');
+              showErrorMessage(
+                "bookingTypesContainer",
+                "Please select at least one booking type."
+              );
             }
           });
         });
-        
+
         // Make these functions available globally for other scripts
         window.clearErrorMessage = clearErrorMessage;
         window.highlightElement = highlightElement;

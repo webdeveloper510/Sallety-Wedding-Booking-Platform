@@ -934,9 +934,9 @@ document.addEventListener('DOMContentLoaded', function () {
             valid = false;
         }
         
-        const region = document.querySelector('select[name="region"]');
-        if (!region.value) {
-            showError(region, 'Please select a region');
+        const region = document.querySelector('input[name="region"]'); // <-- fixed here
+        if (!region.value.trim()) {
+            showError(region, 'Region is required');
             valid = false;
         }
         
@@ -961,6 +961,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         return valid;
     }
+    
     
     // Function to show error under an input field
     function showError(element, message) {
