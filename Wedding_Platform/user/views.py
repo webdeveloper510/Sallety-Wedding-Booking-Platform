@@ -160,7 +160,8 @@ def add_venue(request):
 #venue list
 @login_required
 def VenueList(request):
-    if request.user.role == 'owner':
+    print("checking",request.user.role)
+    if request.user.role != 'owner':
         venue_list = Venue.objects.all().order_by('-created_at')
     else:
         venue_list = Venue.objects.filter(user_id=request.user).order_by('-created_at')
@@ -191,10 +192,11 @@ def contact(request):
 
 @login_required
 def venue_list(request):
-    if request.user.role == 'owner':
-        venues = Venue.objects.all().order_by('-id')
+    print("jjjjjjj",request.user.role)
+    if request.user.role != 'owner':
+        venues = Venue.objects.all().order_by('-created_at')
     else:
-        venues = Venue.objects.filter(user=request.user).order_by('-id')
+        venues = Venue.objects.filter(user_id=request.user).order_by('-created_at')
     
     return render(request, 'VenueList.html', {
         'venues': venues
@@ -419,9 +421,14 @@ def visit_request_view(request):
                 messages.error(request, f'Error: {str(e)}')
 
     # Get visit requests data for the template
-    if request.user.role in ['owner', 'admin']:
+    if request.user.role == 'admin':
+        # Admins see all visit requests
         visit_requests = VisitRequest.objects.all().order_by('-created_at')
+    elif request.user.role == 'owner':
+        # Owners see only visit requests for venues they own
+        visit_requests = VisitRequest.objects.filter(venue__user=request.user).order_by('-created_at')
     else:
+        # Regular users see only their own visit requests
         visit_requests = VisitRequest.objects.filter(user=request.user).order_by('-created_at')
     
     # Only return the template for GET requests or non-AJAX POST requests
@@ -430,7 +437,6 @@ def visit_request_view(request):
     
     # This line should not be reached for AJAX requests since we return above
     return JsonResponse({'success': False, 'message': 'Invalid request'})
-
 ###########################Update visite status################################################
 @csrf_exempt
 @login_required
@@ -474,15 +480,13 @@ def update_venue_status(request, venue_id):
 @login_required
 def table_booking(request):
     if request.user.role == 'owner':
-        # Owners see all bookings - latest first
-        bookings = Booking.objects.select_related('venue').all().order_by('-created_at')
+        # Owners see only bookings for venues they own - latest first
+        bookings = Booking.objects.select_related('venue').filter(venue__user=request.user).order_by('-created_at')
     else:
-        # Users see only their bookings - latest first
+        # Regular users see only their own bookings - latest first
         bookings = Booking.objects.select_related('venue').filter(user=request.user).order_by('-created_at')
     
     return render(request, 'TableBooking.html', {'bookings': bookings})
-
-
 ###########################Updatebooking status################################################
 @csrf_exempt
 @login_required

@@ -406,7 +406,7 @@
                   info.dayEl.classList.add('selected-date');
                   lastClickedEl = info.dayEl;
 
-                  selectedDateText.innerText = "Selected Date: " + clickedDate;
+                  selectedDateText.innerText = "Selected Date: " + new Date(clickedDate).toLocaleDateString('en-US');
                   chosenDateInput.value = clickedDate;
 
                   // Update available booking types based on selected date

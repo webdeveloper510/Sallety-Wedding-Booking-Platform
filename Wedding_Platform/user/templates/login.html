@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +41,24 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <style>
+      .error-feedback {
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: #dc3545;
+        text-align: left;
+        display: none;
+      }
+      .form-control.is-invalid {
+        border-color: #dc3545;
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+      }
+    </style>
   </head>
   <body>
     {% include 'header.html' %}
@@ -66,46 +85,43 @@
         <div class="col-md-6 couple-login">
           <div class="register-block">
             <h3 class="mb-4">LOGIN</h3>
-            <form method="POST" action="{% url 'user-login' %}">
+            <form method="POST" action="{% url 'user-login' %}" id="loginForm" novalidate>
               {% csrf_token %}
               <div class="mb-3">
                 <input
                   type="text"
                   name="username_or_email"
+                  id="usernameOrEmail"
                   class="form-control"
                   placeholder="Username Or Email"
+                  value="{{ request.POST.username_or_email|default:'' }}"
                   required
                 />
+                <div class="error-feedback" id="usernameOrEmailError">Please enter your username or email.</div>
               </div>
               <div class="mb-3">
                 <input
                   type="password"
                   name="password"
+                  id="password"
                   class="form-control"
                   placeholder="Password"
+                  value="{{ request.POST.password|default:'' }}"
                   required
                 />
+                <div class="error-feedback" id="passwordError">Please enter your password.</div>
               </div>
               <div class="mt-3 mb-4 text-start">
-                <button type="submit" class="btn submit-btn">LOGIN</button>
+                <button type="submit" class="btn submit-btn" id="loginButton">LOGIN</button>
               </div>
-              {% comment %}
-              <div class="mt-3 mb-4 text-start">
-                <input
-                  type="hidden"
-                  name="csrfmiddlewaretoken"
-                  value="some-long-token"
-                />
-              </div>
-              {% endcomment %} 
+              
               {% if messages %}
-  {% for message in messages %}
-    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
-      {{ message }}
-    </p>
-  {% endfor %}
-{% endif %}
-
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+                  {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </form>
 
             <div class="row w-100 m-0">
@@ -118,7 +134,7 @@
               </div>
               <div class="col-sm-5 p-0 text-end">
                 <p class="sign-in text-right">
-                  {% comment %} <a class="forgotpasswordclick">Forgot Password</a> {% endcomment %}
+                  <a href="" class="forgotpasswordclick">Forgot Password</a>
                 </p>
               </div>
             </div>
@@ -181,5 +197,55 @@
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const usernameOrEmail = document.getElementById('usernameOrEmail');
+        const password = document.getElementById('password');
+        
+        const usernameOrEmailError = document.getElementById('usernameOrEmailError');
+        const passwordError = document.getElementById('passwordError');
+        
+        // Username/Email validation
+        function validateUsernameOrEmail() {
+          if (!usernameOrEmail.value.trim()) {
+            usernameOrEmailError.style.display = 'block';
+            usernameOrEmail.classList.add('is-invalid');
+            return false;
+          } else {
+            usernameOrEmailError.style.display = 'none';
+            usernameOrEmail.classList.remove('is-invalid');
+            return true;
+          }
+        }
+        
+        // Password validation
+        function validatePassword() {
+          if (!password.value) {
+            passwordError.style.display = 'block';
+            password.classList.add('is-invalid');
+            return false;
+          } else {
+            passwordError.style.display = 'none';
+            password.classList.remove('is-invalid');
+            return true;
+          }
+        }
+        
+        // Validate fields on blur
+        usernameOrEmail.addEventListener('blur', validateUsernameOrEmail);
+        password.addEventListener('blur', validatePassword);
+        
+        // Form submission validation
+        form.addEventListener('submit', function(event) {
+          const isUsernameOrEmailValid = validateUsernameOrEmail();
+          const isPasswordValid = validatePassword();
+          
+          if (!(isUsernameOrEmailValid && isPasswordValid)) {
+            event.preventDefault();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
