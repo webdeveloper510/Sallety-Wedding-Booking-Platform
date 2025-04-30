@@ -337,7 +337,7 @@ def booking(request, venue_id):
 
             booking.total_price = total_price
             booking.venue = venue 
-            print(booking.venue_id,"kuch vi")
+            
 
             if request.user.is_authenticated:
                 booking.user = request.user

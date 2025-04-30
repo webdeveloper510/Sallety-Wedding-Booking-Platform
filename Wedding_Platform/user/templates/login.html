@@ -52,13 +52,9 @@
         text-align: left;
         display: none;
       }
-      .form-control.is-invalid {
+      .form-control.input-error {
+        background-image: none !important;
         border-color: #dc3545;
-        padding-right: calc(1.5em + 0.75rem);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
       }
     </style>
   </head>
@@ -101,7 +97,7 @@
                 />
                 <div class="error-feedback" id="usernameOrEmailError">Please enter your username or email.</div>
               </div>
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <input
                   type="password"
                   name="password"
@@ -111,27 +107,31 @@
                   value="{{ request.POST.password|default:'' }}"
                   required
                 />
+                <i class="fa fa-eye position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
                 <div class="error-feedback" id="passwordError">Please enter your password.</div>
               </div>
+              
               <div class="mt-3 mb-4 text-start">
                 <button type="submit" class="btn submit-btn" id="loginButton">LOGIN</button>
               </div>
               {% if messages %}
-              <div id="django-alert" class="alert 
-                {% if message.tags == 'error' %}alert-danger
-                {% elif message.tags == 'success' %}alert-success
-                {% else %}alert-info{% endif %}">
+              <div id="django-alerts">
                 {% for message in messages %}
-                  <p class="mb-0">{{ message }}</p>
+                  <div class="alert 
+                    {% if message.tags == 'error' %}alert-danger
+                    {% elif message.tags == 'success' %}alert-success
+                    {% else %}alert-info{% endif %}">
+                    <p class="mb-0">{{ message }}</p>
+                  </div>
                 {% endfor %}
               </div>
             
               <script>
-                // Auto-hide Django messages after 2 seconds (2000ms)
+                // Auto-hide all Django messages after 2 seconds
                 setTimeout(function() {
-                  const alertBox = document.getElementById('django-alert');
-                  if (alertBox) {
-                    alertBox.style.display = 'none';
+                  const alertContainer = document.getElementById('django-alerts');
+                  if (alertContainer) {
+                    alertContainer.style.display = 'none';
                   }
                 }, 2000);
               </script>
@@ -225,11 +225,11 @@
         function validateUsernameOrEmail() {
           if (!usernameOrEmail.value.trim()) {
             usernameOrEmailError.style.display = 'block';
-            usernameOrEmail.classList.add('is-invalid');
+            usernameOrEmail.classList.add('input-error');
             return false;
           } else {
             usernameOrEmailError.style.display = 'none';
-            usernameOrEmail.classList.remove('is-invalid');
+            usernameOrEmail.classList.remove('input-error');
             return true;
           }
         }
@@ -238,11 +238,11 @@
         function validatePassword() {
           if (!password.value) {
             passwordError.style.display = 'block';
-            password.classList.add('is-invalid');
+            password.classList.add('input-error');
             return false;
           } else {
             passwordError.style.display = 'none';
-            password.classList.remove('is-invalid');
+            password.classList.remove('input-error');
             return true;
           }
         }
@@ -262,5 +262,18 @@
         });
       });
     </script>
+    {% comment %} eye icon {% endcomment %}
+    <script>
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+    
+      togglePassword.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    </script>
+    
   </body>
 </html>

@@ -89,7 +89,7 @@
                                href="{% if request.user.is_authenticated %}{% url 'visit_request_view' %}{% else %}{% url 'user-login' %}?next={% url 'visit_request_view' %}{% endif %}" 
                                class="fw-bold" 
                                style="color:black;font-size:15px">
-                              My  Account
+                              My Account
                             </a>
                         </li>
                         {% endif %}
@@ -104,7 +104,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
         <!-- Search Bar -->
         <form method="GET" action="{% url 'venue-search-results' %}" onsubmit="return validateSearchForm();">
@@ -272,10 +271,9 @@
                 <!-- About -->
                 <div class="col-md-3">
                     <h5>About Weddlist</h5>
-                    <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-                    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam cor poris suscipit labo riosam.</p>
-                   
-                </div>
+                    <p>Weddlist is your one-stop destination for discovering the best wedding venues, planners, and vendors.</p>
+                    <p>We help couples plan their dream wedding effortlessly by connecting them with trusted professionals and services.</p>
+                  </div>
                 <!-- Pages -->
                 <div class="col-md-3 links">
                     <h5>Pages</h5>

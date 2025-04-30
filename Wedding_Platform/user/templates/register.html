@@ -49,13 +49,9 @@
         text-align: left;
         display: none;
       }
-      .form-control.is-invalid {
+      .form-control.input-error {
+        background-image: none !important;
         border-color: #dc3545;
-        padding-right: calc(1.5em + 0.75rem);
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
       }
       .field-icon {
         z-index: 2;
@@ -162,37 +158,38 @@
                 <button type="submit" class="btn submit-btn" id="registerButton">REGISTER</button>
               </div>
               {% if messages %}
-              <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+              <div id="django-alerts" class="col-12 mb-3">
                 {% for message in messages %}
-                  <div id="toastMessage" class="toast align-items-center text-white {% if message.tags == 'success' %}bg-success{% else %}bg-danger{% endif %} border-0 show" role="alert">
-                    <div class="d-flex">
-                      <div class="toast-body">
-                        {{ message }}
-                      </div>
-                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
+                  <div class="alert alert-{{ message.tags }} mb-2" data-tag="{{ message.tags }}">
+                    {{ message }}
                   </div>
                 {% endfor %}
               </div>
             
               <script>
-                setTimeout(() => {
-                  const toast = document.getElementById('toastMessage');
-                  if (toast) {
-                    toast.classList.remove('show');
-                  }
-                }, 3000); // hide after 3 seconds
+                document.addEventListener("DOMContentLoaded", function () {
+                  const alerts = document.querySelectorAll('#django-alerts .alert');
             
-                {% for message in messages %}
-                  {% if message.tags == 'success' %}
-                    setTimeout(() => {
-                      window.location.href = "{% url 'user-login' %}";
-                    }, 3500); // redirect after toast hides
-                  {% endif %}
-                {% endfor %}
+                  // Auto-hide alerts after 3 seconds
+                  setTimeout(() => {
+                    alerts.forEach(alert => {
+                      alert.style.display = 'none';
+                    });
+                  }, 1000);
+            
+                  // Check for a success message to trigger redirect
+                  alerts.forEach(alert => {
+                    if (alert.dataset.tag === 'success') {
+                      setTimeout(() => {
+                        window.location.href = "{% url 'user-login' %}";
+                      }, 3500);
+                    }
+                  });
+                });
               </script>
             {% endif %}
             
+
             </form>
 
             <div class="row w-100 m-0">
@@ -219,12 +216,10 @@
           <!-- About -->
           <div class="col-md-3">
             <h5>About Weddlist</h5>
-            <p>Sed ut perspiciatis unde omnis iste natus error voluptatem.</p>
-            <p>
-              Ut enim ad minima veniam, quis nostrum exercitationem ullam cor
-              poris suscipit labo riosam.
-            </p>
-          </div>
+            <p>Weddlist is your one-stop destination for discovering the best wedding venues, planners, and vendors.</p>
+            <p>We help couples plan their dream wedding effortlessly by connecting them with trusted professionals and services.</p>
+        </div>
+        
           <!-- Pages -->
           <div class="col-md-3 links">
             <h5>Pages</h5>
@@ -282,11 +277,11 @@
           if (!username.value.trim()) {
             usernameError.style.display = 'block';
             usernameError.textContent = 'Username is required';
-            username.classList.add('is-invalid');
+            username.classList.add('input-error');
             return false;
           } else {
             usernameError.style.display = 'none';
-            username.classList.remove('is-invalid');
+            username.classList.remove('input-error');
             return true;
           }
         }
@@ -297,16 +292,16 @@
           if (!email.value.trim()) {
             emailError.style.display = 'block';
             emailError.textContent = 'Email is required';
-            email.classList.add('is-invalid');
+            email.classList.add('input-error');
             return false;
           } else if (!emailRegex.test(email.value.trim())) {
             emailError.style.display = 'block';
             emailError.textContent = 'Please enter a valid email address';
-            email.classList.add('is-invalid');
+            email.classList.add('input-error');
             return false;
           } else {
             emailError.style.display = 'none';
-            email.classList.remove('is-invalid');
+            email.classList.remove('input-error');
             return true;
           }
         }
@@ -314,11 +309,11 @@
         function validateRole() {
           if (roleSelect.value === '') {
             roleError.style.display = 'block';
-            roleSelect.classList.add('is-invalid');
+            roleSelect.classList.add('input-error');
             return false;
           } else {
             roleError.style.display = 'none';
-            roleSelect.classList.remove('is-invalid');
+            roleSelect.classList.remove('input-error');
             return true;
           }
         }
@@ -327,16 +322,16 @@
           if (!password.value) {
             passwordError.style.display = 'block';
             passwordError.textContent = 'Password is required';
-            password.classList.add('is-invalid');
+            password.classList.add('input-error');
             return false;
           } else if (password.value.length < 6) {
             passwordError.style.display = 'block';
             passwordError.textContent = 'Password must be at least 6 characters long';
-            password.classList.add('is-invalid');
+            password.classList.add('input-error');
             return false;
           } else {
             passwordError.style.display = 'none';
-            password.classList.remove('is-invalid');
+            password.classList.remove('input-error');
             return true;
           }
         }
@@ -345,16 +340,16 @@
           if (!confirmPassword.value) {
             confirmPasswordError.style.display = 'block';
             confirmPasswordError.textContent = 'Please confirm your password';
-            confirmPassword.classList.add('is-invalid');
+            confirmPassword.classList.add('input-error');
             return false;
           } else if (confirmPassword.value !== password.value) {
             confirmPasswordError.style.display = 'block';
             confirmPasswordError.textContent = 'Passwords do not match';
-            confirmPassword.classList.add('is-invalid');
+            confirmPassword.classList.add('input-error');
             return false;
           } else {
             confirmPasswordError.style.display = 'none';
-            confirmPassword.classList.remove('is-invalid');
+            confirmPassword.classList.remove('input-error');
             return true;
           }
         }
