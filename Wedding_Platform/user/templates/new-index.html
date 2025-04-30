@@ -40,6 +40,11 @@
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
         }
+        .venue-d {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 
@@ -227,11 +232,15 @@
                 <div class="d-flex align-items-center mb-2">
                 </div>
                 <h5 class="fw-bold">{{ venue.name }}</h5>
-                <p class="price text-danger fw-bold">${{ venue.price }} </p>
+                <p class="price mb-0 text-danger fw-bold">${{ venue.price }} </p>
+                <p class="venue-d text-muted">
+                    {{ venue.region }} · Capacity: {{ venue.capacity }} guests
+                  </p>
+
                 {% comment %} <p class="text-muted small">{{ venue.description|truncatechars:100 }}</p> {% endcomment %}
                 <div class="d-flex justify-content-between text-muted d_none">
-                    <span><i class="bi bi-cash-coin"></i> ${{ venue.price }}</span>
-                    <span><i class="bi bi-geo-alt"></i> {{ venue.region }}</span>
+                    {% comment %} <span><i class="bi bi-cash-coin"></i> ${{ venue.price }}</span> {% endcomment %}
+                    <span><i class="bi bi-geo-alt"></i> {{ venue.capacity }}</span>
                     <span><i class="bi bi-star"></i> 
                         {% if venue.chambermarie == 'yes' %}
                             Featured

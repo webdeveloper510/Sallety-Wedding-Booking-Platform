@@ -5,7 +5,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Wedding Vendor Directory</title>
+    <title>Register</title>
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
     <!-- Bootstrap 5.3.3 CSS -->
     <link
       rel="stylesheet"
@@ -53,7 +57,9 @@
         background-position: right calc(0.375em + 0.1875rem) center;
         background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
       }
-      /* Removed password strength styling */
+      .field-icon {
+        z-index: 2;
+      }
     </style>
   </head>
   <body>
@@ -118,43 +124,75 @@
                 />
                 <div class="error-feedback" id="emailError">Please enter a valid email address.</div>
               </div>
-              <div class="mb-3">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  class="form-control"
-                  placeholder="Password"
-                  value="{{ request.POST.password|default:'' }}"
-                  required
-                  minlength="6"
-                />
-                <div class="error-feedback" id="passwordError">Password must be at least 6 characters long.</div>
-              </div>
-              <div class="mb-3">
-                <input
-                  type="password"
-                  name="confirm_password"
-                  id="confirmPassword"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  value="{{ request.POST.confirm_password|default:'' }}"
-                  required
-                />
-                <div class="error-feedback" id="confirmPasswordError">Passwords do not match.</div>
-              </div>
+            <!-- Password Field with Eye Icon -->
+<div class="mb-3 position-relative">
+  <input
+    type="password"
+    name="password"
+    id="password"
+    class="form-control"
+    placeholder="Password"
+    value="{{ request.POST.password|default:'' }}"
+    required
+    minlength="6"
+  />
+  <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"
+    style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%); cursor: pointer;"></span>
+  <div class="error-feedback" id="passwordError">Password must be at least 6 characters long.</div>
+</div>
+
+<!-- Confirm Password Field with Eye Icon -->
+<div class="mb-3 position-relative">
+  <input
+    type="password"
+    name="confirm_password"
+    id="confirmPassword"
+    class="form-control"
+    placeholder="Confirm Password"
+    value="{{ request.POST.confirm_password|default:'' }}"
+    required
+  />
+  <span toggle="#confirmPassword" class="fa fa-fw fa-eye field-icon toggle-password"
+    style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%); cursor: pointer;"></span>
+  <div class="error-feedback" id="confirmPasswordError">Passwords do not match.</div>
+</div>
+
 
               <div class="mt-3 mb-4 text-start">
                 <button type="submit" class="btn submit-btn" id="registerButton">REGISTER</button>
               </div>
-
               {% if messages %}
-              <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+              <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
                 {% for message in messages %}
-                  <p class="mb-0">{{ message }}</p>
+                  <div id="toastMessage" class="toast align-items-center text-white {% if message.tags == 'success' %}bg-success{% else %}bg-danger{% endif %} border-0 show" role="alert">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        {{ message }}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
                 {% endfor %}
               </div>
-              {% endif %}
+            
+              <script>
+                setTimeout(() => {
+                  const toast = document.getElementById('toastMessage');
+                  if (toast) {
+                    toast.classList.remove('show');
+                  }
+                }, 3000); // hide after 3 seconds
+            
+                {% for message in messages %}
+                  {% if message.tags == 'success' %}
+                    setTimeout(() => {
+                      window.location.href = "{% url 'user-login' %}";
+                    }, 3500); // redirect after toast hides
+                  {% endif %}
+                {% endfor %}
+              </script>
+            {% endif %}
+            
             </form>
 
             <div class="row w-100 m-0">
@@ -224,7 +262,7 @@
     <script src="assets/js/owl.carousel.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script>
+    <script>
       document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('registerForm');
         const roleSelect = document.getElementById('roleSelect');
@@ -232,25 +270,18 @@
         const email = document.getElementById('email');
         const password = document.getElementById('password');
         const confirmPassword = document.getElementById('confirmPassword');
-        
+    
         const roleError = document.getElementById('roleError');
         const usernameError = document.getElementById('usernameError');
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
         const confirmPasswordError = document.getElementById('confirmPasswordError');
-        
-        // Removed strength meter variables
-        
-        // Username validation
+    
+        // ✅ Username validation (only not empty)
         function validateUsername() {
-          const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-          if (!username.value) {
+          if (!username.value.trim()) {
             usernameError.style.display = 'block';
             usernameError.textContent = 'Username is required';
-            username.classList.add('is-invalid');
-            return false;
-          } else if (!usernameRegex.test(username.value)) {
-            usernameError.style.display = 'block';
             username.classList.add('is-invalid');
             return false;
           } else {
@@ -259,17 +290,18 @@
             return true;
           }
         }
-        
-        // Email validation
+    
+        // ✅ Improved email validation
         function validateEmail() {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!email.value) {
+          if (!email.value.trim()) {
             emailError.style.display = 'block';
             emailError.textContent = 'Email is required';
             email.classList.add('is-invalid');
             return false;
-          } else if (!emailRegex.test(email.value)) {
+          } else if (!emailRegex.test(email.value.trim())) {
             emailError.style.display = 'block';
+            emailError.textContent = 'Please enter a valid email address';
             email.classList.add('is-invalid');
             return false;
           } else {
@@ -278,8 +310,7 @@
             return true;
           }
         }
-        
-        // Role validation
+    
         function validateRole() {
           if (roleSelect.value === '') {
             roleError.style.display = 'block';
@@ -291,8 +322,7 @@
             return true;
           }
         }
-        
-        // Simple password validation
+    
         function validatePassword() {
           if (!password.value) {
             passwordError.style.display = 'block';
@@ -301,6 +331,7 @@
             return false;
           } else if (password.value.length < 6) {
             passwordError.style.display = 'block';
+            passwordError.textContent = 'Password must be at least 6 characters long';
             password.classList.add('is-invalid');
             return false;
           } else {
@@ -309,8 +340,7 @@
             return true;
           }
         }
-        
-        // Confirm password validation
+    
         function validateConfirmPassword() {
           if (!confirmPassword.value) {
             confirmPasswordError.style.display = 'block';
@@ -319,6 +349,7 @@
             return false;
           } else if (confirmPassword.value !== password.value) {
             confirmPasswordError.style.display = 'block';
+            confirmPasswordError.textContent = 'Passwords do not match';
             confirmPassword.classList.add('is-invalid');
             return false;
           } else {
@@ -327,29 +358,42 @@
             return true;
           }
         }
-        
-        // Removed password strength meter event listener
-        
-        // Validate fields on blur
+    
+        // Validate on blur/change
         username.addEventListener('blur', validateUsername);
         email.addEventListener('blur', validateEmail);
         roleSelect.addEventListener('change', validateRole);
         password.addEventListener('blur', validatePassword);
         confirmPassword.addEventListener('blur', validateConfirmPassword);
-        
-        // Form submission validation
+    
+        // Form submission
         form.addEventListener('submit', function(event) {
           const isUsernameValid = validateUsername();
           const isEmailValid = validateEmail();
           const isRoleValid = validateRole();
           const isPasswordValid = validatePassword();
           const isConfirmPasswordValid = validateConfirmPassword();
-          
+    
           if (!(isUsernameValid && isEmailValid && isRoleValid && isPasswordValid && isConfirmPasswordValid)) {
             event.preventDefault();
           }
         });
       });
     </script>
+    
+    <script>
+      document.querySelectorAll('.toggle-password').forEach(function (eyeIcon) {
+        eyeIcon.addEventListener('click', function () {
+          const input = document.querySelector(this.getAttribute('toggle'));
+          const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+          input.setAttribute('type', type);
+          this.classList.toggle('fa-eye');
+          this.classList.toggle('fa-eye-slash');
+        });
+      });
+      
+
+    </script>
+
   </body>
 </html>

@@ -237,18 +237,23 @@ def user_register(request):
         name = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        role = request.POST.get("role", "user")  # Default to user if not specified
+        confirm_password = request.POST.get("confirm_password")
+        role = request.POST.get("role", "user")
 
         if User.objects.filter(name=name).exists():
             messages.error(request, "Username already taken.")
         elif User.objects.filter(email=email).exists():
             messages.error(request, "Email already registered.")
+        elif password != confirm_password:
+            messages.error(request, "Passwords do not match.")
         else:
             user = User.objects.create_user(name=name, email=email, password=password, role=role)
             messages.success(request, "Account created successfully!")
-            return redirect('user-login')
+            # No redirect — show toast, then redirect via JavaScript
+            return render(request, 'register.html')
 
     return render(request, 'register.html')
+
 
 #######################3login#############################
 def user_login(request):
@@ -258,7 +263,7 @@ def user_login(request):
 
         # Authenticate using email (USERNAME_FIELD)
         user = authenticate(request, username=username_or_email, password=password)
-        print(user,"kookkk")
+       
 
         # Try with name if the first attempt fails
         if user is None:

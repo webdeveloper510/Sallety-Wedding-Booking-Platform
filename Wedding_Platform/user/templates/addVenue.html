@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Venue</title>
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/homenew.style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/venue.css' %}">
@@ -214,7 +216,7 @@
                                                 <div class="error">{{ form.chambermarie.errors }}</div>
                                                 {% endif %}
                                             </div>
-                                            <div class="form-group" style="flex: 1;">
+                                            <div class="form-group" style="flex: 1;" id="chambermarie-image-div">
                                                 <label>Upload Chambermarie Image</label>
                                                 {{ form.chambermarie_image }}
                                                 {% if form.chambermarie_image.errors %}
@@ -1098,12 +1100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
    </script>
     
-
-
-
-
-
-   <script>
+ <script>
     // Add this script to mark amenity boxes as selected on page load for editing
     document.addEventListener('DOMContentLoaded', function() {
         {% if is_edit %}
@@ -1164,4 +1161,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the chambermarie select input
+        const chambermarieSelect = document.getElementById('id_chambermarie');
+        
+        // Get the parent div of the chambermarie image upload input
+        const chambermarieImageDiv = document.querySelector('div.form-group:has(#id_chambermarie_image)');
+        
+        // Function to toggle visibility of the chambermarie image upload field
+        function toggleChambermarieImageField() {
+            // Check if the selected value is "yes"
+            if (chambermarieSelect.value === 'yes') {
+                chambermarieImageDiv.style.display = 'block';
+            } else {
+                chambermarieImageDiv.style.display = 'none';
+            }
+        }
+        
+        // Call the function initially to set the correct state on page load
+        toggleChambermarieImageField();
+        
+        // Add event listener to the select input to handle changes
+        chambermarieSelect.addEventListener('change', toggleChambermarieImageField);
+    });
+    </script>
 </html>

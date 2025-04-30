@@ -6,6 +6,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking</title>
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
     <link
       rel="stylesheet"
@@ -64,6 +66,14 @@
       href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
       rel="stylesheet"
     />
+    <!-- Toastify CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </head>
   <style>
     .booking-container {
@@ -157,11 +167,20 @@
         </div>
 
         {% if messages %}
-        <div class="col-12 mb-3">
-          {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-          {% endfor %}
-        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            {% for message in messages %}
+              Toastify({
+                text: "{{ message|escapejs }}",
+                duration: 4000,
+                close: true,
+                gravity: "top", // "top" or "bottom"
+                position: "right", // "left", "center" or "right"
+                backgroundColor: "{% if 'error' in message.tags %}#dc3545{% elif 'success' in message.tags %}#28a745{% elif 'warning' in message.tags %}#ffc107{% else %}#17a2b8{% endif %}",
+              }).showToast();
+            {% endfor %}
+          });
+        </script>
         {% endif %}
 
         <!-- Calendar Section -->
@@ -505,311 +524,177 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const bookingForm = document.getElementById("bookingForm");
-
-        // Form validation function
+      
         function validateForm() {
           let isValid = true;
-          let errorMessages = [];
-
-          // Clear all previous error messages
           clearAllErrorMessages();
-
-          // Validate date selection
+      
+          // Validate Date
           const chosenDate = document.getElementById("chosenDate").value;
           if (!chosenDate) {
             isValid = false;
-            errorMessages.push("Please select a date for your booking.");
-            highlightElement(document.getElementById("calendar"), true);
-            showErrorMessage(
-              "calendar",
-              "Please select a date for your booking."
-            );
-          } else {
-            highlightElement(document.getElementById("calendar"), false);
+            showFieldError("calendar", "This field is required.");
           }
-
-          // Validate at least one booking type is selected
-          const bookingTypes = document.querySelectorAll(
-            'input[name="booking_types"]:checked'
-          );
+      
+          // Validate Booking Type
+          const bookingTypes = document.querySelectorAll('input[name="booking_types"]:checked');
           if (bookingTypes.length === 0) {
             isValid = false;
-            errorMessages.push("Please select at least one booking type.");
-            highlightElement(
-              document.getElementById("bookingTypesContainer"),
-              true
-            );
-            showErrorMessage(
-              "bookingTypesContainer",
-              "Please select at least one booking type."
-            );
-          } else {
-            highlightElement(
-              document.getElementById("bookingTypesContainer"),
-              false
-            );
+            showFieldError("bookingTypesContainer", "This field is required.");
           }
-
-          // Validate guests
+      
+          // Validate Guests
           const guestsField = document.getElementById("id_guests");
-          if (
-            !guestsField.value ||
-            isNaN(guestsField.value) ||
-            parseInt(guestsField.value) <= 0
-          ) {
+          if (!guestsField.value) {
             isValid = false;
-            errorMessages.push("Please enter a valid number of guests.");
-            highlightElement(guestsField, true);
-            showErrorMessage(
-              "id_guests",
-              "Please enter a valid number of guests."
-            );
-          } else {
-            highlightElement(guestsField, false);
+            showFieldError("id_guests", "This field is required.");
+          } else if (isNaN(guestsField.value) || parseInt(guestsField.value) <= 0) {
+            isValid = false;
+            showFieldError("id_guests", "Guests must be a positive number.");
           }
-
-          // Validate name
+      
+          // Validate Name
           const nameField = document.getElementById("id_name");
-          if (!nameField.value || nameField.value.trim().length < 2) {
+          if (!nameField.value.trim()) {
             isValid = false;
-            errorMessages.push("Please enter your full name.");
-            highlightElement(nameField, true);
-            showErrorMessage("id_name", "Please enter your full name.");
-          } else {
-            highlightElement(nameField, false);
+            showFieldError("id_name", "This field is required.");
           }
-
-          // Validate phone
+      
+          // Validate Phone
           const phoneField = document.getElementById("id_phone");
-          const phoneRegex =
-            /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-          if (!phoneField.value || !phoneRegex.test(phoneField.value)) {
+          const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+          if (!phoneField.value.trim()) {
             isValid = false;
-            errorMessages.push("Please enter a valid phone number.");
-            highlightElement(phoneField, true);
-            showErrorMessage("id_phone", "Please enter a valid phone number.");
-          } else {
-            highlightElement(phoneField, false);
+            showFieldError("id_phone", "This field is required.");
+          } else if (!phoneRegex.test(phoneField.value)) {
+            isValid = false;
+            showFieldError("id_phone", "Phone number format is invalid.");
           }
-
-          // Validate email
+      
+          // Validate Email
           const emailField = document.getElementById("id_email");
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailField.value || !emailRegex.test(emailField.value)) {
+          if (!emailField.value.trim()) {
             isValid = false;
-            errorMessages.push("Please enter a valid email address.");
-            highlightElement(emailField, true);
-            showErrorMessage("id_email", "Please enter a valid email address.");
-          } else {
-            highlightElement(emailField, false);
+            showFieldError("id_email", "This field is required.");
+          } else if (!emailRegex.test(emailField.value)) {
+            isValid = false;
+            showFieldError("id_email", "Invalid email format.");
           }
-
-          // Display summary validation errors if any
-          if (!isValid) {
-            showValidationSummary(errorMessages);
-          }
-
+      
           return isValid;
         }
-
-        // Highlight invalid fields
-        function highlightElement(element, isInvalid) {
-          if (isInvalid) {
-            element.classList.add("is-invalid");
-            element.classList.add("border-danger");
-          } else {
-            element.classList.remove("is-invalid");
-            element.classList.remove("border-danger");
+      
+        function showFieldError(fieldId, message) {
+          const field = document.getElementById(fieldId);
+          field.classList.add("is-invalid", "border-danger");
+      
+          let errorElement = document.getElementById(`${fieldId}-error`);
+          if (!errorElement) {
+            errorElement = document.createElement("div");
+            errorElement.id = `${fieldId}-error`;
+            errorElement.className = "text-danger mt-1";
+      
+            const wrapper = field.closest(".mb-3") || field.parentElement;
+            wrapper.appendChild(errorElement);
           }
+      
+          errorElement.textContent = message;
         }
-
-        // Show error message for a specific field
-        function showErrorMessage(elementId, message) {
-          const element = document.getElementById(elementId);
-          let errorMessageElement = document.getElementById(
-            `${elementId}-error`
-          );
-
-          if (!errorMessageElement) {
-            errorMessageElement = document.createElement("div");
-            errorMessageElement.id = `${elementId}-error`;
-            errorMessageElement.className = "text-danger mt-1";
-
-            // Find the parent wrapper to append the error message
-            if (elementId === "calendar") {
-              document
-                .getElementById("selectedDateText")
-                .after(errorMessageElement);
-            } else if (elementId === "bookingTypesContainer") {
-              element.parentNode.appendChild(errorMessageElement);
-            } else {
-              // For form inputs, find the closest parent .mb-3 div
-              const parentContainer =
-                element.closest(".mb-3") || element.closest(".col-md-6");
-              if (parentContainer) {
-                parentContainer.appendChild(errorMessageElement);
-              } else {
-                element.after(errorMessageElement);
-              }
-            }
-          }
-
-          errorMessageElement.textContent = message;
-        }
-
-        // Clear all error messages
+      
         function clearAllErrorMessages() {
-          const errorMessages = document.querySelectorAll('[id$="-error"]');
-          errorMessages.forEach((element) => element.remove());
-
-          // Also remove validation summary if exists
-          const existingErrorContainer =
-            document.getElementById("validation-summary");
-          if (existingErrorContainer) {
-            existingErrorContainer.remove();
-          }
-        }
-
-        // Clear error message for a specific field
-        function clearErrorMessage(elementId) {
-          const errorMessageElement = document.getElementById(
-            `${elementId}-error`
-          );
-          if (errorMessageElement) {
-            errorMessageElement.remove();
-          }
-        }
-
-        // Display validation summary
-        function showValidationSummary(errors) {
-          // Remove any existing error message container
-          const existingErrorContainer =
-            document.getElementById("validation-summary");
-          if (existingErrorContainer) {
-            existingErrorContainer.remove();
-          }
-
-          // Create a new error message container
-          const errorContainer = document.createElement("div");
-          errorContainer.id = "validation-summary";
-          errorContainer.className = "alert alert-danger mb-3";
-
-          errorContainer.appendChild(errorHeading);
-
-          const errorList = document.createElement("ul");
-          errorList.className = "m-0";
-          errors.forEach((error) => {
-            const errorItem = document.createElement("li");
-            errorItem.textContent = error;
-            errorList.appendChild(errorItem);
+          document.querySelectorAll(".is-invalid").forEach(el => {
+            el.classList.remove("is-invalid", "border-danger");
           });
-
-          errorContainer.appendChild(errorList);
-          bookingForm.prepend(errorContainer);
-
-          // Scroll to the error container
-          errorContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+      
+          document.querySelectorAll('[id$="-error"]').forEach(el => el.remove());
         }
-
-        // Real-time validation for individual fields
-        const formInputs = bookingForm.querySelectorAll("input, select");
-        formInputs.forEach((input) => {
-          input.addEventListener("blur", function () {
-            // Individual field validation
-            if (this.id === "id_guests") {
-              const isValid =
-                this.value && !isNaN(this.value) && parseInt(this.value) > 0;
-              highlightElement(this, !isValid);
-              if (!isValid) {
-                showErrorMessage(
-                  this.id,
-                  "Please enter a valid number of guests."
-                );
-              } else {
-                clearErrorMessage(this.id);
-              }
-            } else if (this.id === "id_name") {
-              const isValid = this.value && this.value.trim().length >= 2;
-              highlightElement(this, !isValid);
-              if (!isValid) {
-                showErrorMessage(this.id, "Please enter your full name.");
-              } else {
-                clearErrorMessage(this.id);
-              }
-            } else if (this.id === "id_phone") {
-              const phoneRegex =
-                /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-              const isValid = this.value && phoneRegex.test(this.value);
-              highlightElement(this, !isValid);
-              if (!isValid) {
-                showErrorMessage(this.id, "Please enter a valid phone number.");
-              } else {
-                clearErrorMessage(this.id);
-              }
-            } else if (this.id === "id_email") {
-              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-              const isValid = this.value && emailRegex.test(this.value);
-              highlightElement(this, !isValid);
-              if (!isValid) {
-                showErrorMessage(
-                  this.id,
-                  "Please enter a valid email address."
-                );
-              } else {
-                clearErrorMessage(this.id);
-              }
-            }
-          });
-
-          // Clear error message on input
-          input.addEventListener("input", function () {
-            if (this.classList.contains("is-invalid")) {
-              highlightElement(this, false);
-              clearErrorMessage(this.id);
-            }
-          });
-        });
-
-        // Form submission handler
+      
         bookingForm.addEventListener("submit", function (event) {
-          // Always prevent the default form submission
           event.preventDefault();
-
-          // Validate the form
           if (validateForm()) {
-            // If validation passes, submit the form
             this.submit();
           }
         });
-
-        // Initialize booking type selection validation feedback
-        const bookingTypeInputs = document.querySelectorAll(
-          'input[name="booking_types"]'
-        );
-        bookingTypeInputs.forEach((input) => {
-          input.addEventListener("change", function () {
-            const anyChecked = Array.from(bookingTypeInputs).some(
-              (input) => input.checked
-            );
-            highlightElement(
-              document.getElementById("bookingTypesContainer"),
-              !anyChecked
-            );
-            if (anyChecked) {
-              clearErrorMessage("bookingTypesContainer");
-            } else {
-              showErrorMessage(
-                "bookingTypesContainer",
-                "Please select at least one booking type."
-              );
-            }
-          });
-        });
-
-        // Make these functions available globally for other scripts
-        window.clearErrorMessage = clearErrorMessage;
-        window.highlightElement = highlightElement;
       });
+// Add this after your bookingForm.addEventListener("submit", ...) block
+const fieldsToValidate = [
+  { id: "id_name", type: "text" },
+  { id: "id_guests", type: "number" },
+  { id: "id_phone", type: "phone" },
+  { id: "id_email", type: "email" },
+  { id: "chosenDate", type: "date" }
+];
+
+fieldsToValidate.forEach(({ id, type }) => {
+  const field = document.getElementById(id);
+  if (!field) return;
+
+  field.addEventListener("input", () => {
+    const value = field.value.trim();
+    const errorElement = document.getElementById(`${id}-error`);
+
+    // Required check
+    if (!value) {
+      showFieldError(id, "This field is required.");
+    } else {
+      // Format-specific checks
+      if (type === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          showFieldError(id, "Invalid email format.");
+        } else {
+          clearFieldError(id);
+        }
+      } else if (type === "phone") {
+        const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+        if (!phoneRegex.test(value)) {
+          showFieldError(id, "Phone number format is invalid.");
+        } else {
+          clearFieldError(id);
+        }
+      } else if (type === "number") {
+        if (isNaN(value) || parseInt(value) <= 0) {
+          showFieldError(id, "Guests must be a positive number.");
+        } else {
+          clearFieldError(id);
+        }
+      } else {
+        clearFieldError(id);
+      }
+    }
+  });
+});
+
+// Special case: booking type
+document.querySelectorAll('input[name="booking_types"]').forEach(input => {
+  input.addEventListener("change", () => {
+    const checked = document.querySelectorAll('input[name="booking_types"]:checked');
+    if (checked.length > 0) {
+      clearFieldError("bookingTypesContainer");
+    }
+  });
+});
+
+// Special case: calendar date
+document.getElementById("chosenDate").addEventListener("change", () => {
+  const date = document.getElementById("chosenDate").value;
+  if (date) {
+    clearFieldError("calendar");
+  }
+});
+
+function clearFieldError(fieldId) {
+  const field = document.getElementById(fieldId);
+  field.classList.remove("is-invalid", "border-danger");
+
+  const errorElement = document.getElementById(`${fieldId}-error`);
+  if (errorElement) {
+    errorElement.remove();
+  }
+}
+      
     </script>
+    
   </body>
 </html>
