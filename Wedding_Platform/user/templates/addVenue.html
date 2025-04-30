@@ -166,337 +166,357 @@
                     {% endfor %}
                 </div>
                 {% endif %} 
-
-                <div class="row">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="step_tabs">
-                            <!-- Step Navigation -->
-                            <div class="steps">
-                                <div class="step active" data-step="1" onclick="showStep(1)"><span>01</span> Basic Information</div>
-                                <div class="step" data-step="2" onclick="showStep(2)"><span>02</span> Gallery</div>
-                                <div class="step" data-step="3" onclick="showStep(3)"><span>03</span> Location</div>
-                                <div class="step" data-step="4" onclick="showStep(4)"><span>04</span> Amenities</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4">
+                            <div class="step_tabs">
+                                <!-- Step Navigation -->
+                                <div class="steps">
+                                    <div class="step active" data-step="1" onclick="showStep(1)"><span>01</span> Basic Information</div>
+                                    <div class="step" data-step="2" onclick="showStep(2)"><span>02</span> Gallery</div>
+                                    <div class="step" data-step="3" onclick="showStep(3)"><span>03</span> Location</div>
+                                    <div class="step" data-step="4" onclick="showStep(4)"><span>04</span> Amenities</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-9 col-md-8 main-form">
-                      
-                        <form method="post" id="venueForm" enctype="multipart/form-data">
-                            {% csrf_token %}
-                           
-                            <!-- Step 1: Basic Information -->
-                            <div class="form-section active" id="step1">
-                                <div class="form-grid">
-                                    <div class="form-group full">
-                                        <label class="required-field">Venue Name</label>
-                                        {{ form.name }}
-                                        {% if form.name.errors %}
-                                        <div class="error">{{ form.name.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                   
-                                    <div class="form-group full">
-                                        <label class="required-field">Venue Description</label>
-                                        {{ form.description }}
-                                        {% if form.description.errors %}
-                                        <div class="error">{{ form.description.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                   
-                                    <div style="display: flex; gap: 15px; width: 100%;" class="mobile_view">
-                                        <div class="form-group" style="flex: 1;">
-                                            <label>Chambermarie</label>
-                                            {{ form.chambermarie }}
-                                            {% if form.chambermarie.errors %}
-                                            <div class="error">{{ form.chambermarie.errors }}</div>
+                
+                        <div class="col-lg-9 col-md-8 main-form">
+                            <!-- Form title based on context -->
+                            {% comment %} <h3 class="form-title mb-4">{% if is_edit %}Edit{% else %}Add New{% endif %} Venue</h3> {% endcomment %}
+                          
+                            <form method="post" id="venueForm" enctype="multipart/form-data">
+                                {% csrf_token %}
+                               
+                                <!-- Step 1: Basic Information -->
+                                <div class="form-section active" id="step1">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="required-field">Venue Name</label>
+                                            {{ form.name }}
+                                            {% if form.name.errors %}
+                                            <div class="error">{{ form.name.errors }}</div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-group" style="flex: 1;">
-                                            <label>Upload Chambermarie Image</label>
-                                            {{ form.chambermarie_image }}
-                                            {% if form.chambermarie_image.errors %}
-                                            <div class="error">{{ form.chambermarie_image.errors }}</div>
+                                       
+                                        <div class="form-group full">
+                                            <label class="required-field">Venue Description</label>
+                                            {{ form.description }}
+                                            {% if form.description.errors %}
+                                            <div class="error">{{ form.description.errors }}</div>
                                             {% endif %}
                                         </div>
-                                    </div>
-                                   
-                                    <div class="form-group full">
-                                        <label>Select Categories</label>
-                                      
-                                       <div class="outer_check"> 
-                                        <div class="form-check">
-                                          {{ form.is_beach }}
-                                          <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
-                                        </div>
-                                      
-                                        <div class="form-check">
-                                          {{ form.is_city }}
-                                          <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
-                                        </div>
-                                      
-                                        <div class="form-check">
-                                          {{ form.is_hotel }}
-                                          <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
-                                        </div>
-                                      
-                                        <div class="form-check">
-                                          {{ form.is_countryside }}
-                                          <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">Countryside</label>
-                                        </div>
-                                      
-                                        <!-- ✅ New checkboxes -->
-                                        <div class="form-check">
-                                          {{ form.is_mountain }}
-                                          <label class="form-check-label" for="{{ form.is_mountain.id_for_label }}">Mountain</label>
-                                        </div>
-                                      
-                                        <div class="form-check">
-                                          {{ form.is_resort }}
-                                          <label class="form-check-label" for="{{ form.is_resort.id_for_label }}">Resort</label>
-                                        </div>
-                                      
-                                        <div class="form-check">
-                                          {{ form.is_forest }}
-                                          <label class="form-check-label" for="{{ form.is_forest.id_for_label }}">Forest</label>
-                                        </div>
-                                        <div class="form-check">
-                                            {{ form.is_rooftop }}
-                                            <label class="form-check-label" for="{{ form.is_rooftop.id_for_label }}">Rooftop</label>
-                                        </div>
-                                        <div class="form-check">
-                                            {{ form.is_garden }}
-                                            <label class="form-check-label" for="{{ form.is_garden.id_for_label }}">Garden</label>
-                                          </div>
-                                          <div class="form-check">
-                                            {{ form.is_desert }}
-                                            <label class="form-check-label" for="{{ form.is_desert.id_for_label }}">Desert</label>
-                                          </div>
-                                          
-                                          <div class="form-check">
-                                            {{ form.is_lake }}
-                                            <label class="form-check-label" for="{{ form.is_lake.id_for_label }}">Lake</label>
-                                          </div>
-                                          
-                                          <div class="form-check">
-                                            {{ form.is_island }}
-                                            <label class="form-check-label" for="{{ form.is_island.id_for_label }}">Island</label>
-                                          </div>
-                                          
-                                          <div class="form-check">
-                                            {{ form.is_cave }}
-                                            <label class="form-check-label" for="{{ form.is_cave.id_for_label }}">Cave</label>
-                                          </div>
-                                          
-                                          <div class="form-check">
-                                            {{ form.is_vineyard }}
-                                            <label class="form-check-label" for="{{ form.is_vineyard.id_for_label }}">Vineyard</label>
-                                          </div>
-                                          
-                                          </div>
-                                      </div>
-                                       <div style="display: flex; gap: 40px; width: 100%;">
-                                        <div class="form-group" style="flex: 1;">
-                                            <label class="required-field">Price</label>
-                                            {{ form.price }}
-                                            {% if form.price.errors %}
-                                            <div class="error">{{ form.price.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group" style="flex: 1;">
-                                            <label class="required-field">Contact</label>
-                                            {{ form.contact }}
-                                            {% if form.contact.errors %}
-                                            <div class="error">{{ form.contact.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group full">
-                                        <label class="required-field">Capacity</label>
-                                        {{ form.capacity }}
-                                        {% if form.capacity.errors %}
-                                        <div class="error">{{ form.capacity.errors }}</div>
-                                        {% endif %}
-                                    </div>
-                                    
-                                </div>
-                                <div class="form-navigation">
-                                    <button type="button" class="btn btn-primary next-btn">Next</button>
-                                  </div>
-                                  
-                            </div>
-
-                            <!-- Step 2: Gallery -->
-                            <div class="form-section" id="step2" style="margin-top: 30px;">
-                                <div class="same_div">
-                                    <label style="font-weight: 500;">Venue Thumbnail</label>
-                                    {{ form.thumbnail }}
-                                    {% if form.thumbnail.errors %}
-                                    <div class="error">{{ form.thumbnail.errors }}</div>
-                                    {% endif %}
-                                    <small>* Thumbnail image is required</small>
-
-                                    <div class="dropzone" style="float: left; margin-top: 10px;">
-                                        <input type="file" name="gallery_images" multiple accept="image/*" id="galleryInput">
-                                        
-                                        <div id="previewContainer" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
-                                    
-                                        <p id="errorText" style="color: red; font-weight: 500;"></p>
-                                    
-                                        <small>* You can upload up to 4 images for your listing(JPG, PNG,JPEG)</small><br>
-                                        <small>* Listing images should be at least 620x480 in dimensions</small>
-                                    </div>
-                                   
-                                </div>
-                                <div class="form-navigation">
-                                    <button type="button" class="btn btn-secondary prev-btn">Previous</button>
-                                    <button type="button" class="btn btn-primary next-btn" >Next</button>
-                                  </div>
-                                  
-                            </div>
-
-                            <!-- Step 3: Location -->
-                            <div class="form-section" id="step3">
-                                <div class="location same_div">
-                                   
-                                    {% comment %} <div class="">
-                                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423817.9663201953!2d18.032266843830698!3d-33.913395580156234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sin!4v1743676276759!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                           
-                                       </div>
-                                       <p class="text-muted">Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
-                                        {% endcomment %}
-                                        <div class="form-group mt2">
-                                            <label for="fullAddress" class="required-field">Full Address</label>
-                                            {{ form.full_address }}
-                                            {% if form.full_address.errors %}
-                                            <div class="error">{{ form.full_address.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="region" class="required-field">Region</label>
-                                            {{ form.region }}
-                                            {% if form.region.errors %}
-                    <div class="error">{{ form.region.errors }}</div>
-                    {% endif %}
-                                        </div>
-                                        <div class="form-row" style="display: flex; gap: 15px;">
+                                       
+                                        <div style="display: flex; gap: 15px; width: 100%;" class="mobile_view">
                                             <div class="form-group" style="flex: 1;">
-                                                <label for="longitude" class="required-field">Longitude</label>
-                                                {{ form.longitude }}
-                                                {% if form.longitude.errors %}
-                                                <div class="error">{{ form.longitude.errors }}</div>
+                                                <label>Chambermarie</label>
+                                                {{ form.chambermarie }}
+                                                {% if form.chambermarie.errors %}
+                                                <div class="error">{{ form.chambermarie.errors }}</div>
                                                 {% endif %}
                                             </div>
                                             <div class="form-group" style="flex: 1;">
-                                                <label for="latitude" class="required-field">Latitude</label>
-                                                {{ form.latitude }}
-                                                {% if form.latitude.errors %}
-                        <div class="error">{{ form.latitude.errors }}</div>
-                        {% endif %}
+                                                <label>Upload Chambermarie Image</label>
+                                                {{ form.chambermarie_image }}
+                                                {% if form.chambermarie_image.errors %}
+                                                <div class="error">{{ form.chambermarie_image.errors }}</div>
+                                                {% endif %}
+                                                {% if is_edit and venue.chambermarie_image %}
+                                                <div class="mt-2">
+                                                    <img src="{{ venue.chambermarie_image.url }}" class="img-thumbnail" alt="Chambermarie Image" style="max-height: 100px;">
+                                                </div>
+                                                {% endif %}
                                             </div>
+                                        </div>
+                                       
+                                        <div class="form-group full">
+                                            <label>Select Categories</label>
+                                          
+                                           <div class="outer_check"> 
+                                            <div class="form-check">
+                                              {{ form.is_beach }}
+                                              <label class="form-check-label" for="{{ form.is_beach.id_for_label }}">Beach</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_city }}
+                                              <label class="form-check-label" for="{{ form.is_city.id_for_label }}">City</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_hotel }}
+                                              <label class="form-check-label" for="{{ form.is_hotel.id_for_label }}">Hotel</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_countryside }}
+                                              <label class="form-check-label" for="{{ form.is_countryside.id_for_label }}">Countryside</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_mountain }}
+                                              <label class="form-check-label" for="{{ form.is_mountain.id_for_label }}">Mountain</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_resort }}
+                                              <label class="form-check-label" for="{{ form.is_resort.id_for_label }}">Resort</label>
+                                            </div>
+                                          
+                                            <div class="form-check">
+                                              {{ form.is_forest }}
+                                              <label class="form-check-label" for="{{ form.is_forest.id_for_label }}">Forest</label>
+                                            </div>
+                                            <div class="form-check">
+                                                {{ form.is_rooftop }}
+                                                <label class="form-check-label" for="{{ form.is_rooftop.id_for_label }}">Rooftop</label>
+                                            </div>
+                                            <div class="form-check">
+                                                {{ form.is_garden }}
+                                                <label class="form-check-label" for="{{ form.is_garden.id_for_label }}">Garden</label>
+                                              </div>
+                                              <div class="form-check">
+                                                {{ form.is_desert }}
+                                                <label class="form-check-label" for="{{ form.is_desert.id_for_label }}">Desert</label>
+                                              </div>
+                                              
+                                              <div class="form-check">
+                                                {{ form.is_lake }}
+                                                <label class="form-check-label" for="{{ form.is_lake.id_for_label }}">Lake</label>
+                                              </div>
+                                              
+                                              <div class="form-check">
+                                                {{ form.is_island }}
+                                                <label class="form-check-label" for="{{ form.is_island.id_for_label }}">Island</label>
+                                              </div>
+                                              
+                                              <div class="form-check">
+                                                {{ form.is_cave }}
+                                                <label class="form-check-label" for="{{ form.is_cave.id_for_label }}">Cave</label>
+                                              </div>
+                                              
+                                              <div class="form-check">
+                                                {{ form.is_vineyard }}
+                                                <label class="form-check-label" for="{{ form.is_vineyard.id_for_label }}">Vineyard</label>
+                                              </div>
+                                              
+                                              </div>
+                                          </div>
+                                           <div style="display: flex; gap: 40px; width: 100%;">
+                                            <div class="form-group" style="flex: 1;">
+                                                <label class="required-field">Price</label>
+                                                {{ form.price }}
+                                                {% if form.price.errors %}
+                                                <div class="error">{{ form.price.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group" style="flex: 1;">
+                                                <label class="required-field">Contact</label>
+                                                {{ form.contact }}
+                                                {% if form.contact.errors %}
+                                                <div class="error">{{ form.contact.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group full">
+                                            <label class="required-field">Capacity</label>
+                                            {{ form.capacity }}
+                                            {% if form.capacity.errors %}
+                                            <div class="error">{{ form.capacity.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        
                                     </div>
-                                   
+                                    <div class="form-navigation">
+                                        <button type="button" class="btn btn-primary next-btn">Next</button>
+                                      </div>
                                       
                                 </div>
-                                <div class="form-navigation">
-                                    <button type="button" class="btn btn-secondary prev-btn" >Previous</button>
-                                    <button type="button" class="btn btn-primary next-btn" >Next</button>
-                                  </div>
-                            </div>
-
-                            <!-- Step 4: Amenities -->
-                            <div class="form-section" id="step4">
-                                <div class="location same_div">
-                                    <div class="feature-grid">
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'parking')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-parking"></i>
-                                                <p>Parking</p>
-                                            </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="parking" style="display:none;" {% if form.has_parking.value %}checked{% endif %}>
+                
+                                <!-- Step 2: Gallery -->
+                                <div class="form-section" id="step2" style="margin-top: 30px;">
+                                    <div class="same_div">
+                                        <label style="font-weight: 500;">Venue Thumbnail</label>
+                                        {{ form.thumbnail }}
+                                        {% if form.thumbnail.errors %}
+                                        <div class="error">{{ form.thumbnail.errors }}</div>
+                                        {% endif %}
+                                        <small>* Thumbnail image is required</small>
+                
+                                        {% if is_edit and venue.thumbnail %}
+                                        <div class="mt-2">
+                                            <p>Current Thumbnail:</p>
+                                            <img src="{{ venue.thumbnail.url }}" class="img-thumbnail" alt="Venue Thumbnail" style="max-width: 150px;">
                                         </div>
-                                       
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'prayer_rooms')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-praying-hands"></i>
-                                                <p>Prayer Rooms</p>
+                                        {% endif %}
+                
+                                        <div class="dropzone" style="float: left; margin-top: 10px;">
+                                            <input type="file" name="gallery_images" multiple accept="image/*" id="galleryInput">
+                                            
+                                            <div id="previewContainer" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+                                                {% if is_edit and gallery_images %}
+                                                    {% for image in gallery_images %}
+                                                    <div class="preview-item">
+                                                        <img src="{{ image.image.url }}" alt="Gallery image" style="width: 100px; height: 100px; object-fit: cover;">
+                                                    </div>
+                                                    {% endfor %}
+                                                {% endif %}
                                             </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="prayer_rooms" style="display:none;" {% if form.has_prayer_rooms.value %}checked{% endif %}>
-                                        </div>
-                                       
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'dj')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-music"></i>
-                                                <p>DJ</p>
-                                            </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="dj" style="display:none;" {% if form.has_dj.value %}checked{% endif %}>
-                                        </div>
-                                       
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'photographer')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-camera"></i>
-                                                <p>Photographer</p>
-                                            </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="photographer" style="display:none;" {% if form.has_photographer.value %}checked{% endif %}>
-                                        </div>
-                                       
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'wifi')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-wifi"></i>
-                                                <p>WiFi</p>
-                                            </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="wifi" style="display:none;" {% if form.has_wifi.value %}checked{% endif %}>
-                                        </div>
-                                       
-                                        <div class="feature-box" onclick="toggleAmenity(this, 'swimming_pool')">
-                                            <div class="feature-content">
-                                                <i class="fas fa-swimming-pool"></i>
-                                                <p>Swimming Pool</p>
-                                            </div>
-                                            <div class="checkbox-indicator">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <input type="checkbox" name="amenities" value="swimming_pool" style="display:none;" {% if form.has_swimming_pool.value %}checked{% endif %}>
+                                        
+                                            <p id="errorText" style="color: red; font-weight: 500;"></p>
+                                        
+                                            <small>* You can upload up to 4 images for your listing(JPG, PNG,JPEG)</small><br>
+                                            <small>* Listing images should be at least 620x480 in dimensions</small>
                                         </div>
                                        
                                     </div>
-
-                                    <div class="venue-butn d-flex justify-content-between">
-                                        <button type="button" style="margin-top:20px;height:40px" class="btn btn-secondary prev-btn">Previous</button>
-                                        <button type="submit" class="submitbtn">Add Venue</button>
+                                    <div class="form-navigation">
+                                        <button type="button" class="btn btn-secondary prev-btn">Previous</button>
+                                        <button type="button" class="btn btn-primary next-btn" >Next</button>
+                                      </div>
+                                      
+                                </div>
+                
+                                <!-- Step 3: Location -->
+                                <div class="form-section" id="step3">
+                                    <div class="location same_div">
+                                       
+                                        {% comment %} <div class="">
+                                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423817.9663201953!2d18.032266843830698!3d-33.913395580156234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sin!4v1743676276759!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                               
+                                           </div>
+                                           <p class="text-muted">Drag and drop the marker to identify your <b>Latitude</b> and <b>Longitude</b></p>
+                                            {% endcomment %}
+                                            <div class="form-group mt2">
+                                                <label for="fullAddress" class="required-field">Full Address</label>
+                                                {{ form.full_address }}
+                                                {% if form.full_address.errors %}
+                                                <div class="error">{{ form.full_address.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="region" class="required-field">Region</label>
+                                                {{ form.region }}
+                                                {% if form.region.errors %}
+                                                <div class="error">{{ form.region.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-row" style="display: flex; gap: 15px;">
+                                                <div class="form-group" style="flex: 1;">
+                                                    <label for="longitude" class="required-field">Longitude</label>
+                                                    {{ form.longitude }}
+                                                    {% if form.longitude.errors %}
+                                                    <div class="error">{{ form.longitude.errors }}</div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group" style="flex: 1;">
+                                                    <label for="latitude" class="required-field">Latitude</label>
+                                                    {{ form.latitude }}
+                                                    {% if form.latitude.errors %}
+                                                    <div class="error">{{ form.latitude.errors }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="form-navigation">
+                                        <button type="button" class="btn btn-secondary prev-btn" >Previous</button>
+                                        <button type="button" class="btn btn-primary next-btn" >Next</button>
                                     </div>
                                 </div>
-                            </div>
-                            
-                        </form>
+                
+                                <!-- Step 4: Amenities -->
+                                <div class="form-section" id="step4">
+                                    <div class="location same_div">
+                                        <div class="feature-grid">
+                                            <div class="feature-box {% if venue.has_parking %}selected{% endif %}" onclick="toggleAmenity(this, 'parking')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-parking"></i>
+                                                    <p>Parking</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="parking" style="display:none;" {% if venue.has_parking %}checked{% endif %}>
+                                            </div>
+                                           
+                                            <div class="feature-box {% if venue.has_prayer_rooms %}selected{% endif %}" onclick="toggleAmenity(this, 'prayer_rooms')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-praying-hands"></i>
+                                                    <p>Prayer Rooms</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="prayer_rooms" style="display:none;" {% if venue.has_prayer_rooms %}checked{% endif %}>
+                                            </div>
+                                           
+                                            <div class="feature-box {% if venue.has_dj %}selected{% endif %}" onclick="toggleAmenity(this, 'dj')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-music"></i>
+                                                    <p>DJ</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="dj" style="display:none;" {% if venue.has_dj %}checked{% endif %}>
+                                            </div>
+                                           
+                                            <div class="feature-box {% if venue.has_photographer %}selected{% endif %}" onclick="toggleAmenity(this, 'photographer')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-camera"></i>
+                                                    <p>Photographer</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="photographer" style="display:none;" {% if venue.has_photographer %}checked{% endif %}>
+                                            </div>
+                                           
+                                            <div class="feature-box {% if venue.has_wifi %}selected{% endif %}" onclick="toggleAmenity(this, 'wifi')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-wifi"></i>
+                                                    <p>WiFi</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="wifi" style="display:none;" {% if venue.has_wifi %}checked{% endif %}>
+                                            </div>
+                                           
+                                            <div class="feature-box {% if venue.has_swimming_pool %}selected{% endif %}" onclick="toggleAmenity(this, 'swimming_pool')">
+                                                <div class="feature-content">
+                                                    <i class="fas fa-swimming-pool"></i>
+                                                    <p>Swimming Pool</p>
+                                                </div>
+                                                <div class="checkbox-indicator">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                                <input type="checkbox" name="amenities" value="swimming_pool" style="display:none;" {% if venue.has_swimming_pool %}checked{% endif %}>
+                                            </div>
+                                           
+                                        </div>
+                
+                                        <div class="venue-butn d-flex justify-content-between">
+                                            <button type="button" style="margin-top:20px;height:40px" class="btn btn-secondary prev-btn">Previous</button>
+                                            <button type="submit" class="submitbtn">{% if is_edit %}Update{% else %}Add{% endif %} Venue</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1078,4 +1098,70 @@ document.addEventListener('DOMContentLoaded', function () {
 });
    </script>
     
+
+
+
+
+
+   <script>
+    // Add this script to mark amenity boxes as selected on page load for editing
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if is_edit %}
+            // Find all checkboxes that are checked
+            document.querySelectorAll('input[type="checkbox"][name="amenities"]:checked').forEach(function(checkbox) {
+                // Mark the parent feature-box as selected
+                checkbox.closest('.feature-box').classList.add('selected');
+            });
+        {% endif %}
+    });
+
+    // Your existing JavaScript for the multi-step form goes here
+    function showStep(step) {
+        // Hide all form sections
+        document.querySelectorAll('.form-section').forEach(function(section) {
+            section.classList.remove('active');
+        });
+        
+        // Show the selected section
+        document.getElementById('step' + step).classList.add('active');
+        
+        // Update step navigation
+        document.querySelectorAll('.step').forEach(function(stepElement) {
+            stepElement.classList.remove('active');
+        });
+        document.querySelector('.step[data-step="' + step + '"]').classList.add('active');
+    }
+    
+    // Add existing toggle amenity function if not already in your scripts
+    function toggleAmenity(element, amenityValue) {
+        element.classList.toggle('selected');
+        var checkbox = element.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+    }
+    
+    // Add event listeners for next and previous buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentStep = 1;
+        
+        // Next button click handler
+        document.querySelectorAll('.next-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                if (currentStep < 4) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+        });
+        
+        // Previous button click handler
+        document.querySelectorAll('.prev-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+        });
+    });
+</script>
 </html>

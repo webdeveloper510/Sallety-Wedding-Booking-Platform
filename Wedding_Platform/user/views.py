@@ -38,9 +38,8 @@ def owner_required(view_func):
 #####################index#####################
 def index(request):
     # Get active venues from the database
-    venues = Venue.objects.filter(status='active')
-    
-    # Get search parameters
+    venues = Venue.objects.filter(status='active').order_by('created_at')
+   # Get search parameters
     region = request.GET.get('destination')
     date = request.GET.get('date')
     capacity = request.GET.get('guests')
@@ -96,10 +95,10 @@ def index(request):
 
         if category.lower() in category_mapping:
             filter_kwargs = {category_mapping[category.lower()]: True}
-            venues = venues.filter(**filter_kwargs)
+            venues = venues.filter(**filter_kwargs).order_by('-created_at')
     
     context = {
-        'venues': venues,
+        'venues': venues.order_by('-created_at'),
         'active_category': category,
         # Add search parameters to context to maintain form state
         'search_region': region,
@@ -107,6 +106,7 @@ def index(request):
         'search_capacity': capacity
     }
     return render(request, 'new-index.html', context)
+
 @login_required
 def logout_user(request):
     logout(request)
@@ -722,3 +722,65 @@ def search_results(request):
         'total_results': venues.count()
     }
     return render(request, 'venue-search-results.html', context)
+
+
+################################# 1. Create the edit_venue view function########################
+@login_required
+def edit_venue(request, venue_id):
+    # Get the venue or return 404 if not found
+    venue = get_object_or_404(Venue, id=venue_id)
+    
+    # Check if the user is an admin or the owner of the venue
+    if not request.user.is_staff and venue.user != request.user:
+        messages.error(request, "You don't have permission to edit this venue.")
+        return redirect('venue-list')
+    
+    if request.method == 'POST':
+        form = VenueForm(request.POST, request.FILES, instance=venue)
+        
+        if form.is_valid():
+            venue = form.save(commit=False)
+            venue.save()
+            
+            # Process amenities checkboxes
+            venue.has_parking = 'parking' in request.POST.getlist('amenities', [])
+            venue.has_prayer_rooms = 'prayer_rooms' in request.POST.getlist('amenities', [])
+            venue.has_dj = 'dj' in request.POST.getlist('amenities', [])
+            venue.has_photographer = 'photographer' in request.POST.getlist('amenities', [])
+            venue.has_wifi = 'wifi' in request.POST.getlist('amenities', [])
+            venue.has_swimming_pool = 'swimming_pool' in request.POST.getlist('amenities', [])
+            venue.save()
+            
+            # Handle gallery images
+            if 'gallery_images' in request.FILES:
+                gallery_images = request.FILES.getlist('gallery_images')
+                # Limit to 4 images
+                current_images_count = VenueImage.objects.filter(venue=venue).count()
+                remaining_slots = 4 - current_images_count
+                
+                if remaining_slots > 0:
+                    for image in gallery_images[:remaining_slots]:
+                        VenueImage.objects.create(venue=venue, image=image)
+                else:
+                    messages.warning(request, 'Maximum of 4 gallery images allowed. No new images were added.')
+            
+            messages.success(request, 'Venue updated successfully!')
+            return redirect('venue-list')
+        else:
+            # Enhanced error handling
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.replace('_', ' ').title()}: {error}")
+    else:
+        # Create the form with the venue instance to pre-fill values
+        form = VenueForm(instance=venue)
+    
+    # Get existing gallery images
+    gallery_images = VenueImage.objects.filter(venue=venue)
+    
+    return render(request, 'addVenue.html', {
+        'form': form,
+        'venue': venue,
+        'gallery_images': gallery_images,
+        'is_edit': True
+    })
