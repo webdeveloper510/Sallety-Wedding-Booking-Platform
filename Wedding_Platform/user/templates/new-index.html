@@ -120,6 +120,14 @@
                     <label for="guests">Capacity</label>
                     <input type="number" id="guests" name="guests" placeholder="Add no of guests" min="1" value="{{ search_capacity|default:'' }}">
                 </div>
+                <div>
+                    <label for="chambermarie">Chambermarie</label>
+                    <select id="chambermarie" name="chambermarie" class="chamb">
+                        <option value="">Bride Room</option>
+                        <option value="yes" {% if search_chambermarie == 'yes' %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if search_chambermarie == 'no' %}selected{% endif %}>No</option>
+                    </select>
+                </div>
                 <button type="submit" class="search-button" id="searchBtn">
                     <i class="bi bi-search"></i>
                 </button>
@@ -383,7 +391,9 @@
         topGuests: document.getElementById('topGuests'),
         mainGuests: document.getElementById('mainGuests'),
         searchBtn: document.getElementById('searchBtn'),
-        dateInput: document.getElementById('date')
+        dateInput: document.getElementById('date'),
+        mainBridegroom: document.getElementById('mainBridegroom'),
+
     };
 
     // Initialize features only if necessary elements exist
@@ -530,7 +540,7 @@ function initializeDatePicker(dateInput) {
 
 // Search form validation
 function initializeSearchValidation(elements) {
-    const formInputs = ["mainDestination", "mainDate", "mainGuests"];
+    const formInputs = ["mainDestination", "mainDate", "mainGuests","mainBridegroom"];
     
     // Dynamic validation
     formInputs.forEach(id => {
@@ -782,9 +792,10 @@ function validateSearchForm(elements) {
     const destination = elements.mainDestination ? elements.mainDestination.value.trim() : '';
     const date = elements.mainDate ? elements.mainDate.value.trim() : '';
     const guests = elements.mainGuests ? elements.mainGuests.value.trim() : '';
+    const bridegroom = elements.mainBridegroom?.value.trim();
     
     // Enable button if any field has a value
-    elements.searchBtn.disabled = !(destination || date || guests);
+    elements.searchBtn.disabled = !(destination || date || guests ||mainBridegroom);
     
     return !elements.searchBtn.disabled;
 }
