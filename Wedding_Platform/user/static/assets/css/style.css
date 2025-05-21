@@ -1176,3 +1176,9 @@ div#weddingCarousel .carousel-item img {
 .top_wedding h5.fw-bold {
     min-height: 48px;
 }
+.chamb{
+	border: none !important;
+    font-size: 15px !important;
+    color: gray !important;
+    background: none !important;
+}

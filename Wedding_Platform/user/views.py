@@ -39,10 +39,11 @@ def owner_required(view_func):
 def index(request):
     # Get active venues from the database
     venues = Venue.objects.filter(status='active').order_by('created_at')
-   # Get search parameters
+    # Get search parameters
     region = request.GET.get('destination')
     date = request.GET.get('date')
     capacity = request.GET.get('guests')
+    chambermarie = request.GET.get('chambermarie')  # New chambermarie filter
     
     # Apply region filter
     if region:
@@ -55,6 +56,12 @@ def index(request):
             venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
         except ValueError:
             pass  # Invalid capacity input
+    
+    # Apply chambermarie filter
+    if chambermarie == 'yes':
+        venues = venues.filter(chambermarie='yes')
+    elif chambermarie == 'no':
+        venues = venues.filter(chambermarie='no')
     
     # Apply date filter - check if venues are available on that date
     if date:
@@ -103,10 +110,10 @@ def index(request):
         # Add search parameters to context to maintain form state
         'search_region': region,
         'search_date': date,
-        'search_capacity': capacity
+        'search_capacity': capacity,
+        'search_chambermarie': chambermarie  # Add chambermarie to context
     }
     return render(request, 'new-index.html', context)
-
 @login_required
 def logout_user(request):
     logout(request)
@@ -521,6 +528,7 @@ def search_results(request):
     region = request.GET.get('destination')
     date = request.GET.get('date')
     capacity = request.GET.get('guests')
+    chambermarie = request.GET.get('chambermarie')  # New chambermarie filter
     
     # Apply region filter
     if region:
@@ -533,6 +541,14 @@ def search_results(request):
             venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
         except ValueError:
             pass  # Invalid capacity input
+    
+    # Apply chambermarie filter
+    if chambermarie == 'yes':
+        venues = venues.filter(chambermarie='yes')
+        print("if",venue)
+    elif chambermarie == 'no':
+        venues = venues.filter(chambermarie='no')
+        print("elseif",venue)
     
     # Apply date filter - check if venues are available on that date
     if date:
@@ -581,18 +597,22 @@ def search_results(request):
         'search_region': region,
         'search_date': date,
         'search_capacity': capacity,
+        'search_chambermarie': chambermarie,  # Add chambermarie to context
         'total_results': venues.count()
     }
     
     # Render using your existing single-venue.html template
     return render(request, 'single-venue.html', context)
-    # Get active venues from the database
+
+# For the second search_results implementation (duplicated in your code)
+# Get active venues from the database
     venues = Venue.objects.filter(status='active')
     
     # Get search parameters
     region = request.GET.get('destination')
     date = request.GET.get('date')
     capacity = request.GET.get('guests')
+    chambermarie = request.GET.get('chambermarie')  # New chambermarie filter
     
     # Apply region filter
     if region:
@@ -605,6 +625,12 @@ def search_results(request):
             venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
         except ValueError:
             pass  # Invalid capacity input
+    
+    # Apply chambermarie filter
+    if chambermarie == 'yes':
+        venues = venues.filter(chambermarie='yes')
+    elif chambermarie == 'no':
+        venues = venues.filter(chambermarie='no')
     
     # Apply date filter - check if venues are available on that date
     if date:
@@ -653,18 +679,22 @@ def search_results(request):
         'search_region': region,
         'search_date': date,
         'search_capacity': capacity,
+        'search_chambermarie': chambermarie,  # Add chambermarie to context
         'total_results': venues.count()
     }
     
     # Use an existing template temporarily
     return render(request, 'new-index.html', context)
-    # Get active venues from the database
+
+# For the third search_results implementation (duplicated in your code)
+# Get active venues from the database
     venues = Venue.objects.filter(status='active')
     
     # Get search parameters
     region = request.GET.get('destination')
     date = request.GET.get('date')
     capacity = request.GET.get('guests')
+    chambermarie = request.GET.get('chambermarie')  # New chambermarie filter
     
     # Apply region filter
     if region:
@@ -677,6 +707,10 @@ def search_results(request):
             venues = venues.filter(capacity__gte=capacity)  # Greater than or equal to
         except ValueError:
             pass  # Invalid capacity input
+    
+    # Apply chambermarie filter
+    if chambermarie in ['yes', 'no']:
+        venues = venues.filter(chambermarie=chambermarie)
     
     # Apply date filter - check if venues are available on that date
     if date:
@@ -724,10 +758,10 @@ def search_results(request):
         'search_region': region,
         'search_date': date,
         'search_capacity': capacity,
+        'search_chambermarie': chambermarie,  # Add chambermarie to context
         'total_results': venues.count()
     }
     return render(request, 'venue-search-results.html', context)
-
 
 ################################# 1. Create the edit_venue view function########################
 @login_required
