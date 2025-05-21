@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,8 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Register</title>
-        <!-- Favicon -->
-        <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
         <!-- Favicon -->
         <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
     <!-- Bootstrap 5.3.3 CSS -->
@@ -120,7 +117,7 @@
                 />
                 <div class="error-feedback" id="emailError">Please enter a valid email address.</div>
               </div>
-            <!-- Password Field with Eye Icon -->
+                      <!-- Password Field with Eye Icon -->
 <div class="mb-3 position-relative">
   <input
     type="password"
@@ -188,10 +185,7 @@
                 });
               </script>
             {% endif %}
-            
-
-            </form>
-
+             </form>
             <div class="row w-100 m-0">
               <div class="col-sm-7 p-0 text-start">
                 <p class="sign-in">
@@ -272,7 +266,7 @@
         const passwordError = document.getElementById('passwordError');
         const confirmPasswordError = document.getElementById('confirmPasswordError');
     
-        // ✅ Username validation (only not empty)
+        // 0Username validation (only not empty)
         function validateUsername() {
           if (!username.value.trim()) {
             usernameError.style.display = 'block';
@@ -367,8 +361,7 @@
           const isEmailValid = validateEmail();
           const isRoleValid = validateRole();
           const isPasswordValid = validatePassword();
-          const isConfirmPasswordValid = validateConfirmPassword();
-    
+          const isConfirmPasswordValid = validateConfirmPassword();   
           if (!(isUsernameValid && isEmailValid && isRoleValid && isPasswordValid && isConfirmPasswordValid)) {
             event.preventDefault();
           }
@@ -385,10 +378,7 @@
           this.classList.toggle('fa-eye');
           this.classList.toggle('fa-eye-slash');
         });
-      });
-      
-
+      }); 
     </script>
-
   </body>
 </html>
